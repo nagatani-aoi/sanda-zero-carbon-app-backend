@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import jp.kobespiral.sandazerocarbonappbackend.entity.Article;
 import jp.kobespiral.sandazerocarbonappbackend.entity.InitialLocation;
 /**
+ * 初期位置のリポジトリ
  * @author sato
  */
 @Repository

@@ -8,6 +8,7 @@ import org.apache.catalina.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 /**
+ * ユーザデイリーステータスのリポジトリ
  * @author sato
  */
 @Repository

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import jp.kobespiral.sandazerocarbonappbackend.entity.Article;
 /**
+ * 記事のリポジトリ
  * @author sato
  */
 @Repository

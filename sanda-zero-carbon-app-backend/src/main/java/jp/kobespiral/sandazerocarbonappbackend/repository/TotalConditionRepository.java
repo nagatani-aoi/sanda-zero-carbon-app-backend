@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
+ * 市の状況のリポジトリ
  * @author sato
  */
 @Repository

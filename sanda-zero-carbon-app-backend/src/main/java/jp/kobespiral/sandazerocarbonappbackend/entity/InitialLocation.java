@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ユーザデイリーステータスエンティティ
+ * イニシャルロケーションのエンティティ
  * @author sato
  */
 @Data

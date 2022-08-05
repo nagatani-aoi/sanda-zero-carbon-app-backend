@@ -9,21 +9,22 @@ import jp.kobespiral.sandazerocarbonappbackend.entity.Mission;
 
 /**
  * ミッションリポジトリ 
+ * 
  */
 @Repository
 public interface MissionRepository extends CrudRepository<Mission, Long>{
 
     /**
      * タイトルをキーワードで検索する．
-     * @param keyword
-     * @return List<Mission>
+     * @param keyword　キーワード
+     * @return 指定されたキーワードをタイトルに含むミッションのリスト
      */
     List<Mission> findByDateTitleContaining(String keyword); 
     
     /**
-     * タグIDで検索する．
-     * @param tagId
-     * @return List<Mission>
+     * タグIDで記事を検索する
+     * @param tagId タグID
+     * @return 指定されたタグIDでフィルター済みの記事のリスト
      */
     List<Mission> findByTagId(Long tagId); 
 

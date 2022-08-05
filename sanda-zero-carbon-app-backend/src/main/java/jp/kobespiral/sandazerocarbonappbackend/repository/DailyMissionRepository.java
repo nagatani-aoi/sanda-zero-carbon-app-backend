@@ -17,8 +17,8 @@ import jp.kobespiral.sandazerocarbonappbackend.entity.DailyMission;
 public interface DailyMissionRepository extends CrudRepository<DailyMission, Long>{
     /**
      * 指定した日以降のデイリーミッションを取得する．
-     * @param date
-     * @return List<DailyMission>
+     * @param date　日にち
+     * @return 指定された日以降のデイリーミッションのリスト
      */
     List<DailyMission> findByDateGreaterThanEqual(LocalDateTime date);  
 }

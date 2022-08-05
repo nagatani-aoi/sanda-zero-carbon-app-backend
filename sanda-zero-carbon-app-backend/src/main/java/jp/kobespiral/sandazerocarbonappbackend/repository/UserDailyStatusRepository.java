@@ -20,7 +20,7 @@ public interface UserDailyStatusRepository extends CrudRepository<UserDailyStatu
      * @param until 指定期間の終わり
      * @return ユーザIDと指定期間でフィルター済みのユーザデイリーステータスのリスト
      */
-    List<UserDailyStatus> findByUserIdAndDateBetween(Long userId, LocalDateTime since,LocalDateTime until);
+    List<UserDailyStatus> findByUserIdAndDateBetween(Long userId, LocalDateTime since, LocalDateTime until);
     /**
      * ユーザIDと日時を指定して、ユーザデイリーステータスのリストを取得する
      * @param userId ユーザID

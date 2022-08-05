@@ -29,7 +29,5 @@ public class Quiz {
     String ans2; 
     String ans3; 
     int point; 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long tagId; 
 }

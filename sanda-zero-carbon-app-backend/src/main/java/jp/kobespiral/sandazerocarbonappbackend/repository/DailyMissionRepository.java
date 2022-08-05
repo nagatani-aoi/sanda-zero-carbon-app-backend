@@ -7,7 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import jp.kobespiral.sandazerocarbonappbackend.entity.DailyMission;
-import jp.kobespiral.sandazerocarbonappbackend.entity.Mission;
 
 /**
  * デイリーミッションリポジトリ 
@@ -15,7 +14,7 @@ import jp.kobespiral.sandazerocarbonappbackend.entity.Mission;
  * @author Marin
  */
 @Repository
-public interface DailyMissionRepository extends CrudRepository<Mission, Long>{
+public interface DailyMissionRepository extends CrudRepository<DailyMission, Long>{
     /**
      * 指定した日以降のデイリーミッションを取得する．
      * @param date

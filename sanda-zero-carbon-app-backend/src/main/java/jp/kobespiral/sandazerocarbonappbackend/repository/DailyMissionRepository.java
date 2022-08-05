@@ -1,6 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.repository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -21,5 +21,5 @@ public interface DailyMissionRepository extends CrudRepository<Mission, Long>{
      * @param date
      * @return List<DailyMission>
      */
-    List<DailyMission> findByDateGreaterThanEqual(Date date);  
+    List<DailyMission> findByDateGreaterThanEqual(LocalDateTime date);  
 }

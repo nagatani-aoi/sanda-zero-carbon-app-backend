@@ -26,10 +26,10 @@ public class Achievement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long achievementId; // 達成ID
-    Long usetId; // ユーザID
+    Long userId; // ユーザID
     Long missionId; // ミッションID
     int hour; // ミッション実行時間
     @Temporal(TemporalType.TIMESTAMP)
-    LocalDateTime achievementAt; // 達成日時
+    LocalDateTime achievedAt; // 達成日時
     Boolean isDailyMission; // デーリーミッション判定フラグ
 }

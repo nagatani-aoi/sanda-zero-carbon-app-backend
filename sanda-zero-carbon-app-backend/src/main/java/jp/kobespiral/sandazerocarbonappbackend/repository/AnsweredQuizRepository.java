@@ -26,5 +26,5 @@ public interface AnsweredQuizRepository extends CrudRepository<AnsweredQuiz, Lon
      * @param userId ユーザID
      * @return List<AnsweredQuiz> 回答済みクイズのリスト
      */
-    List<AnsweredQuiz> findByIsCorrectedAndUserId(Boolean isCorrect, Long userId);
+    List<AnsweredQuiz> findByIsCorrectAndUserId(Boolean isCorrect, Long userId);
 }

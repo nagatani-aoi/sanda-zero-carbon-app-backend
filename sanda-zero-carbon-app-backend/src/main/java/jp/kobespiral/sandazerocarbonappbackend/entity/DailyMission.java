@@ -25,8 +25,6 @@ public class DailyMission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long dailyMissionId; // デイリーミッションID
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long missionId; // ミッションID
     @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime date; // デイリーミッションの日時

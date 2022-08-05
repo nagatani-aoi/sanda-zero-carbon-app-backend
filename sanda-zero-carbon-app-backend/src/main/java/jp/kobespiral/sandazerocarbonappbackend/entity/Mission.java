@@ -20,5 +20,5 @@ public class Mission {
     double costReduction; //節約金額
     Difficulty difficulty; //難易度
     MissionType missionType; //ミッションタイプ
-    Boolean done; // 完了フラグ
+    Long tagId; // タグID
 }

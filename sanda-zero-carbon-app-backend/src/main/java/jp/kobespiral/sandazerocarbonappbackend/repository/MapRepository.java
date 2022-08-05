@@ -1,7 +1,5 @@
 package jp.kobespiral.sandazerocarbonappbackend.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +18,5 @@ public interface MapRepository extends CrudRepository<Map, Long> {
      * @param level レベル
      * @return Optional<Map> マップ
      */
-    Optional<Map> findByCurrentLocationAndLevel(Long currentLocation, int level);
+    Map findByCurrentLocationAndLevel(Long currentLocation, int level);
 }

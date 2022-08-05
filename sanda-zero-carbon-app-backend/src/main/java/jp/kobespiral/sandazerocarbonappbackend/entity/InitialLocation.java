@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class InitialLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long initialLoacationId;
+    Long initialLocationId;
     int level;
     Long initialLocation;
 }

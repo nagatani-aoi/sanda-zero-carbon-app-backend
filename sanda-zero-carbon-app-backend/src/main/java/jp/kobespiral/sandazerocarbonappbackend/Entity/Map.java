@@ -1,6 +1,8 @@
 package jp.kobespiral.sandazerocarbonappbackend.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Map {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long mapId; // マップID
     Long CurrentLocation; // マップ上での現在地
     int level; // レベル

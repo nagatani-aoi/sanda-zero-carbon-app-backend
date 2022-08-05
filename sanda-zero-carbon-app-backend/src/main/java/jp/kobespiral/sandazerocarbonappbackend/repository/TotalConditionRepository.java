@@ -1,5 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.repository;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface TotalConditionRepository extends CrudRepository<TotalConditionR
      * @param until フィルター期間の終わり
      * @return 指定された期間でフィルター済みのトータルコンディションのリスト
      */
-    List<TotalConditionRepository> findByTotalBetween(Date since, Date until);
+    List<TotalConditionRepository> findByTotalBetween(LocalDateTime since, LocalDateTime until);
 }

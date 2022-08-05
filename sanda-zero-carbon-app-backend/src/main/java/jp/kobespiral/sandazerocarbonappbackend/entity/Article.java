@@ -1,5 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -29,7 +30,7 @@ public class Article {
     Long tagId;
     String description;
     @Temporal(TemporalType.TIMESTAMP)
-    Date postedAt;
+    LocalDateTime postedAt;
     String thumbnailSource;
     Boolean isImportant;
     String url;

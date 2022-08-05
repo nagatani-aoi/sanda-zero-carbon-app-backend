@@ -9,8 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/*
+/**
  市の状況把握エンティティ
+ * @author sato
  */
 @Data
 @AllArgsConstructor

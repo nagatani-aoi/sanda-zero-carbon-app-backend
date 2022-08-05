@@ -13,8 +13,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/*
+/**
 ユーザデイリーステータスエンティティ
+* @author sato
  */
 @Data
 @AllArgsConstructor

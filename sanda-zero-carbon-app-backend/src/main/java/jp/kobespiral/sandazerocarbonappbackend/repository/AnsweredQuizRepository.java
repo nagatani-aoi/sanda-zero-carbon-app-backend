@@ -22,9 +22,9 @@ public interface AnsweredQuizRepository extends CrudRepository<AnsweredQuiz, Lon
     List<AnsweredQuiz> findByUserId(Long userId);
     /**
      * 正誤フラグとユーザIDを指定して，該当する回答済みリストを取得する
-     * @param isCorrected 正誤フラグ
+     * @param isCorrect 正誤フラグ
      * @param userId ユーザID
      * @return List<AnsweredQuiz> 回答済みクイズのリスト
      */
-    List<AnsweredQuiz> findByIsCorrectedAndUserId(Boolean isCorrected, Long userId);
+    List<AnsweredQuiz> findByIsCorrectedAndUserId(Boolean isCorrect, Long userId);
 }

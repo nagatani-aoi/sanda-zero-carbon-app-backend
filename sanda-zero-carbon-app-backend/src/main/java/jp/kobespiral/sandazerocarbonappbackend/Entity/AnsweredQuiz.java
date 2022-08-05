@@ -31,5 +31,5 @@ public class AnsweredQuiz {
     @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime answeredAt; // 回答完了日時
     String ans; // 正解
-    Boolean isCorrected; // 正誤フラグ
+    Boolean isCorrect; // 正誤フラグ
 }

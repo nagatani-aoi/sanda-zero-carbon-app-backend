@@ -18,7 +18,7 @@ public interface AchievementRepository extends CrudRepository<Achievement, Long>
     /**
      * 指定した日時以降の達成ミッションのリストを返す
      * @param date 達成日時
-     * @return List<DailyMission> 達成ミッションのリスト
+     * @return List<Achievement> 達成ミッションのリスト
      */
     List<Achievement> findByDateGreaterThanEqual(LocalDateTime date);
 

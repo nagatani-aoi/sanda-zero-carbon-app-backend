@@ -6,6 +6,6 @@ package jp.kobespiral.sandazerocarbonappbackend.entity;
  * @author Marin 
  */
 public enum MissionType {
-    Dotype, 
+    DoType, 
     TimeType
 }

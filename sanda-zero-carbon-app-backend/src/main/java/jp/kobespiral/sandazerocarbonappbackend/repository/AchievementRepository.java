@@ -1,6 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.repository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -20,7 +20,7 @@ public interface AchievementRepository extends CrudRepository<Achievement, Long>
      * @param date 達成日時
      * @return List<DailyMission> 達成ミッションのリスト
      */
-    List<Achievement> findByDateGreaterThanEqual(Date date);
+    List<Achievement> findByDateGreaterThanEqual(LocalDateTime date);
 
     /**
      * ユーザIDを指定して，達成ミッションのリストを取得する
@@ -37,5 +37,5 @@ public interface AchievementRepository extends CrudRepository<Achievement, Long>
      * @param until 集計終了日時
      * @return List<Achievement> 達成ミッションのリスト
      */
-    List<Achievement> findByUserIdAndAchievedAtBetween(Long userId, Date since, Date until);
+    List<Achievement> findByUserIdAndAchievedAtBetween(Long userId, LocalDateTime since, LocalDateTime until);
 }

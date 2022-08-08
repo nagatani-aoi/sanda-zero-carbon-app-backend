@@ -33,6 +33,6 @@ public class UserDailyStatus {
     double totalCO2Reduction;
     double totalCostReduction;
     Boolean easyMissionCompleted;
-    Boolean nomalMissionCompleted;
+    Boolean normalMissionCompleted;
     Boolean hardMissionCompleted;
 }

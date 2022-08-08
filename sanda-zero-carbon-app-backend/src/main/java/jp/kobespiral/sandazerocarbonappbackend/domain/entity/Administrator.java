@@ -21,6 +21,6 @@ import lombok.NoArgsConstructor;
 public class Administrator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long adminId; // アドミンID
+    Long administratorId; // アドミンID
     String password; // パスワード
 }

@@ -3,6 +3,7 @@ package jp.kobespiral.sandazerocarbonappbackend.domain.service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,9 @@ public class AchievementService {
      * @param date   日時
      * @return 達成Dtoのリスト
      */
-    public List<AchievementDto> getAchivement(Long userId, LocalDate date) {
+    public List<AchievementDto> getAchivement(Long userId, String dateString) {
+        LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy/MM/dd")); // String型の日付をLocalDateに変換
+
         LocalDate monday = date.with(DayOfWeek.MONDAY); // その週の月曜日を取得
         LocalDate nextMonday = date.with(DayOfWeek.SUNDAY).plusDays(1); // その次週の日曜日を取得
 

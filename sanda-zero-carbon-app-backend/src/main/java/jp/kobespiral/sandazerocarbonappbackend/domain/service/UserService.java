@@ -82,6 +82,7 @@ public class UserService {
         if(!userDailyStatusRepository.existsByUserIdAndDate(userId, localDate)){
             UserDailyStatus tempUserDailyStatus = new UserDailyStatus(null, userId, localDate, 0, 0,0, false,false,false);
         }
+        Mission mission = missionRepository.findById(achievement.getMissionId()).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId, localDate);
         
         //ユーザのトータルポイントの更新
@@ -89,11 +90,10 @@ public class UserService {
         user.setTotalPoint(user.getTotalPoint() + achievement.getGetPoint());
         //デイリーステータスの更新
         userDailyStatus.setTotalPoint(userDailyStatus.getTotalPoint() + achievement.getGetPoint());
-        userDailyStatus.setTotalCO2Reduction(userDailyStatus.getTotalCostReduction() + achievement.getGetCO2Reduction());
-        userDailyStatus.setTotalCostReduction(userDailyStatus.getTotalCostReduction() + achievement.getGetCostReduction());
+        userDailyStatus.setTotalCO2Reduction(userDailyStatus.getTotalCO2Reduction() + mission.getCO2Reduction());
+        userDailyStatus.setTotalCostReduction(userDailyStatus.getTotalCostReduction() + mission.getCostReduction());
         //もしデイリーミッションならばフラグ更新
         if(achievement.getIsDailyMission()){
-            Mission mission = missionRepository.findById(achievement.getMissionId()).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
             if(mission.getDifficulty() == Difficulty.easy){
                 userDailyStatus.setEasyMissionCompleted(true);
             }

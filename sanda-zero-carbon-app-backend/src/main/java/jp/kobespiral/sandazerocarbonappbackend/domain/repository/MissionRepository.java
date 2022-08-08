@@ -30,4 +30,10 @@ public interface MissionRepository extends CrudRepository<Mission, Long> {
      */
     List<Mission> findByTagId(Long tagId);
 
+    /**
+     * ミッションをすべて取得する
+     * @return すべてのミッションのリスト
+     */
+    List<Mission> findAll();
+
 }

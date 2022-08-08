@@ -33,6 +33,9 @@ public class AdminRestController {
     AdministratorService adminService;
 
     /*--------------------------Read--------------------------- */
+    /**
+     * 管理者ログイン
+     */
     @GetMapping("/sanda-admin/login")
     public Response<Boolean> login(@RequestParam("administratorId") Long administratorId,@RequestParam("password") String password){
         try{

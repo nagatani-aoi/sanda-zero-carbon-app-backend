@@ -50,7 +50,7 @@ public class UserService {
      */
     public User getUser(Long userId) {
         //微妙
-        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
+        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not exist the user", String.format("Try to get userId : %d",userId)));
         return user;
     }
 
@@ -61,7 +61,7 @@ public class UserService {
      */
     public UserDto getUserDto(Long userId) {
         //微妙
-        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
+        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not get the userDto", String.format("Try to get userDto. userId : %d",userId)));
         return UserDto.build(user);
     }
     
@@ -116,10 +116,14 @@ public class UserService {
      * @return
      */
     public UserDailyStatus getUserDailyStatus(Long userId) {
-        /////////////////合ってるか微妙。今日の日付取得
         LocalDate localDate = LocalDate.now();
-        //なかった時のエクセプションいるかも
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId,localDate);
+        //その日のユーザデイリーステータスがなかったら作成
+        if(userDailyStatus == null){
+            UserDailyStatus tempDailyStatus = new UserDailyStatus(null, userId, localDate, 0, 0,0, false,false,false);
+            userDailyStatusRepository.save(tempDailyStatus);
+            userDailyStatus = tempDailyStatus;
+        }
         return userDailyStatus;
     }
     

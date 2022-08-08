@@ -19,7 +19,7 @@ public class AdministratorService {
     public Administrator getAdministrator(Long administratorId,String password){
         Administrator admin = administratorRepository.findByAdministratorIdAndPassword(administratorId,password);
         if(admin==null){
-            throw new  UserValidationException(USER_DOES_NOT_EXIST,"get the user", String.format("crate %d",administratorId));
+            throw new  UserValidationException(USER_DOES_NOT_EXIST,"Not exist the administrator", String.format("Try to get adminId : %d",administratorId));
         }
         else{
             return admin;

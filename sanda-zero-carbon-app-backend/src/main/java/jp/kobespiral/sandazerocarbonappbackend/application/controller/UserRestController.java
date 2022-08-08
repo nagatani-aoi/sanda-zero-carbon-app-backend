@@ -31,12 +31,22 @@ public class UserRestController {
     UserService userService;
 
     /*--------------------------Create--------------------------- */
+    /**
+     * ユーザ作成
+     * @param form ユーザ作成フォーム
+     * @return 作成したユーザエンティティ
+     */
     @PostMapping("/user")
     public Response<User> createUser(@Validated @RequestBody UserForm form){
         return ResponseCreator.succeed(userService.createUser(form));
     }
 
     /*--------------------------Read--------------------------- */
+    /**
+     * ユーザログイン
+     * @param userId
+     * @return ログインが成功or失敗
+     */
     @GetMapping("/user/login")
     public Response<Boolean> login(@RequestParam("userId") Long userId){
         try{
@@ -48,6 +58,11 @@ public class UserRestController {
         }
     }
 
+    /**
+     * ユーザdtoを取得。レベルとか取得できる。
+     * @param userId ユーザID
+     * @return ユーザdto
+     */
     @GetMapping("/user")
     public Response<UserDto> getUserDto(@Validated @RequestParam("userId") Long userId){
         try{

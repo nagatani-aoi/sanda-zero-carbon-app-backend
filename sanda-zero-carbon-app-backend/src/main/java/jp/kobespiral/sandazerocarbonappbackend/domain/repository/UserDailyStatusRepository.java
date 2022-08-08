@@ -1,6 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.repository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -23,7 +23,7 @@ public interface UserDailyStatusRepository extends CrudRepository<UserDailyStatu
      * @param until  指定期間の終わり
      * @return ユーザIDと指定期間でフィルター済みのユーザデイリーステータスのリスト
      */
-    List<UserDailyStatus> findByUserIdAndDateBetween(Long userId, LocalDateTime since, LocalDateTime until);
+    List<UserDailyStatus> findByUserIdAndDateBetween(Long userId, LocalDate since, LocalDate until);
 
     /**
      * ユーザIDと日時を指定して、ユーザデイリーステータスのリストを取得する
@@ -32,5 +32,5 @@ public interface UserDailyStatusRepository extends CrudRepository<UserDailyStatu
      * @param date   指定する日時
      * @return ユーザIDと日時でフィルター済みのユーザデイリーステータスのリスト
      */
-    List<UserDailyStatus> findByUserIdAndDate(Long userId, LocalDateTime date);
+    UserDailyStatus findByUserIdAndDate(Long userId, LocalDate date);
 }

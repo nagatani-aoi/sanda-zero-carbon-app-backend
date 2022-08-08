@@ -1,6 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +28,7 @@ public class UserDailyStatus {
     Long userDailyStatusId;
     Long userId;
     @Temporal(TemporalType.TIMESTAMP)
-    LocalDateTime date;
+    LocalDate date;
     int totalPoint;
     double totalCO2Reduction;
     double totalCostReduction;

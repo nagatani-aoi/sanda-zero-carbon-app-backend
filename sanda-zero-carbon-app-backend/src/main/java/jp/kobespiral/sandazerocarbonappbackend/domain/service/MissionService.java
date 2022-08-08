@@ -1,11 +1,13 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
+import jp.kobespiral.sandazerocarbonappbackend.domain.entity.DailyMission;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Mission;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Tag;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.DailyMissionRepository;
@@ -31,7 +33,8 @@ public class MissionService {
 
     }
     public List<DailyMissionDto> getDailyMission(Long userId){
-        
+        List<DailyMission> dailyMissionList = new 
+        return 
     }
 
     public MissionDto getMission(Long missionId){
@@ -41,7 +44,13 @@ public class MissionService {
     }
     
     public List<MissionDto> getAllMission(){
-        
+        List<Mission> missionList = missionRepository.findAll();
+        List<MissionDto> missionDtoList = new ArrayList<MissionDto>();
+        for (Mission list : missionList) {
+            Tag tag = tagRepository.findById(list.getTagId()).orElseThrow(IllegalArgumentException::new);
+            missionDtoList.add(MissionDto.build(list, tag));
+        }
+        return missionDtoList;
     }
 
 }

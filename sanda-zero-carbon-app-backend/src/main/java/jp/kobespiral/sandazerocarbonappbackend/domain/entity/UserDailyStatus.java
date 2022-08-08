@@ -27,7 +27,7 @@ public class UserDailyStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long userDailyStatusId;
     Long userId;
-    @Temporal(TemporalType.TIMESTAMP)
+    // @Temporal(TemporalType.TIMESTAMP)
     LocalDate date;
     int totalPoint;
     double totalCO2Reduction;

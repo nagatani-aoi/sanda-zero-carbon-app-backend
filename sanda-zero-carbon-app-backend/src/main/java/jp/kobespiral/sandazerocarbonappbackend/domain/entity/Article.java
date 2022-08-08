@@ -29,7 +29,7 @@ public class Article {
     String title;
     Long tagId;
     String description;
-    @Temporal(TemporalType.TIMESTAMP)
+    // @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime postedAt;
     String thumbnailSource;
     Boolean isImportant;

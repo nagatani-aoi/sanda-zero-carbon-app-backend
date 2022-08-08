@@ -14,7 +14,9 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
+import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Administrator;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.User;
+import jp.kobespiral.sandazerocarbonappbackend.domain.service.AdministratorService;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
 /**
@@ -25,22 +27,16 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class UserRestController {
-    /** ユーザのサービス */
+public class AdminRestController {
+    /** 管理者のサービス */
     @Autowired
-    UserService userService;
-
-    /*--------------------------Create--------------------------- */
-    @PostMapping("/user")
-    public Response<User> createUser(@Validated @RequestBody UserForm form){
-        return ResponseCreator.succeed(userService.createUser(form));
-    }
+    AdministratorService adminService;
 
     /*--------------------------Read--------------------------- */
-    @GetMapping("/user/login")
-    public Response<Boolean> login(@RequestParam("userId") Long userId){
+    @GetMapping("/sanda-admin/login")
+    public Response<Boolean> login(@RequestParam("administratorId") Long administratorId,@RequestParam("password") String password){
         try{
-            userService.getUser(userId);
+            adminService.getAdministrator(administratorId,password);
             return ResponseCreator.succeed(true);
         }
         catch(Exception e){
@@ -48,15 +44,5 @@ public class UserRestController {
         }
     }
 
-    @GetMapping("/user")
-    public Response<UserDto> getUserDto(@Validated @RequestParam("userId") Long userId){
-        try{
-            UserDto user = userService.getUserDto(userId);
-            return ResponseCreator.succeed(user);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,e, null);
-        }
-    }
 
 }

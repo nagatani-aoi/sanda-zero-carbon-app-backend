@@ -12,5 +12,5 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Administrator;
  */
 @Repository
 public interface AdministratorRepository extends CrudRepository<Administrator, Long> {
-
+    Administrator findByAdministratorIdAndPassword(Long adminId, String password);
 }

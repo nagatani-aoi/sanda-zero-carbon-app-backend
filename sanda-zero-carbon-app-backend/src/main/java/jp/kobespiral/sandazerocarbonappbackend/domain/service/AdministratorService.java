@@ -16,8 +16,13 @@ public class AdministratorService {
     @Autowired
     AdministratorRepository administratorRepository;
 
-    public Administrator getAdministrator(Long administratorId){
-        Administrator admin = administratorRepository.findById(administratorId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"get the user", String.format("crate %d",administratorId)));
-        return admin;
+    public Administrator getAdministrator(Long administratorId,String password){
+        Administrator admin = administratorRepository.findByAdministratorIdAndPassword(administratorId,password);
+        if(admin==null){
+            throw new  UserValidationException(USER_DOES_NOT_EXIST,"get the user", String.format("crate %d",administratorId));
+        }
+        else{
+            return admin;
+        }
     }
 }

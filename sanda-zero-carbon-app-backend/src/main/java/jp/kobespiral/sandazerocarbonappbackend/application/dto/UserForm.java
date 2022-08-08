@@ -2,7 +2,9 @@ package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.User;
 import lombok.Data;
-
+/**
+ * @author sato
+ */
 @Data
 public class UserForm {
     Long userId;

@@ -50,6 +50,12 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
         return user;
     }
+    /**
+     * ユーザデイリーステータスの更新
+     * @param userId ユーザID
+     * @param achievementId 達成ID
+     * @return ユーザデイリーステータス
+     */
 
     public UserDailyStatus renewUserDailyStatus(Long userId,Long achievementId){
         Achievement achievement = achievementRepository.findById(achievementId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
@@ -64,9 +70,9 @@ public class UserService {
         
         
         //デイリーステータスの更新
-        userDailyStatus.setTotalPoint(userDailyStatus.getTotalPoint() + achievement.getPoint());
-        userDailyStatus.setTotalCO2Reduction(userDailyStatus.getTotalCostReduction() + achievement.getCO2Reduction());
-        userDailyStatus.setTotalCostReduction(userDailyStatus.getTotalCostReduction() + achievement.getCostReduction());
+        userDailyStatus.setTotalPoint(userDailyStatus.getTotalPoint() + achievement.getGetPoint());
+        userDailyStatus.setTotalCO2Reduction(userDailyStatus.getTotalCostReduction() + achievement.getGetCO2Reduction());
+        userDailyStatus.setTotalCostReduction(userDailyStatus.getTotalCostReduction() + achievement.getGetCostReduction());
         //もしデイリーミッションならばフラグ更新
         if(achievement.getIsDailyMission()){
             Mission mission = missionRepository.findById(achievement.getMissionId()).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
@@ -82,6 +88,18 @@ public class UserService {
         }
         
 
+        return userDailyStatus;
+    }
+
+    /**
+     * ユーザデイリーステータスを取得
+     * @param userId
+     * @param localDate
+     * @return
+     */
+    public UserDailyStatus getUserDailyStatus(Long userId,LocalDate localDate) {
+        //なかった時のエクセプションいるかも
+        UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId,localDate);
         return userDailyStatus;
     }
     

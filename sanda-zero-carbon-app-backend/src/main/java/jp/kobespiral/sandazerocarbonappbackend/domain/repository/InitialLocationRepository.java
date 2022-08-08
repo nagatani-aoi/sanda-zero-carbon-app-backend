@@ -19,5 +19,5 @@ public interface InitialLocationRepository extends CrudRepository<InitialLocatio
      * @return そのレベルにおいて、到達可能なマスの最大のマス目を返す。
      */
     /* (注意)書き換えてる */
-    InitialLocation findFirstByLevelLessThanEquals(int level);
+    InitialLocation findFirstByLevelLessThanEqual(int level);
 }

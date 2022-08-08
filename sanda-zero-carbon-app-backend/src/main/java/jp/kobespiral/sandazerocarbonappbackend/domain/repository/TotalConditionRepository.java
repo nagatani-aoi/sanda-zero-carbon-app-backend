@@ -6,17 +6,19 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import jp.kobespiral.sandazerocarbonappbackend.domain.entity.TotalCondition;
+
 /**
  * 市の状況のリポジトリ
  * 
  * @author sato
  */
 @Repository
-public interface TotalConditionRepository extends CrudRepository<TotalConditionRepository, Long> {
+public interface TotalConditionRepository extends CrudRepository<TotalCondition, Long> {
     /**
      * @return 全てのトータルコンディション
      */
-    List<TotalConditionRepository> findAll();
+    List<TotalCondition> findAll();
 
     /**
      * 市全体のCO2削減状況を期間で検索する
@@ -25,5 +27,5 @@ public interface TotalConditionRepository extends CrudRepository<TotalConditionR
      * @param until フィルター期間の終わり
      * @return 指定された期間でフィルター済みのトータルコンディションのリスト
      */
-    List<TotalConditionRepository> findByTotalBetween(LocalDateTime since, LocalDateTime until);
+    List<TotalCondition> findByRecordedAtBetween(LocalDateTime since, LocalDateTime until);
 }

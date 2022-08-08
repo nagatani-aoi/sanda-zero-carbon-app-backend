@@ -24,4 +24,5 @@ public class User {
     Long userId; // ユーザID
     String nickname; // ニックネーム
     int age; // 年齢
+    int totalPoint;//累積ポイント
 }

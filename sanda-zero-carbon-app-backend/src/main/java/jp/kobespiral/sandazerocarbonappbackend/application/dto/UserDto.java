@@ -22,7 +22,7 @@ public class UserDto {
         dto.age = user.getAge();
         dto.totalPoint = user.getTotalPoint();
         dto.level = user.getTotalPoint()/Rule.levelRate + 1;
-        dto.nextLevelPercentage = (user.getTotalPoint()%Rule.levelRate)/user.getTotalPoint()/Rule.levelRate;
+        dto.nextLevelPercentage = (user.getTotalPoint()%Rule.levelRate)/Rule.levelRate;
         return dto;
     }
 }

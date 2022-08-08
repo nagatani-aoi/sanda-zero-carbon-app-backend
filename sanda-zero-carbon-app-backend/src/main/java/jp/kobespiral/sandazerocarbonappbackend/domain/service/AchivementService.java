@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.AchievementDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionAchieveForm;
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
-import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Mission;
+import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.AchievementRepository;
+import jp.kobespiral.sandazerocarbonappbackend.domain.utils.Rule;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -27,6 +29,11 @@ public class AchivementService {
 
     /** ミッションのサービス */
     private final MissionService missionService;
+    /** ユーザーのサービス */
+    private final UserService userService;
+
+    /** ルール */
+    private final Rule rule;
 
     /**
      * 達成Dtoのリストを取得
@@ -54,8 +61,27 @@ public class AchivementService {
         return achievementDtos;
     }
 
-    public void achieveMission(MissionAchieveForm form) {
+    public void achiveMission(MissionAchieveForm form) {
+        UserDailyStatusDto userDailyStatusdto = userService.getUserDailyStatus(form.getUserId()); // ユーザIDからユーザーデイリーステータスDtoを取得
 
+        MissionDto missionDto = missionService.getMission(form.getMissionId()); // 達成したミッションIDからミッションDtoを取得
+
+        int getPoint; // 取得予定ポイント
+
+        if(form.getIsDailyMission()){ // デイリーミッションならば
+            // if(missionDto.getMissionType() == MissionType.TimeType){ // ミッションのタイプが時間制ならば
+                getPoint = missionDto.getPoint(); // デイリーミッションは最小単位のポイントのみ
+            // }else{
+            //     getPoint = missionDto.getPoint();
+            // }
+        }else{
+
+        }
+
+        if (dto.getTotalPoint() > Rule.innerRule.levelRate) {
+            getPoint = 0;
+        }else if(dto.getTotalPoint() + ){
+
+        }
     }
-
 }

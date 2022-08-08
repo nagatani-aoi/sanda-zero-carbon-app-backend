@@ -3,7 +3,6 @@ package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 import java.time.LocalDateTime;
 
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
-import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Mission;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
 import lombok.Data;
 
@@ -43,8 +42,8 @@ public class AchievementDto {
         dto.getPoint = achievement.getGetPoint();
         dto.title = missionDto.getTitle();
         dto.missionType = missionDto.getMissionType();
-        dto.getCO2Reduction = achievement.getGetCO2Reduction();
-        dto.getcostReduction = achievement.getGetCostReduction();
+        dto.getCO2Reduction = missionDto.getCO2Reduction() * achievement.getHour();
+        dto.getcostReduction = missionDto.getCostReduction() * achievement.getHour();
         dto.achievedAt = achievement.getAchievedAt();
         dto.isDailyMission = achievement.getIsDailyMission();
         return dto;

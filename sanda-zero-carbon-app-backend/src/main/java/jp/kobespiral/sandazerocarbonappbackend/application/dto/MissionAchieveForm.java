@@ -1,7 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
-import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Mission;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
 import lombok.Data;
 

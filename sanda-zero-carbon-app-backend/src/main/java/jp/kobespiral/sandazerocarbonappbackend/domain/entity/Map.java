@@ -22,7 +22,7 @@ public class Map {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long mapId; // マップID
-    Long CurrentLocation; // マップ上での現在地
+    int currentLocation; // マップ上での現在地
     int level; // レベル
     Long nextLocation; // 次の地点
     Long backLocation; // 1つ前の地点

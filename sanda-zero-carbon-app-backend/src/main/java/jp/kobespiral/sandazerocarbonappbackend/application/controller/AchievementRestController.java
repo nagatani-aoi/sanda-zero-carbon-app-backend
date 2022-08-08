@@ -43,7 +43,7 @@ public class AchievementRestController {
      * @param dateString String型の日付
      * @return ラップされた達成Dtoのリスト
      */
-    @GetMapping("/achivement/weekly")
+    @GetMapping("/achievement/weekly")
     public Response<List<AchievementDto>> getWeeklyAchievements(@RequestParam("userId") Long userId,
             @RequestParam("date") String dateString) {
         return ResponseCreator.succeed(achievementService.getAchivement(userId, dateString)); // 達成リストを取得

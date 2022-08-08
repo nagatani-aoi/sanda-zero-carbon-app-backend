@@ -1,6 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.DailyMission;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Difficulty;
@@ -22,7 +22,7 @@ public class DailyMissionDto {
     MissionType missionType; // ミッションタイプ
     Long tagId; // タグID
     String keyword; // キーワード
-    LocalDateTime date; // デイリーミッションの日時
+    LocalDate date; // デイリーミッションの日時
 
     public static DailyMissionDto build(Mission mission, DailyMission dailyMission, Tag tag){
         DailyMissionDto dto = new DailyMissionDto();

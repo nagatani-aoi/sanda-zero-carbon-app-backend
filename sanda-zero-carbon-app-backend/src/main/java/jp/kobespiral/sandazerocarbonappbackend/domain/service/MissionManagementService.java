@@ -54,14 +54,30 @@ public class MissionManagementService {
         Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(IllegalArgumentException::new);
         return MissionDto.build(mission, tag);
     }
-    /* 
+    
     public boolean deleteMission(Long missionId){
-        return ;
+        missionRepository.deleteById(missionId);
+        return true;
     }
-    */
+    
+    public List<MissionDto> searchMissionByKeyword(String keyword){
+        List<Mission> missionList = missionRepository.findByTitleContaining(keyword);
+        List<MissionDto> missionDtoList = new ArrayList<MissionDto>();
+        for (Mission list : missionList) {
+            Tag tag = tagRepository.findById(list.getTagId()).orElseThrow(IllegalArgumentException::new);
+            missionDtoList.add(MissionDto.build(list, tag));
+        }
+        return missionDtoList;
+    }
 
-    public List<MissionDto> searchMission(Long tagId, String keyword){
-        return null;
+    public List<MissionDto> searchMissionByTag(Long tagId){
+        List<Mission> missionList = missionRepository.findByTagId(tagId);
+        Tag tag = tagRepository.findById(tagId).orElseThrow(IllegalArgumentException::new);
+        List<MissionDto> missionDtoList = new ArrayList<MissionDto>();
+        for (Mission list : missionList) {
+            missionDtoList.add(MissionDto.build(list, tag));
+        }
+        return missionDtoList;
     }
 }
 

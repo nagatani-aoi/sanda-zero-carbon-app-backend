@@ -20,7 +20,7 @@ public interface MissionRepository extends CrudRepository<Mission, Long> {
      * @param keyword キーワード
      * @return 指定されたキーワードをタイトルに含むミッションのリスト
      */
-    List<Mission> findByDateTitleContaining(String keyword);
+    List<Mission> findByTitleContaining(String keyword);
 
     /**
      * タグIDで記事を検索する
@@ -32,6 +32,7 @@ public interface MissionRepository extends CrudRepository<Mission, Long> {
 
     /**
      * ミッションをすべて取得する
+     * 
      * @return すべてのミッションのリスト
      */
     List<Mission> findAll();

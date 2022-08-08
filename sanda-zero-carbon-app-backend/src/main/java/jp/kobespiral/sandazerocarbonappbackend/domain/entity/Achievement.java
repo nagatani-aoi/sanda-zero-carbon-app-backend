@@ -33,7 +33,7 @@ public class Achievement {
     int getPoint; // 獲得したポイント
     // double getCO2Reduction; // 獲得したCO2削減量
     // double getCostReduction; // 獲得した節約金額
-    @Temporal(TemporalType.TIMESTAMP)
+    // @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime achievedAt; // 達成日時
     Boolean isDailyMission; // デーリーミッション判定フラグ
 }

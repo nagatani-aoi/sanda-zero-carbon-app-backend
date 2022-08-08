@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.AchievementDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionAchieveForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.AchievementService;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,10 +36,17 @@ public class AchievementRestController {
 
     /* -------------------- Read -------------------- */
 
+    /**
+     * 指定したユーザ，週の1週間分の達成リストを取得
+     *
+     * @param userId     ユーザーID
+     * @param dateString String型の日付
+     * @return ラップされた達成Dtoのリスト
+     */
     @GetMapping("/achivement/weekly")
-    public Response<List<AchievementDto>> getMethodName(@RequestParam("uid") String uid,
-            @RequestParam("date") LocalDate date) {
-        return new SomeData();
+    public Response<List<AchievementDto>> getWeeklyAchievements(@RequestParam("userId") Long userId,
+            @RequestParam("date") String dateString) {
+        return ResponseCreator.succeed(achievementService.getAchivement(userId, dateString)); // 達成リストを取得
     }
 
 }

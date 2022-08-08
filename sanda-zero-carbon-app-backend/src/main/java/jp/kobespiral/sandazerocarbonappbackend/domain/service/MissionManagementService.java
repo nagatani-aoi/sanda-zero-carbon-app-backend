@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionForm;
@@ -12,6 +13,7 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Tag;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.MissionRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.TagRepository;
 
+@Service
 public class MissionManagementService {
     @Autowired
     MissionRepository missionRepository;

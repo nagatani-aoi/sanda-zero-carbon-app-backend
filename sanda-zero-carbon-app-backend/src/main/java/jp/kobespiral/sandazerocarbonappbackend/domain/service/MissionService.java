@@ -41,13 +41,11 @@ public class MissionService {
                     Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(IllegalArgumentException::new);
                     dailyMissionDtoList.add(DailyMissionDto.build(mission, dailyMission, tag));
                 }
-                /* 
             case normal:
                 if (userDailyStatus.getNormalMissionCompleted() == false) {
                     Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(IllegalArgumentException::new);
                     dailyMissionDtoList.add(DailyMissionDto.build(mission, dailyMission, tag));
                 }
-                */
             case hard:
                 if (userDailyStatus.getHardMissionCompleted() == false) {
                     Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(IllegalArgumentException::new);
@@ -61,6 +59,7 @@ public class MissionService {
         List<DailyMission> dailyMissionList = dailyMissionRepository.findByDateGreaterThanEqual(LocalDate.now().atStartOfDay());
         List<DailyMissionDto> dailyMissionDtoList = new ArrayList<DailyMissionDto>();
 
+        
         return null;
     }
 

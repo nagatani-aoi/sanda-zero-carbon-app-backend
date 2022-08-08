@@ -54,13 +54,14 @@ public class MissionManagementService {
         Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(IllegalArgumentException::new);
         return MissionDto.build(mission, tag);
     }
-
+    /* 
     public boolean deleteMission(Long missionId){
-
+        return ;
     }
+    */
 
     public List<MissionDto> searchMission(Long tagId, String keyword){
-        
+        return null;
     }
 }
 

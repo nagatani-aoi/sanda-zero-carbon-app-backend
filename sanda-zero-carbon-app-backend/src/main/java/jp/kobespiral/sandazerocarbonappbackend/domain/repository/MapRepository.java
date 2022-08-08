@@ -19,5 +19,5 @@ public interface MapRepository extends CrudRepository<Map, Long> {
      * @param level           レベル
      * @return Map マップ
      */
-    Map findByCurrentLocationAndLevel(Long currentLocation, int level);
+    Map findByCurrentLocationAndLevel(int currentLocation, int level);
 }

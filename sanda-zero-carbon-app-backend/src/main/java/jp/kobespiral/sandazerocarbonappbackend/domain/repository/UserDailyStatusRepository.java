@@ -33,4 +33,5 @@ public interface UserDailyStatusRepository extends CrudRepository<UserDailyStatu
      * @return ユーザIDと日時でフィルター済みのユーザデイリーステータスのリスト
      */
     UserDailyStatus findByUserIdAndDate(Long userId, LocalDate date);
+    Boolean existsByUserIdAndDate(Long userId, LocalDate date);
 }

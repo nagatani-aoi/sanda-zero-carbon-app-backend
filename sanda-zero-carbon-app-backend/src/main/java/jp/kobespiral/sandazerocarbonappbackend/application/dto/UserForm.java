@@ -9,7 +9,7 @@ public class UserForm {
     String nickname;
     int age;
     public User toEntity(){
-        User user = new User(userId,nickname,age);
+        User user = new User(userId,nickname,age,0);
         return user;
     }
 }

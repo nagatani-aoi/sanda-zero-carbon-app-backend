@@ -5,7 +5,7 @@ package jp.kobespiral.sandazerocarbonappbackend.domain.utils;
  *
  * @author ing
  */
-public static final class Rule {
+public class Rule {
     /** 1レベルあがるのに必要なポイント */
     public static int levelRate = 100;
     /** 1日にミッションで得られるポイント */

@@ -7,6 +7,10 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidat
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Administrator;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.AdministratorRepository;
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserErrorCode.*;
+
+/**
+ * @author sato
+ */
 @Service
 public class AdministratorService {
     @Autowired

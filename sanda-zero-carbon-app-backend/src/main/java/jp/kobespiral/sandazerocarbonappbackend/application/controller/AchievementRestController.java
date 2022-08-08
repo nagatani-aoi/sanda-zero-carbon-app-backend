@@ -1,11 +1,13 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.AchievementDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionAchieveForm;
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.TotalParamDto;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.AchievementService;
@@ -29,9 +31,16 @@ public class AchievementRestController {
     private final AchievementService achievementService;
 
     /* -------------------- Create -------------------- */
-    @PostMapping("/article/achive/")
-    public Response<Boolean> achiveMission(MissionAchieveForm form) {
-        return null;
+
+    /**
+     * ミッションを達成する
+     *
+     * @param form ミッション達成フォーム
+     * @return 達成Dto
+     */
+    @PostMapping("/mission/achieve")
+    public Response<AchievementDto> achiveMission(@RequestBody MissionAchieveForm form) {
+        return ResponseCreator.succeed(achievementService.achieveMission(form));
     }
 
     /* -------------------- Read -------------------- */
@@ -49,4 +58,14 @@ public class AchievementRestController {
         return ResponseCreator.succeed(achievementService.getAchivement(userId, dateString)); // 達成リストを取得
     }
 
+    /**
+     * 指定したユーザーの累計パラメータを取得
+     *
+     * @param userId ユーザーID
+     * @return ラップされた累計パラメータDto
+     */
+    @GetMapping("/achievement/total")
+    public Response<TotalParamDto> getTotalParam(@RequestParam("userId") Long userId) {
+        return ResponseCreator.succeed(achievementService.getTotalParam(userId));
+    }
 }

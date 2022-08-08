@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.AchievementDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionAchieveForm;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.TotalParamDto;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.UserDailyStatus;
@@ -35,36 +36,58 @@ public class AchievementService {
     /** ユーザーのサービス */
     private final UserService userService;
 
-    // /** ルール */
-    // private final Rule rule;
-
     /* -------------------- Create -------------------- */
 
-    // public void achiveMission(MissionAchieveForm form) {
-    //     UserDailyStatus userDailyStatus =
-    //     userService.getUserDailyStatus(form.getUserId()); //ユーザIDからユーザーデイリーステータスDtoを取得
+    /**
+     * ミッションを達成
+     *
+     * @param form ミッション達成フォーム
+     */
+    public AchievementDto achieveMission(MissionAchieveForm form) {
+        Long userId = form.getUserId(); // ユーザーIDを固定
+        Long missionId = form.getMissionId(); // ミッションIDを固定
+        int hour = form.getHour(); // 時間を固定
+        Boolean isDailyMission = form.getIsDailyMission(); // デイリーミッションフラグを固定
 
-    //     MissionDto missionDto = missionService.getMission(form.getMissionId()); //達成したミッションIDからミッションDtoを取得
+        UserDailyStatus userDailyStatus = userService.getUserDailyStatus(userId);
+        // ユーザIDからユーザーデイリーステータスDtoを取得
 
-    //     int getPoint; // 取得予定ポイント
+        MissionDto missionDto = missionService.getMission(missionId);
+        // 達成したミッションIDからミッションDtoを取得
 
-    //     if(form.getIsDailyMission()){ // デイリーミッションならば
-    //     getPoint = missionDto.getPoint(); // デイリーミッションは最小単位のポイントのみ
-    //     }else{ // デイリーミッションでないならば
-    //     if(missionDto.getMissionType() == MissionType.TimeType){ // ミッションのタイプが時間制ならば
-    //     getPoint = missionDto.getPoint() * form.getHour(); // デイリーミッションは最小単位のポイントのみ
-    //     }else{
-    //     getPoint = missionDto.getPoint();
-    //     }
+        int getPoint; // 取得予定ポイント
+        int getRealPoint; // 実際の取得ポイント
 
-    //     }
+        if (isDailyMission) { // デイリーミッションならば
+            getPoint = missionDto.getPoint(); // デイリーミッションは最小単位のポイントのみ
+        } else { // デイリーミッションでないならば
+            if (missionDto.getMissionType() == MissionType.TimeType) { // ミッションのタイプが時間制ならば
+                getPoint = missionDto.getPoint() * hour; // 最小単位のポイントに時間を乗算
+            } else { // ミッションのタイプが時間制でないならば
+                getPoint = missionDto.getPoint(); // 最小単位のポイントのみ
+            }
+        }
 
-    //     if (dto.getTotalPoint() > Rule.maxMissionPoint) {
-    //     getPoint = 0;
-    //     }else if(dto.getTotalPoint() + ){
+        if (userDailyStatus.getTotalPoint() > Rule.maxMissionPoint) { // ポイント取得上限に達していたら
+            getRealPoint = 0; // ポイント0
+        } else if (userDailyStatus.getTotalPoint() + getPoint > Rule.maxMissionPoint) { // 今回のポイント獲得分を足すとポイント取得上限に達するなら
+            getRealPoint = Rule.maxMissionPoint - userDailyStatus.getTotalPoint(); // 上限までのポイント
+        } else {
+            getRealPoint = getPoint; // ポイント全て
+        }
 
-    //     }
-    // }
+        Achievement achievement = form.toEntity(); // MissionAchieveFormからAchieveを作成
+
+        // 必要な情報をセット
+        achievement.setGetPoint(getRealPoint);
+        achievement.setAchievedAt(LocalDateTime.now()); // 現在時間をセット
+
+        Achievement createdAchievement = achievementRepository.save(achievement);
+
+        userService.renewUserDailyStatus(userId, createdAchievement.getAchievementId()); // ユーザーデイリーステータスを更新
+
+        return AchievementDto.build(createdAchievement, missionDto);
+    }
 
     /* -------------------- Read -------------------- */
 
@@ -102,5 +125,40 @@ public class AchievementService {
         }
 
         return achievementDtos;
+    }
+
+    /**
+     * 特定ユーザーの累計のパラメータを取得
+     *
+     * @param userId ユーザーID
+     * @return 累計のパラメータDto
+     */
+    public TotalParamDto getTotalParam(Long userId) {
+        TotalParamDto dto = new TotalParamDto(); // 累計のパラメータDto
+
+        List<Achievement> achievements = achievementRepository.findByUserId(userId); // ユーザーの達成リストを取得
+
+        Double totalCO2Reduction = 0d; // 累計CO2削減量
+        Double totalCostReduction = 0d; // 累計節約金額
+
+        for (Achievement achievement : achievements) { // ユーザーの達成リストごとに
+            MissionDto missionDto = missionService.getMission(achievement.getMissionId()); // 達成ミッションに紐づいたミッションを取得
+
+            if (missionDto.getMissionType() == MissionType.DoType) { // ミッションタイプが時間制でないなら
+                totalCO2Reduction += missionDto.getCO2Reduction(); // 最小単位のCO2削減量を加算
+                totalCostReduction += missionDto.getCostReduction(); // 最小単位の節約金額を加算
+            } else {
+                totalCO2Reduction += missionDto.getCO2Reduction() * achievement.getHour(); // 最小単位のCO2削減量に時間を乗算したものを加算
+                totalCostReduction += missionDto.getCostReduction() * achievement.getHour(); // 最小単位の節約金額に時間を乗算したものを加算
+            }
+        }
+
+        // 累計のパラメータDtoに情報をセット
+        dto.setUserId(userId);
+        dto.setTotalCO2Reduction(totalCO2Reduction);
+        dto.setTotalCostReduction(totalCostReduction);
+        dto.setAchievementNum(achievements.size());
+
+        return dto;
     }
 }

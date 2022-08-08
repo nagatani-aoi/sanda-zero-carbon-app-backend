@@ -21,8 +21,8 @@ public class UserDto {
         dto.nickname = user.getNickname();
         dto.age = user.getAge();
         dto.totalPoint = user.getTotalPoint();
-        dto.level = user.getTotalPoint()/Rule.innerRule.levelRate + 1;
-        dto.nextLevelPercentage = (user.getTotalPoint()%Rule.innerRule.levelRate)/user.getTotalPoint()/Rule.innerRule.levelRate;
+        dto.level = user.getTotalPoint()/Rule.levelRate + 1;
+        dto.nextLevelPercentage = (user.getTotalPoint()%Rule.levelRate)/user.getTotalPoint()/Rule.levelRate;
         return dto;
     }
 }

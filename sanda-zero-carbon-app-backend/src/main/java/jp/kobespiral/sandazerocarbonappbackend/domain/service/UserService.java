@@ -1,7 +1,9 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
@@ -21,6 +23,7 @@ import java.time.LocalDateTime;
 /**
  * @author sato
  */
+@Service
 public class UserService {
     @Autowired
     UserRepository userRepository;
@@ -50,6 +53,19 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
         return user;
     }
+
+    /**
+     * ユーザdtoを取得。メイン画面構成時に使用
+     * @param userId
+     * @return ユーザdto
+     */
+    public UserDto getUserDto(Long userId) {
+        //微妙
+        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
+        UserDto dto = UserDto.build(user);
+        return dto;
+    }
+    
     /**
      * ユーザデイリーステータスの更新
      * @param userId ユーザID
@@ -68,7 +84,9 @@ public class UserService {
         }
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId, localDate);
         
-        
+        //ユーザのトータルポイントの更新
+        User user = getUser(userId);
+        user.setTotalPoint(user.getTotalPoint() + achievement.getGetPoint());
         //デイリーステータスの更新
         userDailyStatus.setTotalPoint(userDailyStatus.getTotalPoint() + achievement.getGetPoint());
         userDailyStatus.setTotalCO2Reduction(userDailyStatus.getTotalCostReduction() + achievement.getGetCO2Reduction());
@@ -94,10 +112,11 @@ public class UserService {
     /**
      * ユーザデイリーステータスを取得
      * @param userId
-     * @param localDate
      * @return
      */
-    public UserDailyStatus getUserDailyStatus(Long userId,LocalDate localDate) {
+    public UserDailyStatus getUserDailyStatus(Long userId) {
+        /////////////////合ってるか微妙。今日の日付取得
+        LocalDate localDate = LocalDate.now();
         //なかった時のエクセプションいるかも
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId,localDate);
         return userDailyStatus;

@@ -22,11 +22,10 @@ public class UserRestController {
     /** ユーザのサービス */
     @Autowired
     UserService userService;
-
     /*--------------------------Create--------------------------- */
     @PostMapping("/user")
     public Response<User> createUser(UserForm form){
-        return null;
+        return userService.createUser(form);
     }
 
 }

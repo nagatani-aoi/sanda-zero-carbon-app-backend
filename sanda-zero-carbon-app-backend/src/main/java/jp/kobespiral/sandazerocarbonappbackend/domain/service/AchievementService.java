@@ -35,38 +35,36 @@ public class AchievementService {
     /** ユーザーのサービス */
     private final UserService userService;
 
-    /** ルール */
-    private final Rule rule;
+    // /** ルール */
+    // private final Rule rule;
 
     /* -------------------- Create -------------------- */
 
-    // public void achiveMission(MissionAchieveForm form) {
-    // UserDailyStatus userDailyStatus =
-    // userService.getUserDailyStatus(form.getUserId()); //
-    // ユーザIDからユーザーデイリーステータスDtoを取得
+    public void achiveMission(MissionAchieveForm form) {
+    UserDailyStatus userDailyStatus =
+    userService.getUserDailyStatus(form.getUserId()); //ユーザIDからユーザーデイリーステータスDtoを取得
 
-    // MissionDto missionDto = missionService.getMission(form.getMissionId()); //
-    // 達成したミッションIDからミッションDtoを取得
+    MissionDto missionDto = missionService.getMission(form.getMissionId()); //達成したミッションIDからミッションDtoを取得
 
-    // int getPoint; // 取得予定ポイント
+    int getPoint; // 取得予定ポイント
 
-    // if(form.getIsDailyMission()){ // デイリーミッションならば
-    // getPoint = missionDto.getPoint(); // デイリーミッションは最小単位のポイントのみ
-    // }else{ // デイリーミッションでないならば
-    // if(missionDto.getMissionType() == MissionType.TimeType){ // ミッションのタイプが時間制ならば
-    // getPoint = missionDto.getPoint() * form.getHour(); // デイリーミッションは最小単位のポイントのみ
-    // }else{
-    // getPoint = missionDto.getPoint();
-    // }
+    if(form.getIsDailyMission()){ // デイリーミッションならば
+    getPoint = missionDto.getPoint(); // デイリーミッションは最小単位のポイントのみ
+    }else{ // デイリーミッションでないならば
+    if(missionDto.getMissionType() == MissionType.TimeType){ // ミッションのタイプが時間制ならば
+    getPoint = missionDto.getPoint() * form.getHour(); // デイリーミッションは最小単位のポイントのみ
+    }else{
+    getPoint = missionDto.getPoint();
+    }
 
-    // }
+    }
 
-    // if (dto.getTotalPoint() > Rule.innerRule.maxMissionPoint) {
-    // getPoint = 0;
-    // }else if(dto.getTotalPoint() + ){
+    if (dto.getTotalPoint() > Rule.maxMissionPoint) {
+    getPoint = 0;
+    }else if(dto.getTotalPoint() + ){
 
-    // }
-    // }
+    }
+    }
 
     /* -------------------- Read -------------------- */
 

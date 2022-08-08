@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
+import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Mission;
+import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Tag;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.DailyMissionRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.MissionRepository;
+import jp.kobespiral.sandazerocarbonappbackend.domain.repository.TagRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.UserDailyStatusRepository;
 
 /**
@@ -21,6 +24,8 @@ public class MissionService {
     MissionRepository missionRepository;
     @Autowired
     UserDailyStatusRepository userDailyStatusRepository;
+    @Autowired
+    TagRepository tagRepository;
 
     public list<AchievementDto> getDailyMissionProgress(Long userId){
 
@@ -29,8 +34,14 @@ public class MissionService {
         
     }
 
+    public MissionDto getMission(Long missionId){
+        Mission mission = missionRepository.findById(missionId).orElseThrow(IllegalArgumentException::new);
+        Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(IllegalArgumentException::new);
+        return MissionDto.build(mission, tag);
+    }
+    
     public List<MissionDto> getAllMission(){
-        return missionRepository.findAll();
+        
     }
 
 }

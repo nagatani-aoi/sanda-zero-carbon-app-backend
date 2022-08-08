@@ -81,8 +81,10 @@ public class UserService {
         //その日のデイリーステータスが存在しなければ、新たに作成
         if(!userDailyStatusRepository.existsByUserIdAndDate(userId, localDate)){
             UserDailyStatus tempUserDailyStatus = new UserDailyStatus(null, userId, localDate, 0, 0,0, false,false,false);
+            userDailyStatusRepository.save(tempUserDailyStatus);
         }
         Mission mission = missionRepository.findById(achievement.getMissionId()).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
+
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId, localDate);
         
         //ユーザのトータルポイントの更新
@@ -98,7 +100,7 @@ public class UserService {
                 userDailyStatus.setEasyMissionCompleted(true);
             }
             else if(mission.getDifficulty() == Difficulty.normal){
-                userDailyStatus.setNomalMissionCompleted(true);;
+                userDailyStatus.setNormalMissionCompleted(true);;
             }
             else if(mission.getDifficulty() == Difficulty.easy){
                 userDailyStatus.setHardMissionCompleted(true);

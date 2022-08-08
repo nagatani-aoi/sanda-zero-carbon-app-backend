@@ -7,11 +7,10 @@ import lombok.Data;
  */
 @Data
 public class UserForm {
-    Long userId;
     String nickname;
     int age;
     public User toEntity(){
-        User user = new User(userId,nickname,age,0);
+        User user = new User(null,nickname,age,0);
         return user;
     }
 }

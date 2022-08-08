@@ -62,8 +62,7 @@ public class UserService {
     public UserDto getUserDto(Long userId) {
         //微妙
         User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
-        UserDto dto = UserDto.build(user);
-        return dto;
+        return UserDto.build(user);
     }
     
     /**

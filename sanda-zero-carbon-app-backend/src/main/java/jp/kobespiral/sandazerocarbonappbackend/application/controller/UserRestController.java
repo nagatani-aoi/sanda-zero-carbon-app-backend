@@ -5,11 +5,15 @@ import java.io.IOException;
 import javax.imageio.IIOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
@@ -32,13 +36,13 @@ public class UserRestController {
 
     /*--------------------------Create--------------------------- */
     @PostMapping("/user")
-    public Response<User> createUser(UserForm form){
+    public Response<User> createUser(@Validated @RequestBody UserForm form){
         return ResponseCreator.succeed(userService.createUser(form));
     }
 
     /*--------------------------Read--------------------------- */
     @GetMapping("/user/login")
-    public Response<Boolean> login(Long userId){
+    public Response<Boolean> login(@RequestParam("userId") Long userId){
         try{
             userService.getUser(userId);
             return ResponseCreator.succeed(true);
@@ -49,9 +53,9 @@ public class UserRestController {
     }
 
     @GetMapping("/user")
-    public Response<User> getUser(Long userId){
+    public Response<UserDto> getUserDto(@Validated @RequestParam("userId") Long userId){
         try{
-            User user = userService.getUser(userId);
+            UserDto user = userService.getUserDto(userId);
             return ResponseCreator.succeed(user);
         }
         catch(Exception e){

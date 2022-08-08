@@ -1,6 +1,7 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.service;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionAchieveFor
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
+import jp.kobespiral.sandazerocarbonappbackend.domain.entity.UserDailyStatus;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.AchievementRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.utils.Rule;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor
-public class AchivementService {
+public class AchievementService {
     /** 達成のリポジトリ */
     private final AchievementRepository achievementRepository;
 
@@ -42,13 +44,18 @@ public class AchivementService {
      * @param date   日時
      * @return 達成Dtoのリスト
      */
-    public List<AchievementDto> getAchivement(Long userId, LocalDateTime date) {
-        LocalDateTime monday = date.with(DayOfWeek.MONDAY); // その週の月曜日を取得
-        LocalDateTime sunday = date.with(DayOfWeek.SUNDAY); // その週の日曜日を取得
+    public List<AchievementDto> getAchivement(Long userId, LocalDate date) {
+        LocalDate monday = date.with(DayOfWeek.MONDAY); // その週の月曜日を取得
+        LocalDate nextMonday = date.with(DayOfWeek.SUNDAY).plusDays(1); // その次週の日曜日を取得
+
         // 参考 :
         // https://www.bing.com/ck/a?!&&p=54e655132aae1b06JmltdHM9MTY1OTkyMTY4NyZpZ3VpZD1kZDI1OTBkYS1jZDY3LTRiYmYtYTVlZi1kZGU2YmE0NGQzNzYmaW5zaWQ9NTE5Mg&ptn=3&hsh=3&fclid=6c93149d-16b8-11ed-a9cd-9b2466a350dc&u=a1aHR0cHM6Ly9xaWl0YS5jb20va2F6b2tjbGlseS9pdGVtcy8zMzY0ZTI1YjYxMjQ4N2RkYWMwNQ&ntb=1
 
-        List<Achievement> achievements = achievementRepository.findByUserIdAndAchievedAtBetween(userId, monday, sunday); // その週の達成リストを取得
+        LocalDateTime mondayStart = monday.atStartOfDay(); // その週の月曜日の始まりの日時をを取得
+        LocalDateTime sundayEnd = nextMonday.atStartOfDay(); // その週の日曜日の終わりの日時をを取得
+
+        List<Achievement> achievements = achievementRepository.findByUserIdAndAchievedAtBetween(userId, mondayStart,
+                sundayEnd); // その週の達成リストを取得
 
         ArrayList<AchievementDto> achievementDtos = new ArrayList<AchievementDto>();
 
@@ -61,27 +68,31 @@ public class AchivementService {
         return achievementDtos;
     }
 
-    public void achiveMission(MissionAchieveForm form) {
-        UserDailyStatusDto userDailyStatusdto = userService.getUserDailyStatus(form.getUserId()); // ユーザIDからユーザーデイリーステータスDtoを取得
+    // public void achiveMission(MissionAchieveForm form) {
+    // UserDailyStatus userDailyStatus =
+    // userService.getUserDailyStatus(form.getUserId()); //
+    // ユーザIDからユーザーデイリーステータスDtoを取得
 
-        MissionDto missionDto = missionService.getMission(form.getMissionId()); // 達成したミッションIDからミッションDtoを取得
+    // MissionDto missionDto = missionService.getMission(form.getMissionId()); //
+    // 達成したミッションIDからミッションDtoを取得
 
-        int getPoint; // 取得予定ポイント
+    // int getPoint; // 取得予定ポイント
 
-        if(form.getIsDailyMission()){ // デイリーミッションならば
-            // if(missionDto.getMissionType() == MissionType.TimeType){ // ミッションのタイプが時間制ならば
-                getPoint = missionDto.getPoint(); // デイリーミッションは最小単位のポイントのみ
-            // }else{
-            //     getPoint = missionDto.getPoint();
-            // }
-        }else{
+    // if(form.getIsDailyMission()){ // デイリーミッションならば
+    // getPoint = missionDto.getPoint(); // デイリーミッションは最小単位のポイントのみ
+    // }else{ // デイリーミッションでないならば
+    // if(missionDto.getMissionType() == MissionType.TimeType){ // ミッションのタイプが時間制ならば
+    // getPoint = missionDto.getPoint() * form.getHour(); // デイリーミッションは最小単位のポイントのみ
+    // }else{
+    // getPoint = missionDto.getPoint();
+    // }
 
-        }
+    // }
 
-        if (dto.getTotalPoint() > Rule.innerRule.levelRate) {
-            getPoint = 0;
-        }else if(dto.getTotalPoint() + ){
+    // if (dto.getTotalPoint() > Rule.innerRule.maxMissionPoint) {
+    // getPoint = 0;
+    // }else if(dto.getTotalPoint() + ){
 
-        }
-    }
+    // }
+    // }
 }

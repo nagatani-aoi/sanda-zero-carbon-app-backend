@@ -1,5 +1,8 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,4 +27,5 @@ public class TotalCondition {
     Long cityConditionId;
     double costReduction;
     double CO2Reduction;
+    LocalDateTime recordedAt; // 記録日時
 }

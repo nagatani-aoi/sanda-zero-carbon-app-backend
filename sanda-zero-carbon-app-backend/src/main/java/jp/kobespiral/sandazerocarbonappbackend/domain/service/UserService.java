@@ -89,6 +89,7 @@ public class UserService {
         //ユーザのトータルポイントの更新
         User user = getUser(userId);
         user.setTotalPoint(user.getTotalPoint() + achievement.getGetPoint());
+        userRepository.save(user);
         //デイリーステータスの更新
         userDailyStatus.setTotalPoint(userDailyStatus.getTotalPoint() + achievement.getGetPoint());
         userDailyStatus.setTotalCO2Reduction(userDailyStatus.getTotalCO2Reduction() + mission.getCO2Reduction());

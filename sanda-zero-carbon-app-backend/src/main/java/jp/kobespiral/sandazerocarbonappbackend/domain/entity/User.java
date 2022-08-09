@@ -21,7 +21,8 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String userId; // ユーザID
+    Long userId; // ユーザID
+    String nickname; // ニックネーム
     String password;//パスワード
     int age; // 年齢
     int totalPoint;//累積ポイント

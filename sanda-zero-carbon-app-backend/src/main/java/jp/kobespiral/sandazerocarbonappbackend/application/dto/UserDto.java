@@ -8,7 +8,8 @@ import lombok.Data;
  */
 @Data
 public class UserDto {
-    String userId; // ユーザID
+    Long userId; // ユーザID
+    String nickname; // ニックネーム
     int age; // 年齢
     int totalPoint;//累積ポイント
     int level;//レベル
@@ -17,6 +18,7 @@ public class UserDto {
     public static UserDto build(User user){
         UserDto dto = new UserDto();
         dto.userId = user.getUserId();
+        dto.nickname = user.getNickname();
         dto.age = user.getAge();
         dto.totalPoint = user.getTotalPoint();
         dto.level = user.getTotalPoint()/Rule.levelRate + 1;

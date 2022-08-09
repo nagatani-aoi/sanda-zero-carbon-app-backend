@@ -49,7 +49,7 @@ public class AchievementDto {
             dto.hour = achievement.getHour();
         }
 
-        dto.getCO2Reduction = missionDto.getCO2Reduction() * achievement.getHour();
+        dto.getCO2Reduction = missionDto.getCo2Reduction() * achievement.getHour();
         dto.getcostReduction = missionDto.getCostReduction() * achievement.getHour();
         dto.achievedAt = achievement.getAchievedAt();
         dto.isDailyMission = achievement.getIsDailyMission();

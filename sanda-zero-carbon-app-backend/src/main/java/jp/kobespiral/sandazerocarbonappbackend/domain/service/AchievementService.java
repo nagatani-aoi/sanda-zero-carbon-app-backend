@@ -145,10 +145,10 @@ public class AchievementService {
             MissionDto missionDto = missionService.getMission(achievement.getMissionId()); // 達成ミッションに紐づいたミッションを取得
 
             if (missionDto.getMissionType() == MissionType.DoType) { // ミッションタイプが時間制でないなら
-                totalCO2Reduction += missionDto.getCO2Reduction(); // 最小単位のCO2削減量を加算
+                totalCO2Reduction += missionDto.getCo2Reduction(); // 最小単位のCO2削減量を加算
                 totalCostReduction += missionDto.getCostReduction(); // 最小単位の節約金額を加算
             } else {
-                totalCO2Reduction += missionDto.getCO2Reduction() * achievement.getHour(); // 最小単位のCO2削減量に時間を乗算したものを加算
+                totalCO2Reduction += missionDto.getCo2Reduction() * achievement.getHour(); // 最小単位のCO2削減量に時間を乗算したものを加算
                 totalCostReduction += missionDto.getCostReduction() * achievement.getHour(); // 最小単位の節約金額に時間を乗算したものを加算
             }
         }

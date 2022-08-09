@@ -55,6 +55,7 @@ public class AchievementRestController {
      * @return ラップされた達成Dtoのリスト
      */
     @GetMapping("/achievement/weekly")
+    @CrossOrigin("https://localhost:5173")
     public Response<List<AchievementDto>> getWeeklyAchievements(@RequestParam("userId") String userId,
             @RequestParam("date") String dateString) {
         return ResponseCreator.succeed(achievementService.getAchivement(userId, dateString)); // 達成リストを取得
@@ -67,6 +68,7 @@ public class AchievementRestController {
      * @return ラップされた累計パラメータDto
      */
     @GetMapping("/achievement/total")
+    @CrossOrigin("https://localhost:5173")
     public Response<TotalParamDto> getTotalParam(@RequestParam("userId") String userId) {
         return ResponseCreator.succeed(achievementService.getTotalParam(userId));
     }

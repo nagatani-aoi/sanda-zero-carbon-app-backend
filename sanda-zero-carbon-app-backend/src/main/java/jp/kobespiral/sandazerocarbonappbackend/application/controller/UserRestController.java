@@ -18,6 +18,7 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCre
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.User;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
+
 /**
  * ユーザのRESTController
  * 
@@ -34,6 +35,7 @@ public class UserRestController {
     /*--------------------------Create--------------------------- */
     /**
      * ユーザ作成
+     * 
      * @param form ユーザ作成フォーム
      * @return 作成したユーザエンティティ
      */
@@ -46,6 +48,7 @@ public class UserRestController {
     /*--------------------------Read--------------------------- */
     /**
      * ユーザログイン
+     * 
      * @param userId
      * @return ログインが成功or失敗
      */
@@ -55,14 +58,14 @@ public class UserRestController {
         try{
             userService.loginUser(userId,password);
             return ResponseCreator.succeed(true);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,e,false);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, e, false);
         }
     }
 
     /**
      * ユーザdtoを取得。レベルとか取得できる。
+     * 
      * @param userId ユーザID
      * @return ユーザdto
      */
@@ -72,14 +75,14 @@ public class UserRestController {
         try{
             UserDto user = userService.getUserDto(userId);
             return ResponseCreator.succeed(user);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,e, null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, e, null);
         }
     }
 
     /**
      * ユーザの存在の確認
+     * 
      * @param userId ユーザID
      * @return ユーザが存在する(true)かしないか(false)
      */
@@ -89,9 +92,11 @@ public class UserRestController {
         Boolean judge = userService.isUserExist(userId);
         return ResponseCreator.succeed(judge);
     }
+
     /**
      * パスワードを変更する
-     * @param userId ユーザID
+     * 
+     * @param userId   ユーザID
      * @param password パスワード
      * @return 変更されたパスワードを持つユーザエンティティ
      */

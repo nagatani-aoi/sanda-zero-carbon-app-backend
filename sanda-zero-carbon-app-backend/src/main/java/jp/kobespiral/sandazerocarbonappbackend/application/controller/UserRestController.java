@@ -48,13 +48,13 @@ public class UserRestController {
      * @return ログインが成功or失敗
      */
     @GetMapping("/user/login")
-    public Response<Boolean> login(@RequestParam("userId") String userId){
+    public Response<Boolean> login(@RequestParam("userId") String userId,@RequestParam("password") String password){
         try{
-            userService.getUser(userId);
+            userService.loginUser(userId,password);
             return ResponseCreator.succeed(true);
         }
         catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,e, false);
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,e,false);
         }
     }
 

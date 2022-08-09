@@ -1,5 +1,7 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.User;
 import lombok.Data;
 /**
@@ -7,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class UserForm {
+    @NotBlank
     String userId;
     String password;
     int age;

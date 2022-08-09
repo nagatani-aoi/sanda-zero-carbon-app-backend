@@ -12,5 +12,6 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.entity.User;
  */
 @Repository
 public interface UserRepository extends CrudRepository<User, String> {
-
+    User findByUserIdAndPassword(String userId, String password);
+    Boolean existsByUserIdAndPassword(String userId, String password);
 }

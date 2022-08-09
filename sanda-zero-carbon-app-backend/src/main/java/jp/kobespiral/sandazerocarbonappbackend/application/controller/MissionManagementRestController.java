@@ -55,12 +55,7 @@ public class MissionManagementRestController {
     @GetMapping("/sanda-admin/mission/{missionId}")
     @CrossOrigin("https://localhost:5173")
     Response<MissionDto> getMission(@PathVariable Long missionId){
-        try{
-            return ResponseCreator.succeed(missionManagementService.getMission(missionId));
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
-        }
+        return ResponseCreator.succeed(missionManagementService.getMission(missionId));
     }
 
     /**
@@ -70,12 +65,7 @@ public class MissionManagementRestController {
     @GetMapping("/sanda-admin/mission")
     @CrossOrigin("https://localhost:5173")
     Response<List<MissionDto>> getAllMission(){
-        try{
-            return ResponseCreator.succeed(missionManagementService.getAllMissions());
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
-        }
+        return ResponseCreator.succeed(missionManagementService.getAllMissions());
     }
 
 
@@ -88,12 +78,7 @@ public class MissionManagementRestController {
     @PutMapping("/sanda-admin/mission/{missionId}")
     @CrossOrigin("https://localhost:5173")
     Response<MissionDto> updateMission(@PathVariable Long missionId, @Validated @RequestBody MissionForm form){
-        try{
-            return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
-        }
+        return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
     }
 
 

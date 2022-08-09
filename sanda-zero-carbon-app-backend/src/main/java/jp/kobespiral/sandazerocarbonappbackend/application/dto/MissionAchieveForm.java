@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class MissionAchieveForm {
     Long missionId; // ミッションID
-    Long userId; // ユーザID
+    String userId; // ユーザID
     // MissionType missionType; // ミッションタイプ
     int hour; // ミッション実行時間
     Boolean isDailyMission; // デイリーミッション判定フラグ

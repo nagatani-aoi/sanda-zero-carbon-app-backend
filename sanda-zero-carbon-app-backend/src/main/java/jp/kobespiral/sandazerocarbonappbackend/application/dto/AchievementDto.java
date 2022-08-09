@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class AchievementDto {
     Long achievementId; // 達成ID
-    Long userId; // ユーザID
+    String userId; // ユーザID
     Long missionId; // ミッションID
     String title; // 題目
     MissionType missionType; // ミッションタイプ

@@ -29,7 +29,7 @@ public interface AchievementRepository extends CrudRepository<Achievement, Long>
      * @param userId ユーザID
      * @return List<Achievement> 達成ミッションのリスト
      */
-    List<Achievement> findByUserId(Long userId);
+    List<Achievement> findByUserId(String userId);
 
     /**
      * ユーザIDの指定と達成日時の範囲指定を行い，
@@ -40,5 +40,5 @@ public interface AchievementRepository extends CrudRepository<Achievement, Long>
      * @param until  集計終了日時
      * @return List<Achievement> 達成ミッションのリスト
      */
-    List<Achievement> findByUserIdAndAchievedAtBetween(Long userId, LocalDateTime since, LocalDateTime until);
+    List<Achievement> findByUserIdAndAchievedAtBetween(String userId, LocalDateTime since, LocalDateTime until);
 }

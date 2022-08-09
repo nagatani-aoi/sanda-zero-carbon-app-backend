@@ -44,7 +44,7 @@ public class AchievementService {
      * @param form ミッション達成フォーム
      */
     public AchievementDto achieveMission(MissionAchieveForm form) {
-        Long userId = form.getUserId(); // ユーザーIDを固定
+        String userId = form.getUserId(); // ユーザーIDを固定
         Long missionId = form.getMissionId(); // ミッションIDを固定
         int hour = form.getHour(); // 時間を固定
         Boolean isDailyMission = form.getIsDailyMission(); // デイリーミッションフラグを固定
@@ -98,7 +98,7 @@ public class AchievementService {
      * @param date   日時
      * @return 達成Dtoのリスト
      */
-    public List<AchievementDto> getAchivement(Long userId, String dateString) {
+    public List<AchievementDto> getAchivement(String userId, String dateString) {
         LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy/MM/dd")); // String型の日付をLocalDateに変換
 
         LocalDate monday = date.with(DayOfWeek.MONDAY); // その週の月曜日を取得
@@ -133,7 +133,7 @@ public class AchievementService {
      * @param userId ユーザーID
      * @return 累計のパラメータDto
      */
-    public TotalParamDto getTotalParam(Long userId) {
+    public TotalParamDto getTotalParam(String userId) {
         TotalParamDto dto = new TotalParamDto(); // 累計のパラメータDto
 
         List<Achievement> achievements = achievementRepository.findByUserId(userId); // ユーザーの達成リストを取得

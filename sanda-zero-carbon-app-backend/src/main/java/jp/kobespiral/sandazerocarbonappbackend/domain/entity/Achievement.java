@@ -24,7 +24,7 @@ public class Achievement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long achievementId; // 達成ID
-    Long userId; // ユーザID
+    String userId; // ユーザID
     Long missionId; // ミッションID
     // MissionType missionType; // ミッションタイプ
     int hour; // ミッション実行時間

@@ -12,7 +12,7 @@ public class MissionDto {
     int point; // ポイント
     String title; // 題目
     String description; // 説明
-    double CO2Reduction; // CO2削減量
+    double co2Reduction; // CO2削減量
     double costReduction; // 節約金額
     Difficulty difficulty; // 難易度
     MissionType missionType; // ミッションタイプ
@@ -25,7 +25,7 @@ public class MissionDto {
         dto.point = mission.getPoint();
         dto.title = mission.getTitle();
         dto.description = mission.getDescription();
-        dto.CO2Reduction = mission.getCO2Reduction();
+        dto.co2Reduction = mission.getCo2Reduction();
         dto.costReduction = mission.getCostReduction();
         dto.difficulty = mission.getDifficulty();
         dto.missionType = mission.getMissionType();

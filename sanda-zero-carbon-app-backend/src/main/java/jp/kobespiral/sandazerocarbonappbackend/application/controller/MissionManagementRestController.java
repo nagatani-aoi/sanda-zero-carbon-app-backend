@@ -47,7 +47,7 @@ public class MissionManagementRestController {
     }
 
     @DeleteMapping("/sanda-admin/mission")
-    Response<Boolean> deleteMission(Long missionId){
+    Response<Boolean> deleteMission(@RequestBody Long missionId){
         return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));
     }
 }

@@ -21,7 +21,7 @@ public class MissionForm {
         mission.setPoint(point);
         mission.setTitle(title);
         mission.setDescription(description);
-        mission.setCO2Reduction(CO2Reduction);
+        mission.setCo2Reduction(CO2Reduction);
         mission.setCostReduction(costReduction);
         mission.setDifficulty(difficulty);
         mission.setMissionType(missionType);

@@ -76,7 +76,7 @@ public class MissionService {
      * @return デイリーミッションDTOのリスト
      */
     public List<DailyMissionDto> getDailyMission(String userId){
-        List<DailyMission> dailyMissionList = dailyMissionRepository.findByDateGreaterThanEqual(LocalDate.now().atStartOfDay());
+        List<DailyMission> dailyMissionList = dailyMissionRepository.findByDateGreaterThanEqual(LocalDate.now());
         List<DailyMissionDto> dailyMissionDtoList = new ArrayList<DailyMissionDto>();
 
         for(DailyMission list: dailyMissionList){

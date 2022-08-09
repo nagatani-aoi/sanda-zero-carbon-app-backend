@@ -24,7 +24,7 @@ public class MissionAchieveForm {
         Achievement achievement = new Achievement();
         achievement.setMissionId(this.missionId);
         achievement.setUserId(this.userId);
-        if (achievement.getHour() == 0) { // 時間がnull(0)ならば
+        if (this.hour == 0) { // 時間がnull(0)ならば
             achievement.setHour(1); // 最小単位の時間とみなして１時間とする
         } else {
             achievement.setHour(this.hour);

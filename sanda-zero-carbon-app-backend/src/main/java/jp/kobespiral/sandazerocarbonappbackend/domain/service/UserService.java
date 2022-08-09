@@ -105,7 +105,7 @@ public class UserService {
                 userDailyStatus.setHardMissionCompleted(true);
             }
         }
-        
+        userDailyStatusRepository.save(userDailyStatus);
 
         return userDailyStatus;
     }

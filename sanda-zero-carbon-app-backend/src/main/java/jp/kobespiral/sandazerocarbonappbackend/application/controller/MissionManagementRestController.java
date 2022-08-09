@@ -98,4 +98,28 @@ public class MissionManagementRestController {
             return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
         }
     }
+
+
+    /*--------------------Other-----------------------*/
+    /**
+     * 引数に指定したキーワードをタイトルに含んだミッションを探索する
+     * @param keyword
+     * @return ミッションDTOのリスト
+     */
+    @PostMapping("/sanda-admin/search/keyword")
+    @CrossOrigin("https://localhost:5173")
+    Response<List<MissionDto>> searchMissionByKeyword(@RequestParam("keyword") String keyword){
+        return ResponseCreator.succeed(missionManagementService.searchMissionByKeyword(keyword));
+    }
+
+    /**
+     * 引数に指定したタグを持ったミッションを探索する
+     * @param tagId
+     * @return ミッションDTOのリスト
+     */
+    @PostMapping("/sanda-admin/search/tag")
+    @CrossOrigin("https://localhost:5173")
+    Response<List<MissionDto>> searchMissionByTag(@RequestParam("tag") Long tagId){
+        return ResponseCreator.succeed(missionManagementService.searchMissionByTag(tagId));
+    }
 }

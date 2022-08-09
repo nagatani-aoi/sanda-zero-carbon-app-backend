@@ -151,8 +151,6 @@ public class MissionManagementService {
      * @param tagId
      * @return ミッションDTOのリスト
      */
-
-    /*
     public List<MissionDto> searchMissionByTag(Long tagId){
         List<Mission> missionList = missionRepository.findByTagId(tagId);
         Tag tag = tagRepository.findById(tagId).orElseThrow(()->new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,"give tag to the mission", String.format("give tag to %d",tagId)));
@@ -161,7 +159,7 @@ public class MissionManagementService {
             missionDtoList.add(MissionDto.build(list, tag));
         }
         return missionDtoList;
-    }*/
+    }
 
 }
 

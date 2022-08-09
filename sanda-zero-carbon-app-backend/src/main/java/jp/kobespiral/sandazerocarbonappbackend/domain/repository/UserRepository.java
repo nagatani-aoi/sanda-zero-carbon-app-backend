@@ -11,6 +11,6 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.entity.User;
  * @author Kamae
  */
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, String> {
 
 }

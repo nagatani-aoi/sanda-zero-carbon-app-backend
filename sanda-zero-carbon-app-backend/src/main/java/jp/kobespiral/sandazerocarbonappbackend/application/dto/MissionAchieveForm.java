@@ -12,10 +12,10 @@ import lombok.Data;
 @Data
 public class MissionAchieveForm {
     Long missionId; // ミッションID
-    Long userId; // ユーザID
-    MissionType missionType; // ミッションタイプ
+    String userId; // ユーザID
+    // MissionType missionType; // ミッションタイプ
     int hour; // ミッション実行時間
-    Boolean isDailyMission; // デーリーミッション判定フラグ
+    Boolean isDailyMission; // デイリーミッション判定フラグ
 
     /**
      * 達成フォームからエンティティを作成
@@ -26,9 +26,9 @@ public class MissionAchieveForm {
         Achievement achievement = new Achievement();
         achievement.setMissionId(this.missionId);
         achievement.setUserId(this.userId);
-        achievement.setMissionType(this.missionType);
+        // achievement.setMissionType(this.missionType);
         achievement.setHour(this.hour);
         achievement.setIsDailyMission(this.isDailyMission);
-        return null;
+        return achievement;
     }
 }

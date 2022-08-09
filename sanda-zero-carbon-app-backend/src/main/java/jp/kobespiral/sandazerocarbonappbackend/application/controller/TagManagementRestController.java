@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,7 @@ public class TagManagementRestController {
      * @return 作成の成功か、失敗
      */
     @PostMapping("/sanda-admin/tag")
+    @CrossOrigin("https://localhost:5173")
     public Response<Boolean> tagUser(@Validated @RequestBody TagForm form){
         try{
             tagService.createTag(form);
@@ -59,6 +61,7 @@ public class TagManagementRestController {
      * @return タグDto
      */
     @GetMapping("/sanda-admin/{tagId}")
+    @CrossOrigin("https://localhost:5173")
     public Response<TagDto> getTag(@PathVariable Long tagId){
         try{
             TagDto tagDto = tagService.getTag(tagId);
@@ -74,6 +77,7 @@ public class TagManagementRestController {
      * @return タグDtoのリスト
      */
     @GetMapping("/sanda-admin/tag")
+    @CrossOrigin("https://localhost:5173")
     public Response<List<TagDto>> getAllTag(){
         try{
             List<TagDto> tagDtos = tagService.getAllTag();
@@ -90,6 +94,7 @@ public class TagManagementRestController {
      * @return 成功or失敗
      */
     @PutMapping("/sanda-admin/tag")
+    @CrossOrigin("https://localhost:5173")
     public Response<Boolean> updateTag(@Validated @RequestBody TagForm form){
         try{
             tagService.updateTag(form);
@@ -107,6 +112,7 @@ public class TagManagementRestController {
      * @return 成功or失敗
      */
     @DeleteMapping("/sanda-admin/tag")
+    @CrossOrigin("https://localhost:5173")
     public Response<Boolean> deleteTag(@Validated @RequestParam("tagId") Long tagId){
         if(tagService.deleteTag(tagId)){
             return ResponseCreator.succeed(true);

@@ -2,6 +2,7 @@ package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,8 @@ public class UserRestController {
      * @return 作成したユーザエンティティ
      */
     @PostMapping("/user")
-    public Response<User> createUser(@Validated @RequestBody UserForm form) {
+    @CrossOrigin("https://localhost:5173")
+    public Response<User> createUser(@Validated @RequestBody UserForm form){
         return ResponseCreator.succeed(userService.createUser(form));
     }
 
@@ -51,9 +53,10 @@ public class UserRestController {
      * @return ログインが成功or失敗
      */
     @GetMapping("/user/login")
-    public Response<Boolean> login(@RequestParam("userId") String userId, @RequestParam("password") String password) {
-        try {
-            userService.loginUser(userId, password);
+    @CrossOrigin("https://localhost:5173")
+    public Response<Boolean> login(@RequestParam("userId") String userId,@RequestParam("password") String password){
+        try{
+            userService.loginUser(userId,password);
             return ResponseCreator.succeed(true);
         } catch (Exception e) {
             return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, e, false);
@@ -67,8 +70,9 @@ public class UserRestController {
      * @return ユーザdto
      */
     @GetMapping("/user")
-    public Response<UserDto> getUserDto(@Validated @RequestParam("userId") String userId) {
-        try {
+    @CrossOrigin("https://localhost:5173")
+    public Response<UserDto> getUserDto(@Validated @RequestParam("userId") String userId){
+        try{
             UserDto user = userService.getUserDto(userId);
             return ResponseCreator.succeed(user);
         } catch (Exception e) {
@@ -83,7 +87,8 @@ public class UserRestController {
      * @return ユーザが存在する(true)かしないか(false)
      */
     @GetMapping("/user/exist")
-    public Response<Boolean> getUserExist(@Validated @RequestParam("userId") String userId) {
+    @CrossOrigin("https://localhost:5173")
+    public Response<Boolean> getUserExist(@Validated @RequestParam("userId") String userId){
         Boolean judge = userService.isUserExist(userId);
         return ResponseCreator.succeed(judge);
     }
@@ -96,9 +101,9 @@ public class UserRestController {
      * @return 変更されたパスワードを持つユーザエンティティ
      */
     @PostMapping("/user/changep")
-    public Response<User> changeUserPassword(@Validated @RequestParam("userId") String userId,
-            @Validated @RequestParam("password") String password) {
-        return ResponseCreator.succeed(userService.changePassword(userId, password));
+    @CrossOrigin("https://localhost:5173")
+    public Response<User> changeUserPassword(@Validated @RequestParam("userId") String userId,@Validated @RequestParam("password") String password){
+        return ResponseCreator.succeed(userService.changePassword(userId,password));
     }
 
 }

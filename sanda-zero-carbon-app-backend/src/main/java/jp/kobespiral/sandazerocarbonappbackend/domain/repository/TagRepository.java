@@ -21,6 +21,10 @@ public interface TagRepository extends CrudRepository<Tag, Long> {
      * @return タグのリスト
      */
     List<Tag> findAll();
+    /**
+     * タグがすでに存在するかどうか
+     * @param keyword キーワード
+     * @return 存在する(true)かしない(false)か
+     */
     Boolean existsByKeyword(String keyword);
-    Boolean deleteByTagId(Long tagId);
 }

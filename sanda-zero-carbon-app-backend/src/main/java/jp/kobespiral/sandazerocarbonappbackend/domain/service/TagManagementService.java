@@ -1,6 +1,7 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.TagDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.TagForm;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * @author sato
  */
+@Service
 public class TagManagementService {
     @Autowired
     TagRepository tagRepository;
@@ -67,6 +69,9 @@ public class TagManagementService {
      */
     public TagDto updateTag(TagForm form){
         Tag tag = tagRepository.findById(form.getTagId()).orElseThrow(()->new TagValidationException(TAG_DOES_NOT_EXIST,"Not exist the tag", String.format("Try to get tagId : %d",form.getTagId())));
+        if(tagRepository.existsByKeyword(form.getKeyword())){
+            throw new TagValidationException(TAG_ALREADY_EXISTS,": Tag already exists",String.format("Try to update userId : %s",form.getKeyword()));
+        }
         tag.setKeyword(form.getKeyword());
         tagRepository.save(tag);
         return TagDto.build(tag);       
@@ -77,6 +82,13 @@ public class TagManagementService {
      * @return 消せたか(true)、消せてないか(false)
      */
     public Boolean deleteTag(Long tagId){
-        return tagRepository.deleteByTagId(tagId);
+        try{
+            tagRepository.deleteById(tagId);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+        
     }
 }

@@ -46,28 +46,17 @@ public class MissionService {
      * @param dailyMissionDtoList
      * @return デイリーミッションDTOのリスト
      */
-    public List<DailyMissionDto> getDailyMissionProgress(String userId, DailyMission dailyMission, List<DailyMissionDto> dailyMissionDtoList){
-        Mission mission = missionRepository.findById(dailyMission.getMissionId()).orElseThrow(IllegalArgumentException::new);
+    public boolean getDailyMissionProgress(String userId, Mission mission, DailyMission dailyMission){
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId, LocalDate.now());
         switch (mission.getDifficulty()){
             case easy:
-                if (userDailyStatus.getEasyMissionCompleted() == false) {
-                    Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(()->new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,"give tag to easy daily mission", String.format("give tag to %d",mission.getMissionId())));
-                    dailyMissionDtoList.add(DailyMissionDto.build(mission, dailyMission, tag));
-                }
+                return !(userDailyStatus.getEasyMissionCompleted());
             case normal:
-                if (userDailyStatus.getNormalMissionCompleted() == false) {
-                    Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(()->new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,"give tag to normal daily mission", String.format("give tag to %d",mission.getMissionId())));
-                    dailyMissionDtoList.add(DailyMissionDto.build(mission, dailyMission, tag));
-                }
+                return !(userDailyStatus.getNormalMissionCompleted());
             case hard:
-                if (userDailyStatus.getHardMissionCompleted() == false) {
-                    Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(()->new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,"give tag to hard daily mission", String.format("give tag to %d",mission.getMissionId())));
-                    dailyMissionDtoList.add(DailyMissionDto.build(mission, dailyMission, tag));
-                }
+                return !(userDailyStatus.getHardMissionCompleted());
         }
-
-        return dailyMissionDtoList;
+        return false;
     }
 
     /**
@@ -80,7 +69,11 @@ public class MissionService {
         List<DailyMissionDto> dailyMissionDtoList = new ArrayList<DailyMissionDto>();
 
         for(DailyMission list: dailyMissionList){
-            getDailyMissionProgress(userId, list, dailyMissionDtoList);
+            Mission mission = missionRepository.findById(list.getMissionId()).orElseThrow(()->new MissionValidationException(MISSION_DOES_NOT_EXIST,"create the mission", String.format("create %d",list.getMissionId())));
+            if( getDailyMissionProgress(userId, mission, list)) {
+                Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(()->new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,"give tag to daily mission", String.format("give tag to %d",mission.getMissionId())));
+                dailyMissionDtoList.add(DailyMissionDto.build(mission, list, tag));
+            }
         }
         return dailyMissionDtoList;
     }

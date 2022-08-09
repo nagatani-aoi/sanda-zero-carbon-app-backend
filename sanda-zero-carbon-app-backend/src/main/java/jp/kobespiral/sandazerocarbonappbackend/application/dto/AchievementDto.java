@@ -20,7 +20,7 @@ public class AchievementDto {
     MissionType missionType; // ミッションタイプ
     int hour; // ミッション実行時間
     int getPoint; // 獲得したポイント
-    double getCO2Reduction; // 獲得したCO2削減量
+    double getCo2Reduction; // 獲得したCO2削減量
     double getcostReduction; // 獲得した節約金額
     LocalDateTime achievedAt; // 達成日時
     Boolean isDailyMission; // デーリーミッション判定フラグ
@@ -42,14 +42,8 @@ public class AchievementDto {
         dto.getPoint = achievement.getGetPoint();
         dto.title = missionDto.getTitle();
         dto.missionType = missionDto.getMissionType();
-
-        if (achievement.getHour() == 0) { // 時間がnull(0)ならば
-            dto.hour = 0; // 最小単位の時間とみなして１時間とする
-        } else {
-            dto.hour = achievement.getHour();
-        }
-
-        dto.getCO2Reduction = missionDto.getCo2Reduction() * achievement.getHour();
+        dto.hour = achievement.getHour();
+        dto.getCo2Reduction = missionDto.getCo2Reduction() * achievement.getHour();
         dto.getcostReduction = missionDto.getCostReduction() * achievement.getHour();
         dto.achievedAt = achievement.getAchievedAt();
         dto.isDailyMission = achievement.getIsDailyMission();

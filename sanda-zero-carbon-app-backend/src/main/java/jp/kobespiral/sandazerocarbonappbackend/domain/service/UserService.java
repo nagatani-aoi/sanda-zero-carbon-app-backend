@@ -40,7 +40,12 @@ public class UserService {
      * @return リポジトリにセーブ
      */
     public User createUser(UserForm form){
+        String userId = form.getUserId();
+        if(userRepository.existsById(userId)){
+            //throw new (ToDoAppException.MEMBER_ALREADY_EXISTS, mid + ": Member already exists");
+        }
         User user = form.toEntity();
+        //user.setPassword(encoder.encode(user.getPassword())); //エンコードしてセーブする
         return userRepository.save(user);
     }
     /**
@@ -92,7 +97,7 @@ public class UserService {
         userRepository.save(user);
         //デイリーステータスの更新
         userDailyStatus.setTotalPoint(userDailyStatus.getTotalPoint() + achievement.getGetPoint());
-        userDailyStatus.setTotalCO2Reduction(userDailyStatus.getTotalCO2Reduction() + mission.getCO2Reduction());
+        userDailyStatus.setTotalCo2Reduction(userDailyStatus.getTotalCo2Reduction() + mission.getCo2Reduction());
         userDailyStatus.setTotalCostReduction(userDailyStatus.getTotalCostReduction() + mission.getCostReduction());
         //もしデイリーミッションならばフラグ更新
         if(achievement.getIsDailyMission()){

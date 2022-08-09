@@ -48,7 +48,7 @@ public class UserService {
      * @param userId ユーザID
      * @return ユーザ
      */
-    public User getUser(Long userId) {
+    public User getUser(String userId) {
         //微妙
         User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not exist the user", String.format("Try to get userId : %d",userId)));
         return user;
@@ -59,7 +59,7 @@ public class UserService {
      * @param userId
      * @return ユーザdto
      */
-    public UserDto getUserDto(Long userId) {
+    public UserDto getUserDto(String userId) {
         //微妙
         User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not get the userDto", String.format("Try to get userDto. userId : %d",userId)));
         return UserDto.build(user);
@@ -72,7 +72,7 @@ public class UserService {
      * @return ユーザデイリーステータス
      */
 
-    public UserDailyStatus renewUserDailyStatus(Long userId,Long achievementId){
+    public UserDailyStatus renewUserDailyStatus(String userId,Long achievementId){
         Achievement achievement = achievementRepository.findById(achievementId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"create the user", String.format("crate %d",userId)));
         //日付タイプの変更
         LocalDateTime localDateTime = achievement.getAchievedAt();
@@ -102,7 +102,7 @@ public class UserService {
             else if(mission.getDifficulty() == Difficulty.normal){
                 userDailyStatus.setNormalMissionCompleted(true);;
             }
-            else if(mission.getDifficulty() == Difficulty.easy){
+            else if(mission.getDifficulty() == Difficulty.hard){
                 userDailyStatus.setHardMissionCompleted(true);
             }
         }
@@ -116,7 +116,7 @@ public class UserService {
      * @param userId
      * @return
      */
-    public UserDailyStatus getUserDailyStatus(Long userId) {
+    public UserDailyStatus getUserDailyStatus(String userId) {
         LocalDate localDate = LocalDate.now();
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId,localDate);
         //その日のユーザデイリーステータスがなかったら作成

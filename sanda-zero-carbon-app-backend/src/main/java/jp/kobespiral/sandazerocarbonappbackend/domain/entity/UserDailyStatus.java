@@ -26,7 +26,7 @@ public class UserDailyStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long userDailyStatusId;
-    Long userId;
+    String userId;
     // @Temporal(TemporalType.TIMESTAMP)
     LocalDate date;
     int totalPoint;

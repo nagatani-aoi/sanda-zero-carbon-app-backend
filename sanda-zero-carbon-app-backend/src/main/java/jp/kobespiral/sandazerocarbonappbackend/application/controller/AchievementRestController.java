@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -39,6 +40,7 @@ public class AchievementRestController {
      * @return 達成Dto
      */
     @PostMapping("/mission/achieve")
+    @CrossOrigin("https://localhost:5173")
     public Response<AchievementDto> achiveMission(@RequestBody MissionAchieveForm form) {
         return ResponseCreator.succeed(achievementService.achieveMission(form));
     }

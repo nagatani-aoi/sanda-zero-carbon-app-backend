@@ -2,6 +2,7 @@ package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,7 @@ public class UserRestController {
      * @return 作成したユーザエンティティ
      */
     @PostMapping("/user")
+    @CrossOrigin("https://localhost:5173")
     public Response<User> createUser(@Validated @RequestBody UserForm form){
         return ResponseCreator.succeed(userService.createUser(form));
     }
@@ -48,6 +50,7 @@ public class UserRestController {
      * @return ログインが成功or失敗
      */
     @GetMapping("/user/login")
+    @CrossOrigin("https://localhost:5173")
     public Response<Boolean> login(@RequestParam("userId") String userId,@RequestParam("password") String password){
         try{
             userService.loginUser(userId,password);
@@ -64,6 +67,7 @@ public class UserRestController {
      * @return ユーザdto
      */
     @GetMapping("/user")
+    @CrossOrigin("https://localhost:5173")
     public Response<UserDto> getUserDto(@Validated @RequestParam("userId") String userId){
         try{
             UserDto user = userService.getUserDto(userId);
@@ -80,6 +84,7 @@ public class UserRestController {
      * @return ユーザが存在する(true)かしないか(false)
      */
     @GetMapping("/user/exist")
+    @CrossOrigin("https://localhost:5173")
     public Response<Boolean> getUserExist(@Validated @RequestParam("userId") String userId){
         Boolean judge = userService.isUserExist(userId);
         return ResponseCreator.succeed(judge);
@@ -91,6 +96,7 @@ public class UserRestController {
      * @return 変更されたパスワードを持つユーザエンティティ
      */
     @PostMapping("/user/changep")
+    @CrossOrigin("https://localhost:5173")
     public Response<User> changeUserPassword(@Validated @RequestParam("userId") String userId,@Validated @RequestParam("password") String password){
         return ResponseCreator.succeed(userService.changePassword(userId,password));
     }

@@ -10,7 +10,7 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Tag;
 /**
  * タグ リポジトリ
  * 
- * @author Kamae
+ * @author sato
  */
 @Repository
 public interface TagRepository extends CrudRepository<Tag, Long> {
@@ -21,4 +21,6 @@ public interface TagRepository extends CrudRepository<Tag, Long> {
      * @return タグのリスト
      */
     List<Tag> findAll();
+    Boolean existsByKeyword(String keyword);
+    Boolean deleteByTagId(Long tagId);
 }

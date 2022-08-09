@@ -59,7 +59,7 @@ public class AchievementService {
         int getRealPoint; // 実際の取得ポイント
 
         if (isDailyMission) { // デイリーミッションならば
-            getPoint = missionDto.getPoint(); // デイリーミッションは最小単位のポイントのみ
+            getPoint = missionDto.getPoint() * 2; // デイリーミッションは最小単位のポイントのみ
         } else { // デイリーミッションでないならば
             if (missionDto.getMissionType() == MissionType.TimeType) { // ミッションのタイプが時間制ならば
                 getPoint = missionDto.getPoint() * hour; // 最小単位のポイントに時間を乗算

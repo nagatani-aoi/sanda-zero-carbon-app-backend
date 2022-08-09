@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Difficulty;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Mission;
 
 /**
@@ -36,5 +37,13 @@ public interface MissionRepository extends CrudRepository<Mission, Long> {
      * @return すべてのミッションのリスト
      */
     List<Mission> findAll();
+
+    /**
+     * 指定した難易度のミッションのリストを取得する
+     * 
+     * @param difficulty ミッションの難易度
+     * @return 指定した難易度のミッションのリスト
+     */
+    List<Mission> findByDifficulty(Difficulty difficulty);
 
 }

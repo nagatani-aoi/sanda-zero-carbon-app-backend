@@ -1,6 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,5 +25,5 @@ public class DailyMission {
     Long dailyMissionId; // デイリーミッションID
     Long missionId; // ミッションID
     // @Temporal(TemporalType.TIMESTAMP)
-    LocalDateTime date; // デイリーミッションの日時
+    LocalDate date; // デイリーミッションの日時
 }

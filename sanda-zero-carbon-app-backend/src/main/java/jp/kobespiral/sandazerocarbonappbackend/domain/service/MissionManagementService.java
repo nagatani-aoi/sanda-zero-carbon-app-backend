@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionForm;
@@ -12,6 +13,7 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Tag;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.MissionRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.TagRepository;
 
+@Service
 public class MissionManagementService {
     @Autowired
     MissionRepository missionRepository;
@@ -54,14 +56,30 @@ public class MissionManagementService {
         Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(IllegalArgumentException::new);
         return MissionDto.build(mission, tag);
     }
-    /* 
+    
     public boolean deleteMission(Long missionId){
-        return ;
+        missionRepository.deleteById(missionId);
+        return true;
     }
-    */
+    
+    public List<MissionDto> searchMissionByKeyword(String keyword){
+        List<Mission> missionList = missionRepository.findByTitleContaining(keyword);
+        List<MissionDto> missionDtoList = new ArrayList<MissionDto>();
+        for (Mission list : missionList) {
+            Tag tag = tagRepository.findById(list.getTagId()).orElseThrow(IllegalArgumentException::new);
+            missionDtoList.add(MissionDto.build(list, tag));
+        }
+        return missionDtoList;
+    }
 
-    public List<MissionDto> searchMission(Long tagId, String keyword){
-        return null;
+    public List<MissionDto> searchMissionByTag(Long tagId){
+        List<Mission> missionList = missionRepository.findByTagId(tagId);
+        Tag tag = tagRepository.findById(tagId).orElseThrow(IllegalArgumentException::new);
+        List<MissionDto> missionDtoList = new ArrayList<MissionDto>();
+        for (Mission list : missionList) {
+            missionDtoList.add(MissionDto.build(list, tag));
+        }
+        return missionDtoList;
     }
 }
 

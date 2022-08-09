@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionForm;
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.TagForm;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserForm;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Difficulty;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionManagementService;
+import jp.kobespiral.sandazerocarbonappbackend.domain.service.TagManagementService;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,8 @@ public class InitializerRestCotroller {
     private final UserService userService;
     /** ミッションサービス */
     private final MissionManagementService missionManagementService;
+    /** タグサービス */
+    private final TagManagementService tagManagementService;
 
     /**
      * 初期状態からDBをいい感じに埋める
@@ -35,6 +39,11 @@ public class InitializerRestCotroller {
         userForm.setPassword("testPassword");
         userForm.setAge(12);
         userService.createUser(userForm);
+
+        /** タグを新規登録 */
+        TagForm tagForm = new TagForm();
+        tagForm.setKeyword("未指定");
+        tagManagementService.createTag(tagForm);
 
         // 難易度低のミッションを新規登録
         MissionForm missionForm = new MissionForm();
@@ -80,5 +89,7 @@ public class InitializerRestCotroller {
         missionForm.setMissionType(MissionType.DoType);
         missionForm.setTagId(1l);
         missionManagementService.createMission(missionForm);
+
+        missionManagementService.selectDailyMissions(); // デイリーミッションの選択
     }
 }

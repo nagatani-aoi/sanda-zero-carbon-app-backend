@@ -21,7 +21,9 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.repository.UserDailyStatus
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 /**
+ * ユーザ側のミッション・デイリーミッションに関するサービス
  * 
+ * @author kamae
  */
 @Service
 public class MissionService {
@@ -34,6 +36,16 @@ public class MissionService {
     @Autowired
     TagRepository tagRepository;
 
+    /*--------------------------------Read------------------------------- */
+    /**
+     * ユーザID、デイリーミッション、デイリーミッションのDTOリストを入力し、
+     * そのユーザが引数で指定したデイリーミッションをまだ達成していなければ、
+     * DTOリストに追加する
+     * @param userId
+     * @param dailyMission
+     * @param dailyMissionDtoList
+     * @return デイリーミッションDTOのリスト
+     */
     public List<DailyMissionDto> getDailyMissionProgress(String userId, DailyMission dailyMission, List<DailyMissionDto> dailyMissionDtoList){
         Mission mission = missionRepository.findById(dailyMission.getMissionId()).orElseThrow(IllegalArgumentException::new);
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId, LocalDate.now());
@@ -57,6 +69,12 @@ public class MissionService {
 
         return dailyMissionDtoList;
     }
+
+    /**
+     * ユーザが未達成のデイリーミッションをDTOリストで出力する
+     * @param userId
+     * @return デイリーミッションDTOのリスト
+     */
     public List<DailyMissionDto> getDailyMission(String userId){
         List<DailyMission> dailyMissionList = dailyMissionRepository.findByDateGreaterThanEqual(LocalDate.now().atStartOfDay());
         List<DailyMissionDto> dailyMissionDtoList = new ArrayList<DailyMissionDto>();
@@ -67,12 +85,21 @@ public class MissionService {
         return dailyMissionDtoList;
     }
 
+    /**
+     * 指定したIDのミッションをDTO形式で取得する
+     * @param missionId
+     * @return ミッションDTO
+     */
     public MissionDto getMission(Long missionId){
         Mission mission = missionRepository.findById(missionId).orElseThrow(()->new MissionValidationException(MISSION_DOES_NOT_EXIST,"create the mission", String.format("create %d",missionId)));
         Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(()->new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,"give tag to the mission", String.format("give tag to %d",missionId)));
         return MissionDto.build(mission, tag);
     }
     
+    /**
+     * すべてのミッションをDTO形式のリストで出力する
+     * @return ミッションDTOのリスト
+     */
     public List<MissionDto> getAllMission(){
         List<Mission> missionList = missionRepository.findAll();
         List<MissionDto> missionDtoList = new ArrayList<MissionDto>();

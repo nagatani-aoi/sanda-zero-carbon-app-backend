@@ -14,22 +14,34 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionService;
 
+/**
+ * ユーザ側でのミッション画面表示をおこなうRESTコントローラ
+ * 
+ * @author kamae
+ */
 @RestController
 @RequestMapping("/api")
 public class MissionRestController {
     @Autowired
     MissionService missionService;
 
-    
+    /*------------------ Read ------------------- */
+    /**
+     * すべてのミッションを取得する
+     * @return ミッションDTOのリスト
+     */
     @GetMapping("/mission")
     Response<List<MissionDto>> getAllMission(){
         return ResponseCreator.succeed(missionService.getAllMission());
     }
 
+    /**
+     * ユーザの持つ未達成のデイリーミッションを取得する
+     * @return デイリーミッションDTOのリスト
+     */
     @GetMapping("/daily-mission/{userId}")
     Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable String userId){
         return ResponseCreator.succeed(missionService.getDailyMission(userId));
     }
     
-
 }

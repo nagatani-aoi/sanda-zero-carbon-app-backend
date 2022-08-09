@@ -17,8 +17,11 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.repository.UserDailyStatus
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.UserRepository;
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserErrorCode.*;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 /**
  * @author sato
@@ -42,10 +45,16 @@ public class UserService {
     public User createUser(UserForm form){
         String userId = form.getUserId();
         if(userRepository.existsById(userId)){
-            //throw new (ToDoAppException.MEMBER_ALREADY_EXISTS, mid + ": Member already exists");
+            throw new UserValidationException(USER_ALREADY_EXISTS,": User already exists",String.format("Try to create userId : %s",userId));
         }
         User user = form.toEntity();
-        //user.setPassword(encoder.encode(user.getPassword())); //エンコードしてセーブする
+        if(user.getPassword()=="" || user.getPassword()==null){
+            String pass = getRandomString(10);
+            Charset charset = StandardCharsets.UTF_8;
+            //エンコード実行
+            String encodedPass = Base64.getEncoder().encodeToString(pass.getBytes(charset));
+            user.setPassword(encodedPass);
+        }
         return userRepository.save(user);
     }
     /**
@@ -57,6 +66,18 @@ public class UserService {
         //微妙
         User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not exist the user", String.format("Try to get userId : %d",userId)));
         return user;
+    }
+
+    public User loginUser(String userId,String password) {
+        //微妙
+        //存在していたら
+        if(userRepository.existsByUserIdAndPassword(userId,password)){
+            User user = userRepository.findByUserIdAndPassword(userId,password);
+            return user;
+        }
+        else{
+            throw new  UserValidationException(USER_DOES_NOT_EXIST,"Not exist the user", String.format("Try to login userId : %d",userId));
+        }
     }
 
     /**
@@ -132,5 +153,24 @@ public class UserService {
         }
         return userDailyStatus;
     }
-    
+
+    static String getRandomString(int i) { 
+        String theAlphaNumericS;
+        StringBuilder builder;    
+        theAlphaNumericS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789"; 
+        //create the StringBuffer
+        builder = new StringBuilder(i); 
+        for (int m = 0; m < i; m++) { 
+
+            // generate numeric
+            int myindex 
+                = (int)(theAlphaNumericS.length() 
+                        * Math.random()); 
+
+            // add the characters
+            builder.append(theAlphaNumericS 
+                        .charAt(myindex)); 
+        } 
+        return builder.toString(); 
+    } 
 }

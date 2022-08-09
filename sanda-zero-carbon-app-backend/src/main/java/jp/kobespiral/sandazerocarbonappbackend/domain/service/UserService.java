@@ -40,7 +40,12 @@ public class UserService {
      * @return リポジトリにセーブ
      */
     public User createUser(UserForm form){
+        String userId = form.getUserId();
+        if(userRepository.existsById(userId)){
+            //throw new (ToDoAppException.MEMBER_ALREADY_EXISTS, mid + ": Member already exists");
+        }
         User user = form.toEntity();
+        //user.setPassword(encoder.encode(user.getPassword())); //エンコードしてセーブする
         return userRepository.save(user);
     }
     /**

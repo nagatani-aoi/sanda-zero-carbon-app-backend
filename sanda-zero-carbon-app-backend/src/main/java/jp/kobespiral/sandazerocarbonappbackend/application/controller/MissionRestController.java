@@ -3,6 +3,7 @@ package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class MissionRestController {
      * @return ミッションDTOのリスト
      */
     @GetMapping("/mission")
+    @CrossOrigin("https://localhost:5173")
     Response<List<MissionDto>> getAllMission(){
         try{
             return ResponseCreator.succeed(missionService.getAllMission());
@@ -46,6 +48,7 @@ public class MissionRestController {
      * @return デイリーミッションDTOのリスト
      */
     @GetMapping("/daily-mission/{userId}")
+    @CrossOrigin("https://localhost:5173")
     Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable String userId){
         return ResponseCreator.succeed(missionService.getDailyMission(userId));
     }

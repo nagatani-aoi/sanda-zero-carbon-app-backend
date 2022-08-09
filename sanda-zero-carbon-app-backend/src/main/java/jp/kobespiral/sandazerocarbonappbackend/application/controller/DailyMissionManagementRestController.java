@@ -3,6 +3,7 @@ package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ public class DailyMissionManagementRestController {
      * @return boolean
      */
     @PostMapping("/sanda-admin/daily-mission")
+    @CrossOrigin("https://localhost:5173")
     Response<List<DailyMissionDto>> selectDailyMission(){
         return ResponseCreator.succeed(missionManagementService.selectDailyMissions());
     }

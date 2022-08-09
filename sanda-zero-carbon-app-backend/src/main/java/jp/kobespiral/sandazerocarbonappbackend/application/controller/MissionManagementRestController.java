@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class MissionManagementRestController {
      * @return 作成したミッションのDTO
      */
     @PostMapping("/sanda-admin/mission")
+    @CrossOrigin("https://localhost:5173")
     Response<MissionDto> createMission(@Validated @RequestBody MissionForm form){
         return ResponseCreator.succeed(missionManagementService.createMission(form));
     }
@@ -51,6 +53,7 @@ public class MissionManagementRestController {
      * @return 指定したIDのミッションDTO
      */
     @GetMapping("/sanda-admin/mission/{missionId}")
+    @CrossOrigin("https://localhost:5173")
     Response<MissionDto> getMission(@PathVariable Long missionId){
         try{
             return ResponseCreator.succeed(missionManagementService.getMission(missionId));
@@ -65,6 +68,7 @@ public class MissionManagementRestController {
      * @return すべてのミッションのDTOリスト
      */
     @GetMapping("/sanda-admin/mission")
+    @CrossOrigin("https://localhost:5173")
     Response<List<MissionDto>> getAllMission(){
         try{
             return ResponseCreator.succeed(missionManagementService.getAllMissions());
@@ -82,6 +86,7 @@ public class MissionManagementRestController {
      * @return 更新したミッションのDTO
      */
     @PutMapping("/sanda-admin/mission/{missionId}")
+    @CrossOrigin("https://localhost:5173")
     Response<MissionDto> updateMission(@PathVariable Long missionId, @Validated @RequestBody MissionForm form){
         try{
             return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
@@ -99,6 +104,7 @@ public class MissionManagementRestController {
      * @return boolean
      */
     @DeleteMapping("/sanda-admin/mission")
+    @CrossOrigin("https://localhost:5173")
     Response<Boolean> deleteMission(@RequestParam("missionId") Long missionId){
         try{
             return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));

@@ -17,6 +17,7 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCre
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.User;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
+
 /**
  * ユーザのRESTController
  * 
@@ -33,66 +34,71 @@ public class UserRestController {
     /*--------------------------Create--------------------------- */
     /**
      * ユーザ作成
+     * 
      * @param form ユーザ作成フォーム
      * @return 作成したユーザエンティティ
      */
     @PostMapping("/user")
-    public Response<User> createUser(@Validated @RequestBody UserForm form){
+    public Response<User> createUser(@Validated @RequestBody UserForm form) {
         return ResponseCreator.succeed(userService.createUser(form));
     }
 
     /*--------------------------Read--------------------------- */
     /**
      * ユーザログイン
+     * 
      * @param userId
      * @return ログインが成功or失敗
      */
     @GetMapping("/user/login")
-    public Response<Boolean> login(@RequestParam("userId") String userId,@RequestParam("password") String password){
-        try{
-            userService.loginUser(userId,password);
+    public Response<Boolean> login(@RequestParam("userId") String userId, @RequestParam("password") String password) {
+        try {
+            userService.loginUser(userId, password);
             return ResponseCreator.succeed(true);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,e,false);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, e, false);
         }
     }
 
     /**
      * ユーザdtoを取得。レベルとか取得できる。
+     * 
      * @param userId ユーザID
      * @return ユーザdto
      */
     @GetMapping("/user")
-    public Response<UserDto> getUserDto(@Validated @RequestParam("userId") String userId){
-        try{
+    public Response<UserDto> getUserDto(@Validated @RequestParam("userId") String userId) {
+        try {
             UserDto user = userService.getUserDto(userId);
             return ResponseCreator.succeed(user);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,e, null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, e, null);
         }
     }
 
     /**
      * ユーザの存在の確認
+     * 
      * @param userId ユーザID
      * @return ユーザが存在する(true)かしないか(false)
      */
     @GetMapping("/user/exist")
-    public Response<Boolean> getUserExist(@Validated @RequestParam("userId") String userId){
+    public Response<Boolean> getUserExist(@Validated @RequestParam("userId") String userId) {
         Boolean judge = userService.isUserExist(userId);
         return ResponseCreator.succeed(judge);
     }
+
     /**
      * パスワードを変更する
-     * @param userId ユーザID
+     * 
+     * @param userId   ユーザID
      * @param password パスワード
      * @return 変更されたパスワードを持つユーザエンティティ
      */
     @PostMapping("/user/changep")
-    public Response<User> changeUserPassword(@Validated @RequestParam("userId") String userId,@Validated @RequestParam("password") String password){
-        return ResponseCreator.succeed(userService.changePassword(userId,password));
+    public Response<User> changeUserPassword(@Validated @RequestParam("userId") String userId,
+            @Validated @RequestParam("password") String password) {
+        return ResponseCreator.succeed(userService.changePassword(userId, password));
     }
 
 }

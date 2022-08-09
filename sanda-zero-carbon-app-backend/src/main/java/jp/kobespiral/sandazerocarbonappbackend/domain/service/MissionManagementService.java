@@ -8,6 +8,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.DailyMissionDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionForm;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.DailyMission;
@@ -51,7 +52,8 @@ public class MissionManagementService {
      * デイリーミッションの選定を行う
      * @return bool変数
      */
-    public boolean selectDailyMissions(){
+    public List<DailyMissionDto> selectDailyMissions(){
+        List<DailyMissionDto> dailyMissionDtoList = new ArrayList<DailyMissionDto>();
         for(Difficulty difficulty:Difficulty.values()){
             DailyMission dailyMission = new DailyMission();
             List<Mission> missionList = missionRepository.findByDifficulty(difficulty);
@@ -60,8 +62,10 @@ public class MissionManagementService {
             dailyMission.setMissionId(missionList.get(index).getMissionId());
             dailyMission.setDate(LocalDate.now());
             dailyMissionRepository.save(dailyMission);
+            Tag tag = tagRepository.findById(missionList.get(index).getTagId()).orElseThrow(()->new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,"give tag to the mission", String.format("give tag to %d",missionList.get(index).getMissionId())));
+            dailyMissionDtoList.add(DailyMissionDto.build(missionList.get(index), dailyMission, tag));
         }
-        return true;
+        return dailyMissionDtoList;
     }
 
 

@@ -63,13 +63,30 @@ public class UserService {
      * @return ユーザ
      */
     public User getUser(String userId) {
-        //微妙
         User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not exist the user", String.format("Try to get userId : %d",userId)));
         return user;
     }
+    /**
+     * ユーザの存在の有無を調べる
+     * @param userId ユーザID
+     * @return 存在するかしないか
+     */
+    public Boolean isUserExist(String userId) {
+        if(userRepository.existsById(userId)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
+    /**
+     * ログイン用サービス
+     * @param userId ユーザID
+     * @param password パスワード
+     * @return
+     */
     public User loginUser(String userId,String password) {
-        //微妙
         //存在していたら
         if(userRepository.existsByUserIdAndPassword(userId,password)){
             User user = userRepository.findByUserIdAndPassword(userId,password);
@@ -154,6 +171,23 @@ public class UserService {
         return userDailyStatus;
     }
 
+    /**
+     * パスワードを変更する
+     * @param userId ユーザID
+     * @param password 新しいパスワード
+     * @return パスワードを変更したユーザエンティティ
+     */
+    public User changePassword(String userId,String password){
+        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not exist the user", String.format("Try to get userId : %d",userId)));
+        user.setPassword(password);
+        userRepository.save(user);
+        return user;
+    }
+    /**
+     * ランダムパスワード生成
+     * @param i パスワードの長さ
+     * @return 長さiのランダム文字列
+     */
     static String getRandomString(int i) { 
         String theAlphaNumericS;
         StringBuilder builder;    

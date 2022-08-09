@@ -2,6 +2,7 @@ package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
@@ -9,6 +10,7 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCre
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionManagementService;
 
 @RestController
+@RequestMapping("/api")
 public class DailyMissionManagementRestController {
     @Autowired
     MissionManagementService missionManagementService;

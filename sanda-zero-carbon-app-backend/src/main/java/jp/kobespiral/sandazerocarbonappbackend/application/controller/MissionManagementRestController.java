@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
@@ -81,7 +82,7 @@ public class MissionManagementRestController {
      * @return boolean
      */
     @DeleteMapping("/sanda-admin/mission")
-    Response<Boolean> deleteMission(@RequestBody Long missionId){
+    Response<Boolean> deleteMission(@RequestParam("missionId") Long missionId){
         return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));
     }
 }

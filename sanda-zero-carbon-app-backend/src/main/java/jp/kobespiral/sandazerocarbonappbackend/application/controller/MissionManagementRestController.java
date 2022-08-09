@@ -3,6 +3,7 @@ package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionForm;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionManagementService;
@@ -38,7 +40,7 @@ public class MissionManagementRestController {
      * @return 作成したミッションのDTO
      */
     @PostMapping("/sanda-admin/mission")
-    Response<MissionDto> createMission(@RequestBody MissionForm form){
+    Response<MissionDto> createMission(@Validated @RequestBody MissionForm form){
         return ResponseCreator.succeed(missionManagementService.createMission(form));
     }
 
@@ -50,7 +52,12 @@ public class MissionManagementRestController {
      */
     @GetMapping("/sanda-admin/mission/{missionId}")
     Response<MissionDto> getMission(@PathVariable Long missionId){
-        return ResponseCreator.succeed(missionManagementService.getMission(missionId));
+        try{
+            return ResponseCreator.succeed(missionManagementService.getMission(missionId));
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
+        }
     }
 
     /**
@@ -59,7 +66,12 @@ public class MissionManagementRestController {
      */
     @GetMapping("/sanda-admin/mission")
     Response<List<MissionDto>> getAllMission(){
-        return ResponseCreator.succeed(missionManagementService.getAllMissions());
+        try{
+            return ResponseCreator.succeed(missionManagementService.getAllMissions());
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
+        }
     }
 
 
@@ -70,8 +82,13 @@ public class MissionManagementRestController {
      * @return 更新したミッションのDTO
      */
     @PutMapping("/sanda-admin/mission/{missionId}")
-    Response<MissionDto> updateMission(@PathVariable Long missionId, @RequestBody MissionForm form){
-        return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
+    Response<MissionDto> updateMission(@PathVariable Long missionId, @Validated @RequestBody MissionForm form){
+        try{
+            return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
+        }
     }
 
 
@@ -83,6 +100,11 @@ public class MissionManagementRestController {
      */
     @DeleteMapping("/sanda-admin/mission")
     Response<Boolean> deleteMission(@RequestParam("missionId") Long missionId){
-        return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));
+        try{
+            return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
+        }
     }
 }

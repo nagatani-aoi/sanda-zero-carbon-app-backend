@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.DailyMissionDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionService;
@@ -32,7 +33,12 @@ public class MissionRestController {
      */
     @GetMapping("/mission")
     Response<List<MissionDto>> getAllMission(){
-        return ResponseCreator.succeed(missionService.getAllMission());
+        try{
+            return ResponseCreator.succeed(missionService.getAllMission());
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
+        }
     }
 
     /**

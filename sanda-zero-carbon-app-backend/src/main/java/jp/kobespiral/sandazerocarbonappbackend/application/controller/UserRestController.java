@@ -48,7 +48,7 @@ public class UserRestController {
      * @return ログインが成功or失敗
      */
     @GetMapping("/user/login")
-    public Response<Boolean> login(@RequestParam("userId") Long userId){
+    public Response<Boolean> login(@RequestParam("userId") String userId){
         try{
             userService.getUser(userId);
             return ResponseCreator.succeed(true);
@@ -64,7 +64,7 @@ public class UserRestController {
      * @return ユーザdto
      */
     @GetMapping("/user")
-    public Response<UserDto> getUserDto(@Validated @RequestParam("userId") Long userId){
+    public Response<UserDto> getUserDto(@Validated @RequestParam("userId") String userId){
         try{
             UserDto user = userService.getUserDto(userId);
             return ResponseCreator.succeed(user);

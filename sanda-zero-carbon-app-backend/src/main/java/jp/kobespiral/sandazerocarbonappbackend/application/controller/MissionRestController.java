@@ -27,7 +27,7 @@ public class MissionRestController {
     }
 
     @GetMapping("/daily-mission/{userId}")
-    Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable Long userId){
+    Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable String userId){
         return ResponseCreator.succeed(missionService.getDailyMission(userId));
     }
     

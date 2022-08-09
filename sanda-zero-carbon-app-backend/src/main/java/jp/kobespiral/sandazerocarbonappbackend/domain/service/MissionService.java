@@ -34,7 +34,7 @@ public class MissionService {
     @Autowired
     TagRepository tagRepository;
 
-    public List<DailyMissionDto> getDailyMissionProgress(Long userId, DailyMission dailyMission, List<DailyMissionDto> dailyMissionDtoList){
+    public List<DailyMissionDto> getDailyMissionProgress(String userId, DailyMission dailyMission, List<DailyMissionDto> dailyMissionDtoList){
         Mission mission = missionRepository.findById(dailyMission.getMissionId()).orElseThrow(IllegalArgumentException::new);
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId, LocalDate.now());
         switch (mission.getDifficulty()){
@@ -57,7 +57,7 @@ public class MissionService {
 
         return dailyMissionDtoList;
     }
-    public List<DailyMissionDto> getDailyMission(Long userId){
+    public List<DailyMissionDto> getDailyMission(String userId){
         List<DailyMission> dailyMissionList = dailyMissionRepository.findByDateGreaterThanEqual(LocalDate.now().atStartOfDay());
         List<DailyMissionDto> dailyMissionDtoList = new ArrayList<DailyMissionDto>();
 

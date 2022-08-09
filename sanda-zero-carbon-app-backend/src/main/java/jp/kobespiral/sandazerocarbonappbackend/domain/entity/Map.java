@@ -23,7 +23,7 @@ public class Map {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long mapId; // マップID
     int currentLocation; // マップ上での現在地
-    int level; // レベル
+    int stage; // 段階
     Long nextLocation; // 次の地点
     Long backLocation; // 1つ前の地点
     String imageSource; // ホーム画面背景の画像ソース(URL)

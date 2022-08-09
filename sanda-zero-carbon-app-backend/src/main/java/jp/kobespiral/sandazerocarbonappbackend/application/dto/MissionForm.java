@@ -10,7 +10,7 @@ public class MissionForm {
     int point; // ポイント
     String title; // 題目
     String description; // 説明
-    double CO2Reduction; // CO2削減量
+    double co2Reduction; // CO2削減量
     double costReduction; // 節約金額
     Difficulty difficulty; // 難易度
     MissionType missionType; // ミッションタイプ
@@ -21,7 +21,7 @@ public class MissionForm {
         mission.setPoint(point);
         mission.setTitle(title);
         mission.setDescription(description);
-        mission.setCo2Reduction(CO2Reduction);
+        mission.setCo2Reduction(co2Reduction);
         mission.setCostReduction(costReduction);
         mission.setDifficulty(difficulty);
         mission.setMissionType(missionType);

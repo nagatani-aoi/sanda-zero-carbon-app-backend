@@ -22,6 +22,6 @@ public class InitialLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long initialLocationId;
-    int level;
-    Long initialLocation;
+    int stage;
+    int initialLocation;
 }

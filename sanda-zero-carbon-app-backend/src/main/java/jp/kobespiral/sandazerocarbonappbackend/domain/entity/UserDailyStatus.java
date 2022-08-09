@@ -28,7 +28,7 @@ public class UserDailyStatus {
     // @Temporal(TemporalType.TIMESTAMP)
     LocalDate date;
     int totalPoint;
-    double totalCO2Reduction;
+    double totalCo2Reduction;
     double totalCostReduction;
     Boolean easyMissionCompleted;
     Boolean normalMissionCompleted;

@@ -26,12 +26,8 @@ public class Achievement {
     Long achievementId; // 達成ID
     String userId; // ユーザID
     Long missionId; // ミッションID
-    // MissionType missionType; // ミッションタイプ
     int hour; // ミッション実行時間
     int getPoint; // 獲得したポイント
-    // double getCO2Reduction; // 獲得したCO2削減量
-    // double getCostReduction; // 獲得した節約金額
-    // @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime achievedAt; // 達成日時
     Boolean isDailyMission; // デーリーミッション判定フラグ
 }

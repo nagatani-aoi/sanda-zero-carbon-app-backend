@@ -170,6 +170,19 @@ public class UserService {
         }
         return userDailyStatus;
     }
+
+    /**
+     * パスワードを変更する
+     * @param userId ユーザID
+     * @param password 新しいパスワード
+     * @return パスワードを変更したユーザエンティティ
+     */
+    public User changePassword(String userId,String password){
+        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not exist the user", String.format("Try to get userId : %d",userId)));
+        user.setPassword(password);
+        userRepository.save(user);
+        return user;
+    }
     /**
      * ランダムパスワード生成
      * @param i パスワードの長さ

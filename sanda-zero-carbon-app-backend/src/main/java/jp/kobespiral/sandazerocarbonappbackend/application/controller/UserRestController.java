@@ -74,10 +74,25 @@ public class UserRestController {
         }
     }
 
+    /**
+     * ユーザの存在の確認
+     * @param userId ユーザID
+     * @return ユーザが存在する(true)かしないか(false)
+     */
     @GetMapping("/user/exist")
     public Response<Boolean> getUserExist(@Validated @RequestParam("userId") String userId){
         Boolean judge = userService.isUserExist(userId);
         return ResponseCreator.succeed(judge);
+    }
+    /**
+     * パスワードを変更する
+     * @param userId ユーザID
+     * @param password パスワード
+     * @return 変更されたパスワードを持つユーザエンティティ
+     */
+    @PostMapping("/user/changep")
+    public Response<User> changeUserPassword(@Validated @RequestParam("userId") String userId,@Validated @RequestParam("password") String password){
+        return ResponseCreator.succeed(userService.changePassword(userId,password));
     }
 
 }

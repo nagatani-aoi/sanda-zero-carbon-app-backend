@@ -74,4 +74,10 @@ public class UserRestController {
         }
     }
 
+    @GetMapping("/user/exist")
+    public Response<Boolean> getUserExist(@Validated @RequestParam("userId") String userId){
+        Boolean judge = userService.isUserExist(userId);
+        return ResponseCreator.succeed(judge);
+    }
+
 }

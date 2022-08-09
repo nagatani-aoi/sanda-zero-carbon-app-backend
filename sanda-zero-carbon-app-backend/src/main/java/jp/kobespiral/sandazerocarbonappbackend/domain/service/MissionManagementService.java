@@ -48,7 +48,7 @@ public class MissionManagementService {
         mission.setPoint(form.getPoint());
         mission.setTitle(form.getTitle());
         mission.setDescription(form.getDescription());
-        mission.setCO2Reduction(form.getCO2Reduction());
+        mission.setCo2Reduction(form.getCO2Reduction());
         mission.setCostReduction(form.getCostReduction());
         mission.setDifficulty(form.getDifficulty());
         mission.setMissionType(form.getMissionType());

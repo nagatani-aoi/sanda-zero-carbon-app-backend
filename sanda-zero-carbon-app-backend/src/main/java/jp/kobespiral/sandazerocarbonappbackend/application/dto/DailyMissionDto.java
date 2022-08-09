@@ -31,7 +31,7 @@ public class DailyMissionDto {
         dto.point = mission.getPoint();
         dto.title = mission.getTitle();
         dto.description = mission.getDescription();
-        dto.CO2Reduction = mission.getCO2Reduction();
+        dto.CO2Reduction = mission.getCo2Reduction();
         dto.costReduction = mission.getCostReduction();
         dto.difficulty = mission.getDifficulty();
         dto.missionType = mission.getMissionType();

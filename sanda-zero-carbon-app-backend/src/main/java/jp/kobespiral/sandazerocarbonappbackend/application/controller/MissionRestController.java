@@ -3,7 +3,6 @@ package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +27,7 @@ public class MissionRestController {
     }
 
     @GetMapping("/daily-mission/{userId}")
-    Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable Long userId){
+    Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable String userId){
         return ResponseCreator.succeed(missionService.getDailyMission(userId));
     }
     

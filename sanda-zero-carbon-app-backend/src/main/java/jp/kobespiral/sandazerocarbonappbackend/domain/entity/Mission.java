@@ -26,7 +26,7 @@ public class Mission {
     int point; // ポイント
     String title; // 題目
     String description; // 説明
-    double CO2Reduction; // CO2削減量
+    double co2Reduction; // CO2削減量
     double costReduction; // 節約金額
     Difficulty difficulty; // 難易度
     MissionType missionType; // ミッションタイプ

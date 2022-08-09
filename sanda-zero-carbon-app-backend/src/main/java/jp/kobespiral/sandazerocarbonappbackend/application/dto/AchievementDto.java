@@ -42,6 +42,13 @@ public class AchievementDto {
         dto.getPoint = achievement.getGetPoint();
         dto.title = missionDto.getTitle();
         dto.missionType = missionDto.getMissionType();
+
+        if (achievement.getHour() == 0) { // 時間がnull(0)ならば
+            dto.hour = 0; // 最小単位の時間とみなして１時間とする
+        } else {
+            dto.hour = achievement.getHour();
+        }
+
         dto.getCO2Reduction = missionDto.getCO2Reduction() * achievement.getHour();
         dto.getcostReduction = missionDto.getCostReduction() * achievement.getHour();
         dto.achievedAt = achievement.getAchievedAt();

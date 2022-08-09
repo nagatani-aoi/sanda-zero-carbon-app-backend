@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     String userId; // ユーザID
     String password;//パスワード
     int age; // 年齢

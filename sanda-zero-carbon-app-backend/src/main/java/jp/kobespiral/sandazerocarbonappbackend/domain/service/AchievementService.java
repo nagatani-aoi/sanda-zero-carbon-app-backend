@@ -13,6 +13,8 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.AchievementDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionAchieveForm;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.TotalParamDto;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.UserDailyStatus;
@@ -49,11 +51,26 @@ public class AchievementService {
         int hour = form.getHour(); // 時間を固定
         Boolean isDailyMission = form.getIsDailyMission(); // デイリーミッションフラグを固定
 
-        UserDailyStatus userDailyStatus = userService.getUserDailyStatus(userId);
+        UserDailyStatus userDailyStatus = new UserDailyStatus();
+        try{
+            userDailyStatus = userService.getUserDailyStatus(userId);
+            // ユーザIDからユーザーデイリーステータスDtoを取得
+        }
+        catch(UserValidationException e){
+            throw e;
+        }
+        // UserDailyStatus userDailyStatus = userService.getUserDailyStatus(userId);
         // ユーザIDからユーザーデイリーステータスDtoを取得
 
-        MissionDto missionDto = missionService.getMission(missionId);
-        // 達成したミッションIDからミッションDtoを取得
+        MissionDto missionDto = new MissionDto();
+        try{
+            missionDto = missionService.getMission(missionId);
+            // 達成したミッションIDからミッションDtoを取得
+        }
+        catch(MissionValidationException e){
+            throw e;
+        }
+        
 
         int getPoint; // 取得予定ポイント
         int getRealPoint; // 実際の取得ポイント

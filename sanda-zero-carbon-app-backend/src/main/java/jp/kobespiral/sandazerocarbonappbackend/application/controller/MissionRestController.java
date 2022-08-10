@@ -15,6 +15,7 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionService;
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
@@ -52,7 +53,12 @@ public class MissionRestController {
     @GetMapping("/daily-mission/{userId}")
     @CrossOrigin("http://localhost:5173")
     Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable String userId){
-        return ResponseCreator.succeed(missionService.getDailyMission(userId));
+        try{
+            return ResponseCreator.succeed(missionService.getDailyMission(userId));
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,new UserValidationException(USER_DOES_NOT_EXIST,"get all daily mission", String.format("this user does not exist (userId: %d )",userId)),null);
+        }
     }
     
 }

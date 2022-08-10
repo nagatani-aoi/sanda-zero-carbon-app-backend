@@ -8,7 +8,7 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.TagForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.TagValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Tag;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.TagRepository;
-import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.TagErrorCode.*;
+import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class TagManagementService {
     public TagDto createTag(TagForm form){
         //もしキーワード被ってたらエラー
         if(tagRepository.existsByKeyword(form.getKeyword())){
-            throw new TagValidationException(TAG_ALREADY_EXISTS,": Tag already exists",String.format("Try to create userId : %s",form.getKeyword()));
+            throw new TagValidationException(TAG_ALREADY_EXISTS,"create tag",String.format("tag-keyword : %s has already exist",form.getKeyword()));
         }
         else{
             Tag tag = form.toEntity();
@@ -37,6 +37,16 @@ public class TagManagementService {
             TagDto tagDto = TagDto.build(tag);
             return tagDto;
         }
+    }
+
+    /**
+     * タグを取得する(Dtoで)
+     * @param tagId
+     * @return
+     */
+    public TagDto getTag(Long tagId){
+        Tag tag = tagRepository.findById(tagId).orElseThrow(()->new TagValidationException(TAG_DOES_NOT_EXIST,"get tag", String.format("tagId : %d doesn't exist",tagId)));
+        return TagDto.build(tag);       
     }
 
     /**
@@ -53,16 +63,6 @@ public class TagManagementService {
     }
 
     /**
-     * タグを取得する(Dtoで)
-     * @param tagId
-     * @return
-     */
-    public TagDto getTag(Long tagId){
-        Tag tag = tagRepository.findById(tagId).orElseThrow(()->new TagValidationException(TAG_DOES_NOT_EXIST,"Not exist the tag", String.format("Try to get tagId : %d",tagId)));
-        return TagDto.build(tag);       
-    }
-
-    /**
      * タグの更新
      * @param form タグフォーム
      * @return 更新したタグのDto
@@ -70,7 +70,7 @@ public class TagManagementService {
     public TagDto updateTag(TagForm form){
         Tag tag = tagRepository.findById(form.getTagId()).orElseThrow(()->new TagValidationException(TAG_DOES_NOT_EXIST,"Not exist the tag", String.format("Try to get tagId : %d",form.getTagId())));
         if(tagRepository.existsByKeyword(form.getKeyword())){
-            throw new TagValidationException(TAG_ALREADY_EXISTS,": Tag already exists",String.format("Try to update userId : %s",form.getKeyword()));
+            throw new TagValidationException(TAG_ALREADY_EXISTS,"create tag",String.format("tag-keyword : %s has already exist",form.getKeyword()));
         }
         tag.setKeyword(form.getKeyword());
         tagRepository.save(tag);

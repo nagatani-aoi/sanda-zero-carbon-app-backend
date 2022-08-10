@@ -46,8 +46,16 @@ public class AchievementRestController {
      */
     @PostMapping("/mission/achieve")
     @CrossOrigin("http://localhost:5173")
-    public Response<AchievementDto> achiveMission(@RequestBody MissionAchieveForm form) {
-        return ResponseCreator.succeed(achievementService.achieveMission(form));
+    public Response<AchievementDto> achieveMission(@Validated @RequestBody MissionAchieveForm form) {
+        try{
+            return ResponseCreator.succeed(achievementService.achieveMission(form));
+        }catch(UserValidationException e){
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,
+                    new UserValidationException(USER_DOES_NOT_EXIST, "achieve mission",String.format("this user does not exist (userId: %d )", form.getUserId())),null);
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"achieve mission", String.format("this mission does not exist (missionId: )", form.getMissionId())),null);
+        }
     }
 
     /* -------------------- Read -------------------- */

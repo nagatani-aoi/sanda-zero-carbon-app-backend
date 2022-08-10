@@ -13,13 +13,13 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.AchievementDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionAchieveForm;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.TotalParamDto;
-import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.UserDailyStatus;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.AchievementRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.utils.Rule;
+import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -51,26 +51,14 @@ public class AchievementService {
         int hour = form.getHour(); // 時間を固定
         Boolean isDailyMission = form.getIsDailyMission(); // デイリーミッションフラグを固定
 
-        UserDailyStatus userDailyStatus = new UserDailyStatus();
-        try{
-            userDailyStatus = userService.getUserDailyStatus(userId);
-            // ユーザIDからユーザーデイリーステータスDtoを取得
+        if(!(userService.isUserExist(userId))){
+            throw new UserValidationException(USER_DOES_NOT_EXIST, "achieve mission",String.format("this user does not exist (userId: %d )", form.getUserId()));
         }
-        catch(UserValidationException e){
-            throw e;
-        }
-        // UserDailyStatus userDailyStatus = userService.getUserDailyStatus(userId);
+        UserDailyStatus userDailyStatus = userService.getUserDailyStatus(userId);
         // ユーザIDからユーザーデイリーステータスDtoを取得
 
-        MissionDto missionDto = new MissionDto();
-        try{
-            missionDto = missionService.getMission(missionId);
-            // 達成したミッションIDからミッションDtoを取得
-        }
-        catch(MissionValidationException e){
-            throw e;
-        }
-        
+        MissionDto missionDto = missionService.getMission(missionId);
+        // 達成したミッションIDからミッションDtoを取得
 
         int getPoint; // 取得予定ポイント
         int getRealPoint; // 実際の取得ポイント

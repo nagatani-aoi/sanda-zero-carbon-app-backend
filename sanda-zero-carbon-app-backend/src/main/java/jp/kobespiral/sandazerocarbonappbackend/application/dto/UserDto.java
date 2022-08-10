@@ -13,6 +13,7 @@ public class UserDto {
     int totalPoint;//累積ポイント
     int level;//レベル
     double nextLevelPercentage;//次のレベルまでの割合
+    int levelRate;//1レベルあげるために必要なポイント
 
     public static UserDto build(User user){
         UserDto dto = new UserDto();
@@ -21,6 +22,7 @@ public class UserDto {
         dto.totalPoint = user.getTotalPoint();
         dto.level = user.getTotalPoint()/Rule.levelRate + 1;
         dto.nextLevelPercentage = (user.getTotalPoint()%Rule.levelRate)/Rule.levelRate;
+        dto.levelRate = Rule.levelRate;
         return dto;
     }
 }

@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.TagDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.TagForm;
-import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.TagValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.TagManagementService;
 import lombok.RequiredArgsConstructor;
+import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 /**
  * タグのRESTController
@@ -50,7 +51,7 @@ public class TagManagementRestController {
             return ResponseCreator.succeed(true);
         }
         catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST,e,false);
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new TagValidationException(TAG_ALREADY_EXISTS,"create tag",String.format("tag-keyword : %s has already exist",form.getKeyword())),false);
         }
     }
 
@@ -68,7 +69,7 @@ public class TagManagementRestController {
             return ResponseCreator.succeed(tagDto);
         }
         catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST,e,null);
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new TagValidationException(TAG_DOES_NOT_EXIST,"get tag", String.format("tagId : %d doesn't exist",tagId)),null);
         }
     }
 
@@ -84,7 +85,7 @@ public class TagManagementRestController {
             return ResponseCreator.succeed(tagDtos);
         }
         catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST,e,null);
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new TagValidationException(TAG_DOES_NOT_EXIST,"get all tag", String.format("tagList doesn't exist")),null);
         }
     }
     /*--------------------------Update--------------------------- */
@@ -101,7 +102,7 @@ public class TagManagementRestController {
             return ResponseCreator.succeed(true);
         }
         catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST,e,false);
+            return ResponseCreator.fail(TAG_ALREADY_EXISTS,new TagValidationException(TAG_ALREADY_EXISTS,"create tag",String.format("tag-keyword : %s has already exist",form.getKeyword())),false);
         }
     }
 
@@ -118,7 +119,7 @@ public class TagManagementRestController {
             return ResponseCreator.succeed(true);
         }
         else {
-            return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST,null,false);
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new TagValidationException(TAG_DOES_NOT_EXIST,"delete tag", String.format("tagId : %d doesn't exist",tagId)),false);
         }
     }
 }

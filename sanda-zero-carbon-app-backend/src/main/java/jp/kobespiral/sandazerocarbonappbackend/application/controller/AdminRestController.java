@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 
+import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.AdministratorService;
 import lombok.RequiredArgsConstructor;
 /**
@@ -43,7 +44,7 @@ public class AdminRestController {
             return ResponseCreator.succeed(true);
         }
         catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,e, false);
+            return ResponseCreator.fail(ADMIN_DOES_NOT_EXISTS,new  UserValidationException(ADMIN_DOES_NOT_EXISTS,"get administrator", String.format("adminId : %d  ,password : %s doesn't exist.",administratorId,password)), false);
         }
     }
 

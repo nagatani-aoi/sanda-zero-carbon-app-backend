@@ -24,11 +24,13 @@ public class DailyMissionDto {
     String keyword; // キーワード
     LocalDate date; // デイリーミッションの日時
 
+    
     public static DailyMissionDto build(Mission mission, DailyMission dailyMission, Tag tag){
         DailyMissionDto dto = new DailyMissionDto();
         dto.dailyMissionId = dailyMission.getDailyMissionId();
         dto.missionId = mission.getMissionId();
-        dto.point = mission.getPoint();
+        dto.point = 2*mission.getPoint();
+        //変数導入してもいいかも
         dto.title = mission.getTitle();
         dto.description = mission.getDescription();
         dto.CO2Reduction = mission.getCo2Reduction();

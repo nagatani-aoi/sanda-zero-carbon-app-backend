@@ -25,7 +25,7 @@ public class DailyMissionManagementRestController {
      * @return boolean
      */
     @PostMapping("/sanda-admin/daily-mission")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<List<DailyMissionDto>> selectDailyMission(){
         return ResponseCreator.succeed(missionManagementService.selectDailyMissions());
     }

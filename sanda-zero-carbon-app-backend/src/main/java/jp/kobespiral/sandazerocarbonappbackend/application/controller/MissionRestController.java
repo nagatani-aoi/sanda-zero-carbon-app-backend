@@ -33,7 +33,7 @@ public class MissionRestController {
      * @return ミッションDTOのリスト
      */
     @GetMapping("/mission")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<List<MissionDto>> getAllMission(){
         try{
             return ResponseCreator.succeed(missionService.getAllMission());
@@ -48,7 +48,7 @@ public class MissionRestController {
      * @return デイリーミッションDTOのリスト
      */
     @GetMapping("/daily-mission/{userId}")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable String userId){
         return ResponseCreator.succeed(missionService.getDailyMission(userId));
     }

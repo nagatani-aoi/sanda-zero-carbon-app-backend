@@ -1,5 +1,9 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
 import lombok.Data;
 
@@ -10,9 +14,14 @@ import lombok.Data;
  */
 @Data
 public class MissionAchieveForm {
+    @NotNull
     Long missionId; // ミッションID
+    @NotBlank
     String userId; // ユーザID
+    @NotNull
+    @Positive
     int hour; // ミッション実行時間
+    @NotNull
     Boolean isDailyMission; // デイリーミッション判定フラグ
 
     /**

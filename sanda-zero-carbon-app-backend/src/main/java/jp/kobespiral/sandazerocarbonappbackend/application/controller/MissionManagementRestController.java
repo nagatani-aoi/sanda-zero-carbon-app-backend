@@ -19,9 +19,11 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionManagementService;
+import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 /**
  * 管理者側でミッションへのCRUDを行うRESTコントローラ
@@ -95,7 +97,7 @@ public class MissionManagementRestController {
             return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));
         }
         catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"delete the mission", String.format("mission does not exist")),null);
         }
     }
 

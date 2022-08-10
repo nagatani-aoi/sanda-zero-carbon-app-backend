@@ -34,7 +34,7 @@ public class MapRestController {
      * @return ラップされたマップDto
      */
     @GetMapping("/map")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     public Response<MapDto> getMap(@RequestParam("userId") String userId,
             @RequestParam("currentLocation") int currentLocation) {
         return ResponseCreator.succeed(mapService.getMap(userId, currentLocation));
@@ -47,7 +47,7 @@ public class MapRestController {
      * @return ラップされたマップDto
      */
     @GetMapping("/map/initialLocation")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     public Response<MapDto> getMapOnInitialLocation(@RequestParam("userId") String userId) {
         return ResponseCreator.succeed(mapService.getMapOnInitialLocation(userId));
     }

@@ -45,17 +45,9 @@ public class AchievementRestController {
      * @return 達成Dto
      */
     @PostMapping("/mission/achieve")
-    @CrossOrigin("https://localhost:5173")
-    public Response<AchievementDto> achiveMission(@Validated @RequestBody MissionAchieveForm form) {
-        try{
-            return ResponseCreator.succeed(achievementService.achieveMission(form));
-        }
-        catch(MissionValidationException e){
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"achieve the mission", String.format("this mission does not exist (missionId: %d)", form.getMissionId())),null);
-        }
-        catch(UserValidationException e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,new UserValidationException(USER_DOES_NOT_EXIST,"achieve the mission", String.format("this user does not exist (userId: %d)", form.getUserId())),null);
-        }
+    @CrossOrigin("http://localhost:5173")
+    public Response<AchievementDto> achiveMission(@RequestBody MissionAchieveForm form) {
+        return ResponseCreator.succeed(achievementService.achieveMission(form));
     }
 
     /* -------------------- Read -------------------- */
@@ -68,14 +60,16 @@ public class AchievementRestController {
      * @return ラップされた達成Dtoのリスト
      */
     @GetMapping("/achievement/weekly")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     public Response<List<AchievementDto>> getWeeklyAchievements(@RequestParam("userId") String userId,
             @RequestParam("date") String dateString) {
-        try{
+        try {
             return ResponseCreator.succeed(achievementService.getAchivement(userId, dateString)); // 達成リストを取得
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,new UserValidationException(USER_DOES_NOT_EXIST,"get the list of weekly achievement", String.format("this user does not exist (userId: %d )",userId)),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,
+                    new UserValidationException(USER_DOES_NOT_EXIST, "get the list of weekly achievement",
+                            String.format("this user does not exist (userId: %d )", userId)),
+                    null);
         }
     }
 
@@ -86,13 +80,15 @@ public class AchievementRestController {
      * @return ラップされた累計パラメータDto
      */
     @GetMapping("/achievement/total")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     public Response<TotalParamDto> getTotalParam(@RequestParam("userId") String userId) {
-        try{
+        try {
             return ResponseCreator.succeed(achievementService.getTotalParam(userId));
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,new UserValidationException(USER_DOES_NOT_EXIST,"get total parameter", String.format("this user does not exist (userId: %d )",userId)),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(
+                    ErrorCode.USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
+                            "get total parameter", String.format("this user does not exist (userId: %d )", userId)),
+                    null);
         }
     }
 }

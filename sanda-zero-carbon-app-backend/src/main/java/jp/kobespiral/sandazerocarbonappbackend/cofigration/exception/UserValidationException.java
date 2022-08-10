@@ -4,7 +4,7 @@ public class UserValidationException extends RuntimeException{
     /** シリアライズであることを保証？ */
     private final static long serialVersionUID = 1L;
     /** エラーの種類識別子 */
-    private final UserErrorCode code;
+    private final ErrorCode code;
     /**
      * 例外を生成するコンストラクタ
      *
@@ -12,7 +12,7 @@ public class UserValidationException extends RuntimeException{
      * @param error 発生したエラーの内容を説明する文字列
      * @param cause 発生したエラーの原因を説明する文字列
      */
-    public UserValidationException(UserErrorCode code, String error, String cause) {
+    public UserValidationException(ErrorCode code, String error, String cause) {
         super(String.format("fail to %s, because %s.", error, cause));
         this.code = code;
     }

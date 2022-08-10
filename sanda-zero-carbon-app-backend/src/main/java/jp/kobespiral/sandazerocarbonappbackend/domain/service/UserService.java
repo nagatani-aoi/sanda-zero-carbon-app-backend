@@ -3,6 +3,7 @@ package jp.kobespiral.sandazerocarbonappbackend.domain.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserDailyDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
@@ -15,7 +16,7 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.repository.AchievementRepo
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.MissionRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.UserDailyStatusRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.UserRepository;
-import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserErrorCode.*;
+import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -45,7 +46,7 @@ public class UserService {
     public User createUser(UserForm form){
         String userId = form.getUserId();
         if(userRepository.existsById(userId)){
-            throw new UserValidationException(USER_ALREADY_EXISTS,": User already exists",String.format("Try to create userId : %s",userId));
+            throw new UserValidationException(USER_ALREADY_EXISTS,"create user",String.format("userId : %s has already exist.",userId));
         }
         User user = form.toEntity();
         if(user.getPassword()=="" || user.getPassword()==null){
@@ -63,7 +64,7 @@ public class UserService {
      * @return ユーザ
      */
     public User getUser(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not exist the user", String.format("Try to get userId : %d",userId)));
+        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"get user", String.format("userId : %s does't exist",userId)));
         return user;
     }
     /**
@@ -93,7 +94,7 @@ public class UserService {
             return user;
         }
         else{
-            throw new  UserValidationException(USER_DOES_NOT_EXIST,"Not exist the user", String.format("Try to login userId : %d",userId));
+            throw new  UserValidationException(USER_DOES_NOT_EXIST,"login user", String.format("userId : %s,password : %s doesn't exist",userId,password));
         }
     }
 
@@ -104,8 +105,19 @@ public class UserService {
      */
     public UserDto getUserDto(String userId) {
         //微妙
-        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not get the userDto", String.format("Try to get userDto. userId : %d",userId)));
+        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"get userDto", String.format("userId : %s doesn't exits",userId)));
         return UserDto.build(user);
+    }
+
+    /**
+     * ユーザデイリーステータスDtoの取得
+     * @param userId ユーザID
+     * @return ユーザデイリーステータスDto
+     */
+    public UserDailyDto getUserDailyDto(String userId) {
+        
+        UserDailyStatus userDailyStatus = getUserDailyStatus(userId);
+        return UserDailyDto.build(userDailyStatus);
     }
     
     /**
@@ -178,7 +190,7 @@ public class UserService {
      * @return パスワードを変更したユーザエンティティ
      */
     public User changePassword(String userId,String password){
-        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"Not exist the user", String.format("Try to get userId : %d",userId)));
+        User user = userRepository.findById(userId).orElseThrow(()->new UserValidationException(USER_DOES_NOT_EXIST,"change user password", String.format("userId : %s doesn't exist",userId)));
         user.setPassword(password);
         userRepository.save(user);
         return user;

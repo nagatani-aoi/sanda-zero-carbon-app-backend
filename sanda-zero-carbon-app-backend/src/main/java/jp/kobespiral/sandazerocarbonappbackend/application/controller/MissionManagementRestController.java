@@ -57,7 +57,12 @@ public class MissionManagementRestController {
     @GetMapping("/sanda-admin/mission/{missionId}")
     @CrossOrigin("http://localhost:5173")
     Response<MissionDto> getMission(@PathVariable Long missionId){
-        return ResponseCreator.succeed(missionManagementService.getMission(missionId));
+        try{
+            return ResponseCreator.succeed(missionManagementService.getMission(missionId));
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"get the mission", String.format("mission does not exist")),null);
+        }
     }
 
     /**
@@ -67,7 +72,12 @@ public class MissionManagementRestController {
     @GetMapping("/sanda-admin/mission")
     @CrossOrigin("http://localhost:5173")
     Response<List<MissionDto>> getAllMission(){
-        return ResponseCreator.succeed(missionManagementService.getAllMissions());
+        try{
+            return ResponseCreator.succeed(missionManagementService.getAllMissions());
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"get all mission", String.format("mission does not exist")),null);
+        }
     }
 
 
@@ -80,7 +90,12 @@ public class MissionManagementRestController {
     @PutMapping("/sanda-admin/mission/{missionId}")
     @CrossOrigin("http://localhost:5173")
     Response<MissionDto> updateMission(@PathVariable Long missionId, @Validated @RequestBody MissionForm form){
-        return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
+        try{
+            return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"update the mission", String.format("mission does not exist")),null);
+        }
     }
 
 

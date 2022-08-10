@@ -1,6 +1,7 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +39,7 @@ public class AdminRestController {
       * @return 成功or失敗
       */
     @GetMapping("/sanda-admin/login")
+    @CrossOrigin("http://localhost:5173")
     public Response<Boolean> login(@RequestParam("administratorId") Long administratorId,@RequestParam("password") String password){
         try{
             adminService.getAdministrator(administratorId,password);

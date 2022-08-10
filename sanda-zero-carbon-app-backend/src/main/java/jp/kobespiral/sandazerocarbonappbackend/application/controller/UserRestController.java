@@ -42,7 +42,7 @@ public class UserRestController {
      * @return 作成したユーザエンティティ
      */
     @PostMapping("/user")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     public Response<User> createUser(@Validated @RequestBody UserForm form){
         try{
             User user = userService.createUser(form);
@@ -60,7 +60,7 @@ public class UserRestController {
      * @return ログインが成功or失敗
      */
     @GetMapping("/user/login")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     public Response<Boolean> login(@RequestParam("userId") String userId,@RequestParam("password") String password){
         try{
             userService.loginUser(userId,password);
@@ -77,7 +77,7 @@ public class UserRestController {
      * @return ユーザdto
      */
     @GetMapping("/user")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     public Response<UserDto> getUserDto(@Validated @RequestParam("userId") String userId){
         try{
             UserDto user = userService.getUserDto(userId);
@@ -93,7 +93,7 @@ public class UserRestController {
      * @return
      */
     @GetMapping("/user/daily")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     public Response<UserDailyDto> getUserDailyDto(@Validated @RequestParam("userId") String userId){
         try{
             UserDailyDto dto = userService.getUserDailyDto(userId);
@@ -110,7 +110,7 @@ public class UserRestController {
      * @return ユーザが存在する(true)かしないか(false)
      */
     @GetMapping("/user/exist")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     public Response<Boolean> getUserExist(@Validated @RequestParam("userId") String userId){
         Boolean judge = userService.isUserExist(userId);
         if(judge==true){
@@ -129,7 +129,7 @@ public class UserRestController {
      * @return 変更されたパスワードを持つユーザエンティティ
      */
     @PostMapping("/user/changep")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     public Response<User> changeUserPassword(@Validated @RequestParam("userId") String userId,@Validated @RequestParam("password") String password){
         try{
             User user = userService.changePassword(userId,password);

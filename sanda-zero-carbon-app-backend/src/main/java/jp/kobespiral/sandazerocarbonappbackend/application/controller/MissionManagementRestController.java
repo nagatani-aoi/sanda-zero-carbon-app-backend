@@ -19,9 +19,12 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionDto;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.TagValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionManagementService;
+import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 /**
  * 管理者側でミッションへのCRUDを行うRESTコントローラ
@@ -41,9 +44,14 @@ public class MissionManagementRestController {
      * @return 作成したミッションのDTO
      */
     @PostMapping("/sanda-admin/mission")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<MissionDto> createMission(@Validated @RequestBody MissionForm form){
-        return ResponseCreator.succeed(missionManagementService.createMission(form));
+        try{
+            return ResponseCreator.succeed(missionManagementService.createMission(form));
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST,new TagValidationException(TAG_DOES_NOT_EXIST,"create the mission", String.format("this tag does not exist (tagId: %d )",form.getTitle())),null);
+        }
     }
 
 
@@ -53,9 +61,14 @@ public class MissionManagementRestController {
      * @return 指定したIDのミッションDTO
      */
     @GetMapping("/sanda-admin/mission/{missionId}")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<MissionDto> getMission(@PathVariable Long missionId){
-        return ResponseCreator.succeed(missionManagementService.getMission(missionId));
+        try{
+            return ResponseCreator.succeed(missionManagementService.getMission(missionId));
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"get the mission", String.format("this mission does not exist (missionId: %d )", missionId)),null);
+        }
     }
 
     /**
@@ -63,9 +76,14 @@ public class MissionManagementRestController {
      * @return すべてのミッションのDTOリスト
      */
     @GetMapping("/sanda-admin/mission")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<List<MissionDto>> getAllMission(){
-        return ResponseCreator.succeed(missionManagementService.getAllMissions());
+        try{
+            return ResponseCreator.succeed(missionManagementService.getAllMissions());
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"get all mission", String.format("mission does not exist")),null);
+        }
     }
 
 
@@ -76,9 +94,14 @@ public class MissionManagementRestController {
      * @return 更新したミッションのDTO
      */
     @PutMapping("/sanda-admin/mission/{missionId}")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<MissionDto> updateMission(@PathVariable Long missionId, @Validated @RequestBody MissionForm form){
-        return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
+        try{
+            return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"update the mission", String.format("this mission does not exist (missionId: %d )", missionId)),null);
+        }
     }
 
 
@@ -89,13 +112,13 @@ public class MissionManagementRestController {
      * @return boolean
      */
     @DeleteMapping("/sanda-admin/mission")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<Boolean> deleteMission(@RequestParam("missionId") Long missionId){
         try{
             return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));
         }
         catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,e,null);
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"delete the mission", String.format("this mission does not exist (missionId: %d )", missionId)),null);
         }
     }
 
@@ -107,7 +130,7 @@ public class MissionManagementRestController {
      * @return ミッションDTOのリスト
      */
     @PostMapping("/sanda-admin/search/keyword")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<List<MissionDto>> searchMissionByKeyword(@RequestParam("keyword") String keyword){
         return ResponseCreator.succeed(missionManagementService.searchMissionByKeyword(keyword));
     }
@@ -118,8 +141,13 @@ public class MissionManagementRestController {
      * @return ミッションDTOのリスト
      */
     @PostMapping("/sanda-admin/search/tag")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<List<MissionDto>> searchMissionByTag(@RequestParam("tag") Long tagId){
-        return ResponseCreator.succeed(missionManagementService.searchMissionByTag(tagId));
+        try{
+            return ResponseCreator.succeed(missionManagementService.searchMissionByTag(tagId));
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST,new TagValidationException(TAG_DOES_NOT_EXIST,"create the mission", String.format("this tag does not exist (tagId: %d )",tagId)),null);
+        }
     }
 }

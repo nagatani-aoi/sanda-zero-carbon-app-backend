@@ -8,13 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.AchievementDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionAchieveForm;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.TotalParamDto;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.AchievementService;
 import lombok.RequiredArgsConstructor;
+import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 import java.util.List;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,7 +63,14 @@ public class AchievementRestController {
     @CrossOrigin("http://localhost:5173")
     public Response<List<AchievementDto>> getWeeklyAchievements(@RequestParam("userId") String userId,
             @RequestParam("date") String dateString) {
-        return ResponseCreator.succeed(achievementService.getAchivement(userId, dateString)); // 達成リストを取得
+        try {
+            return ResponseCreator.succeed(achievementService.getAchivement(userId, dateString)); // 達成リストを取得
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,
+                    new UserValidationException(USER_DOES_NOT_EXIST, "get the list of weekly achievement",
+                            String.format("this user does not exist (userId: %d )", userId)),
+                    null);
+        }
     }
 
     /**
@@ -70,6 +82,13 @@ public class AchievementRestController {
     @GetMapping("/achievement/total")
     @CrossOrigin("http://localhost:5173")
     public Response<TotalParamDto> getTotalParam(@RequestParam("userId") String userId) {
-        return ResponseCreator.succeed(achievementService.getTotalParam(userId));
+        try {
+            return ResponseCreator.succeed(achievementService.getTotalParam(userId));
+        } catch (Exception e) {
+            return ResponseCreator.fail(
+                    ErrorCode.USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
+                            "get total parameter", String.format("this user does not exist (userId: %d )", userId)),
+                    null);
+        }
     }
 }

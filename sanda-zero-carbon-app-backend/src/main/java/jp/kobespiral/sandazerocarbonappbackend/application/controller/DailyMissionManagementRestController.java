@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.DailyMissionDto;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionManagementService;
+import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 @RestController
 @RequestMapping("/api")
@@ -25,8 +28,13 @@ public class DailyMissionManagementRestController {
      * @return boolean
      */
     @PostMapping("/sanda-admin/daily-mission")
-    @CrossOrigin("https://localhost:5173")
+    @CrossOrigin("http://localhost:5173")
     Response<List<DailyMissionDto>> selectDailyMission(){
-        return ResponseCreator.succeed(missionManagementService.selectDailyMissions());
+        try{
+            return ResponseCreator.succeed(missionManagementService.selectDailyMissions());
+        }
+        catch(Exception e){
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"select daily mission", String.format("mission does not exist")),null);
+        }
     }
 }

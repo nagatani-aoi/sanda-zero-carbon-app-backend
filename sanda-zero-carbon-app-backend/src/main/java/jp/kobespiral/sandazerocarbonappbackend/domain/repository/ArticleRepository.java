@@ -15,12 +15,17 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Article;
 @Repository
 public interface ArticleRepository extends CrudRepository<Article, Long> {
     /**
+     * 全ての記事を取得する
+     * @return 全ての記事
+     */
+    List<Article> findAllByOrderByPostedAtDesc();
+    /**
      * タグIDで記事を検索する
      * 
      * @param tagId タグID
      * @return 指定されたタグIDでフィルター済みの済みの記事のリスト
      */
-    List<Article> findByTagId(Long tagId);
+    List<Article> findByTagIdOrderByPostedAtDesc(Long tagId);
 
     /**
      * 重要度の高い記事を検索する

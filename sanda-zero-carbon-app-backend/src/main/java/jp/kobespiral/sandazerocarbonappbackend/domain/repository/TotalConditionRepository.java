@@ -21,6 +21,14 @@ public interface TotalConditionRepository extends CrudRepository<TotalCondition,
     List<TotalCondition> findAll();
 
     /**
+     * 直近の市の状況を取得
+     *
+     * @return 直近の市の状況
+     */
+    TotalCondition findFirstByOrderByRecordedAtDesc();
+    // TotalCondition findFirst();
+
+    /**
      * 市全体のCO2削減状況を期間で検索する
      * 
      * @param since フィルター期間の始まり

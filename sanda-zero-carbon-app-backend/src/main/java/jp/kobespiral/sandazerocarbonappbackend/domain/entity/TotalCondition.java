@@ -25,7 +25,7 @@ public class TotalCondition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long totalConditionId; // 市の状況ID
     double costReduction; // 節約金額
-    double CO2Reduction; // 削減CO2
+    double Co2Reduction; // 削減CO2
     LocalDateTime since; // いつから
     LocalDateTime until; // いつまで
     LocalDateTime recordedAt; // 記録日時

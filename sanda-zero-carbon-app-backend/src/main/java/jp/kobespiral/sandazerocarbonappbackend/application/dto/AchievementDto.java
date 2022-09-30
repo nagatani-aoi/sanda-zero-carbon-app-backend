@@ -13,9 +13,6 @@ import lombok.Data;
  */
 @Data
 public class AchievementDto {
-    // Long achievementId; // 達成ID
-    // String userId; // ユーザID
-    // Long missionId; // ミッションID
     String title; // 題目
     MissionType missionType; // ミッションタイプ
     int hour; // ミッション実行時間
@@ -35,9 +32,7 @@ public class AchievementDto {
     public static AchievementDto build(Achievement achievement, MissionDto missionDto) {
         // 達成Dtoに各変数をセット
         AchievementDto dto = new AchievementDto();
-        // dto.achievementId = achievement.getAchievementId();
-        // dto.userId = achievement.getUserId();
-        // dto.missionId = achievement.getMissionId();
+
         dto.getPoint = achievement.getGetPoint();
         dto.title = missionDto.getTitle();
         dto.missionType = missionDto.getMissionType();

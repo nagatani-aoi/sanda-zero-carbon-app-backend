@@ -1,5 +1,10 @@
 package jp.kobespiral.sandazerocarbonappbackend.cofigration.exception;
 
+/**
+ * 市の状況の例外
+ * 
+ * @author ing
+ */
 public class TotalConditionValidationException extends RuntimeException {
     /** シリアライズであることを保証？ */
     private final static long serialVersionUID = 1L;

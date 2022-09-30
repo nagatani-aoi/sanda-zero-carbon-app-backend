@@ -1,9 +1,11 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.TotalConditionDto;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
@@ -15,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 市の状況のRESTコントローラー
+ * 
+ * @author ing
  */
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -23,22 +27,38 @@ public class TotalConditionRestController {
     /** 市の状況のサービス */
     private final TotalConditionService totalConditionService;
 
+    /* -------------------- Create -------------------- */
+
     /**
      * 直近1時間の市の状況を計算する
      *
-     * @return boolean
+     * @return Response<boolean>
      */
     @PostMapping("/total-codition")
     public Response<Boolean> calculateTotalCondition() {
         try {
             totalConditionService.calculateTotalCondition(); // 直近1時間の市の状況を計算
             return ResponseCreator.succeed(true); // trueを返す
+        } catch (TotalConditionValidationException e) {
+            return ResponseCreator.fail(ErrorCode.TOTAL_CONDITION_COULD_NOT_BE_CALUCULATE, e, false); // 例外をキャッチしてfalseを返す
         } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.TOTAL_CONDITION_COULD_NOT_BE_CALUCULATE,
-                    new TotalConditionValidationException(
-                            TOTAL_CONDITION_COULD_NOT_BE_CALUCULATE, "caliculate total condition",
-                            String.format("Accessed a non-existent mission")),
-                    false); // 例外をキャッチしてfalseを返す
+            return ResponseCreator.fail(ErrorCode.OTHER_ERROR, e, false); // 例外をキャッチしてfalseを返す
+        }
+    }
+
+    /* -------------------- Read -------------------- */
+
+    /**
+     * 全ての市の状況を集計して取得
+     *
+     * @return Response<市の状況DTO>
+     */
+    @GetMapping("/total-codition")
+    public Response<TotalConditionDto> getAllTotalCondition() {
+        try {
+            return ResponseCreator.succeed(totalConditionService.getAllTotalCondition()); // 全ての市の状況を集計して返す
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.OTHER_ERROR, e, null); // 例外をキャッチしてfalseを返す
         }
     }
 }

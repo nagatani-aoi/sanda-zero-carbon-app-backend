@@ -1,6 +1,8 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -97,6 +99,30 @@ public class TotalConditionService {
         double costReduction = 0d; // 節約金額
 
         List<TotalCondition> totalConditions = totalConditionRepository.findAll(); // 市の状況を全て取得
+
+        for (TotalCondition totalCondition : totalConditions) { // リスト内の市の状況ごとに
+            co2Reduction += totalCondition.getCo2Reduction(); // 削減CO2量を加算
+            costReduction += totalCondition.getCostReduction(); // 節約金額を加算
+        }
+
+        return TotalConditionDto.build(co2Reduction, costReduction); // 市の状況DTOを生成して返す
+    }
+
+    /**
+     * 直近1週間の市の状況を集計して取得
+     *
+     * @return 市の状況DTO
+     */
+    public TotalConditionDto getWeeklyTotalCondition() {
+        double co2Reduction = 0d; // 削減CO2量
+        double costReduction = 0d; // 節約金額
+
+        LocalDateTime now = LocalDateTime.now(); // 現在日時を取得
+
+        LocalDateTime since = now.with(DayOfWeek.MONDAY).with(LocalTime.of(0, 0, 0, 0)); // 現在週の月曜日を取得
+        LocalDateTime until = now.with(DayOfWeek.SUNDAY).with(LocalTime.of(0, 0, 0, 0)); // 現在週の日曜日を取得
+
+        List<TotalCondition> totalConditions = totalConditionRepository.findByRecordedAtBetween(since, until); // 直近1週間の市の状況を取得
 
         for (TotalCondition totalCondition : totalConditions) { // リスト内の市の状況ごとに
             co2Reduction += totalCondition.getCo2Reduction(); // 削減CO2量を加算

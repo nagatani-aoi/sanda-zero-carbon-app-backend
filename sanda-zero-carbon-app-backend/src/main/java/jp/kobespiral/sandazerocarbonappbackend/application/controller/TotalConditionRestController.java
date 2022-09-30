@@ -61,4 +61,18 @@ public class TotalConditionRestController {
             return ResponseCreator.fail(ErrorCode.OTHER_ERROR, e, null); // 例外をキャッチしてfalseを返す
         }
     }
+
+    /**
+     * 直近1週間の市の状況を集計して取得
+     *
+     * @return Response<市の状況DTO>
+     */
+    @GetMapping("/total-codition/weekly")
+    public Response<TotalConditionDto> getWeeklyTotalCondition() {
+        try {
+            return ResponseCreator.succeed(totalConditionService.getWeeklyTotalCondition()); // 全ての市の状況を集計して返す
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.OTHER_ERROR, e, null); // 例外をキャッチしてfalseを返す
+        }
+    }
 }

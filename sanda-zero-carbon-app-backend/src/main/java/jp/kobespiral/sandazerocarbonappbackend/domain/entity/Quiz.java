@@ -24,7 +24,7 @@ public class Quiz {
     Long quizId;
     String title;
     String quizSentence; // 問題文
-    String explain; // 説明文
+    String explaination; // 説明文
     String ans1;
     String ans2;
     String ans3;

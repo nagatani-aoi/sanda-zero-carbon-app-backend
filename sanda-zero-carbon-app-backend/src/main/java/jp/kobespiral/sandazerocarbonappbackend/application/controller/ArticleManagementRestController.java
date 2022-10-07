@@ -174,6 +174,11 @@ public class ArticleManagementRestController {
     }
 
     /*--------------------------Delete--------------------------- */
+    /**
+     * 記事を削除する
+     * @param articleId 記事ID
+     * @return 成功or失敗
+     */
     @DeleteMapping("/sanda-admin/article")
     @CrossOrigin("http://localhost:5173")
     Response<Boolean> deleteArticle(@RequestParam("articleId") Long articleId){

@@ -109,12 +109,7 @@ public class UserRestController {
     @CrossOrigin("http://localhost:5173")
     public Response<Boolean> getUserExist(@Validated @RequestParam("userId") String userId){
         Boolean judge = userService.isUserExist(userId);
-        if(judge==true){
-            return ResponseCreator.succeed(judge);
-        }
-        else{
-            return ResponseCreator.fail(USER_DOES_NOT_EXIST,new  UserValidationException(USER_DOES_NOT_EXIST,"get userExist", String.format("userId : %s doesn't exist",userId)), false);
-        }
+        return ResponseCreator.succeed(judge);
     }
 
     /**

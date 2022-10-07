@@ -9,12 +9,14 @@ import lombok.Data;
  */
 @Data
 public class UserDailyDto {
-    int dailyTotalPoint; //今日の累積ポイント
+    int dailyMissionPoint; //今日のミッション累積ポイント
+    int dailyQuizPoint; //今日のクイズ累積ポイント
     int dailyMaxMissionPoint; //一日の獲得ポイント上限
 
     public static UserDailyDto build(UserDailyStatus userDailyStatus){
         UserDailyDto dto = new UserDailyDto();
-        dto.dailyTotalPoint = userDailyStatus.getTotalPoint();
+        dto.dailyMissionPoint = userDailyStatus.getTotalMissionPoint();
+        dto.dailyQuizPoint = userDailyStatus.getTotalQuizPoint();
         dto.dailyMaxMissionPoint = Rule.maxMissionPoint;
         return dto;
     }

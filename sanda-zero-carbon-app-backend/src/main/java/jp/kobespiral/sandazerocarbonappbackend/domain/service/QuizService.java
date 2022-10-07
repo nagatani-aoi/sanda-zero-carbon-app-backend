@@ -75,7 +75,7 @@ public class QuizService {
         // 正解の選択肢を取得
         String correctAns = quiz.getCorrectAns();
         // 正解判定
-        if (correctAns == answeredQuiz.getAns()) {
+        if (correctAns.equals(answeredQuiz.getAns())) {
             isCorrect = true;
         }
         // 回答済みクイズエンティティを保存
@@ -88,7 +88,7 @@ public class QuizService {
 
         int currentPoint = userDailyStatus.getTotalPoint();
         int getPoint = quiz.getPoint();
-        
+
         if (isCorrect) { // クイズが正解ならばポイント加算
             if (currentPoint > Rule.maxMissionPoint) { // ポイント取得上限に達していたら
                 getPoint = 0; // ポイント0

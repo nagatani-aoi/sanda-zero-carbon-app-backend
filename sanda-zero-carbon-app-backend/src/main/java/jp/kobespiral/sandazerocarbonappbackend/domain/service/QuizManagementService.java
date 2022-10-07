@@ -106,6 +106,7 @@ public class QuizManagementService {
         quiz.setCorrectAns(form.getCorrectAns());
         quiz.setPoint(form.getPoint());
         quiz.setTagId(form.getTagId());
+        quizRepository.save(quiz);
         // タグの生成
         Tag tag = tagRepository.findById(form.getTagId()).orElseThrow(()->new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ,"update", String.format("quizId: %d does not have tag", quizId)));
 

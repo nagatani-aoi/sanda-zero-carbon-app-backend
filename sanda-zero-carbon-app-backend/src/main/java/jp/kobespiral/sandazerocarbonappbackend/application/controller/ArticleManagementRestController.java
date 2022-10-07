@@ -49,7 +49,8 @@ public class ArticleManagementRestController {
     @CrossOrigin("http://localhost:5173")
     public Response<Boolean> createArticle(@Validated @RequestBody ArticleForm form){
         //作成失敗は可能性ない
-        ArticleDto articleDto = articleManagementService.createArticle(form);
+        //ArticleDto articleDto = articleManagementService.createArticle(form);
+        articleManagementService.createArticle(form);
         return ResponseCreator.succeed(true);
     }
 

@@ -16,8 +16,6 @@ public class AnsweredQuizForm {
     String userId; // ユーザID
     @NotBlank
     String ans; // 回答
-    @NotNull
-    Boolean isCorrect; // 正誤フラグ
 
     public AnsweredQuiz toEntity() {
         AnsweredQuiz answeredQuiz = new AnsweredQuiz();
@@ -25,7 +23,7 @@ public class AnsweredQuizForm {
         answeredQuiz.setQuizId(quizId);
         answeredQuiz.setAnsweredAt(LocalDateTime.now());
         answeredQuiz.setAns(ans);
-        answeredQuiz.setIsCorrect(isCorrect);
+        answeredQuiz.setIsCorrect(false);
         return answeredQuiz;
     }
 }

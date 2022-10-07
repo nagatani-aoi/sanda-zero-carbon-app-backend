@@ -68,14 +68,27 @@ public class QuizService {
         // タグの取得
         Tag tag = tagRepository.findById(quiz.getTagId()).orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ,"answer quiz",String.format("quizId: %d does not have tag", quiz.getQuizId())));
 
+        // 正解判定処理
+        // 回答済みクイズエンティティを生成する
+        AnsweredQuiz answeredQuiz = form.toEntity();
+        Boolean isCorrect = answeredQuiz.getIsCorrect();
+        // 正解の選択肢を取得
+        String correctAns = quiz.getCorrectAns();
+        // 正解判定
+        if (correctAns == answeredQuiz.getAns()) {
+            isCorrect = true;
+        }
+        // 回答済みクイズエンティティを保存
+        answeredQuiz.setIsCorrect(isCorrect);
+        answeredQuizRepository.save(answeredQuiz);
+
         // クイズが正解ならば、ユーザーデイリーステータスへポイントを加算する
         // ユーザIDからユーザーデイリーステータスDtoを取得
         UserDailyStatus userDailyStatus = userService.getUserDailyStatus(userId);
 
-        Boolean isCorrect = form.getIsCorrect();
-
         int currentPoint = userDailyStatus.getTotalPoint();
         int getPoint = quiz.getPoint();
+        
         if (isCorrect) { // クイズが正解ならばポイント加算
             if (currentPoint > Rule.maxMissionPoint) { // ポイント取得上限に達していたら
                 getPoint = 0; // ポイント0
@@ -87,10 +100,6 @@ public class QuizService {
             userDailyStatus.setTotalPoint(currentPoint + getPoint);
             userDailyStatusRepository.save(userDailyStatus);
         }
-
-        // 回答済みクイズエンティティを生成し、保存
-        AnsweredQuiz answeredQuiz = form.toEntity();
-        answeredQuizRepository.save(answeredQuiz);
     
         return AnsweredQuizDto.build(answeredQuiz, quiz, tag);
     }

@@ -17,6 +17,7 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionManagementS
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class DailyMissionManagementRestController {
     @Autowired
@@ -28,7 +29,6 @@ public class DailyMissionManagementRestController {
      * @return boolean
      */
     @PostMapping("/sanda-admin/daily-mission")
-    @CrossOrigin("http://localhost:5173")
     Response<List<DailyMissionDto>> selectDailyMission(){
         try{
             return ResponseCreator.succeed(missionManagementService.selectDailyMissions());

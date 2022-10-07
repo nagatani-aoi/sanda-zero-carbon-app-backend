@@ -11,12 +11,10 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidat
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.AnsweredQuiz;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Quiz;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Tag;
-import jp.kobespiral.sandazerocarbonappbackend.domain.entity.UserDailyStatus;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.AnsweredQuizRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.QuizRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.TagRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.UserDailyStatusRepository;
-import jp.kobespiral.sandazerocarbonappbackend.domain.utils.Rule;
 
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 

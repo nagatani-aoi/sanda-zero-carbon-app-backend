@@ -27,6 +27,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class ArticleRestController {
     /** 記事のサービス */
@@ -43,7 +44,6 @@ public class ArticleRestController {
      * @return 記事dtoのリスト
      */
     @GetMapping("/article")
-    @CrossOrigin("http://localhost:5173")
     Response<List<ArticleDto>> getAllArticle(){
         try{
             return ResponseCreator.succeed(articleManagementService.getAllArticles());
@@ -58,7 +58,6 @@ public class ArticleRestController {
      * @return 記事dtoのリスト
      */
     @GetMapping("/article/top")
-    @CrossOrigin("http://localhost:5173")
     Response<List<ArticleDto>> getTopArticle(@Validated @RequestParam("articleCount") int articleCount){
         try{
             return ResponseCreator.succeed(userArticleService.getTopArticle(articleCount));
@@ -75,7 +74,6 @@ public class ArticleRestController {
      * @return　記事dto
      */
     @GetMapping("/article/article")
-    @CrossOrigin("http://localhost:5173")
     Response<ArticleDto> searchArticleByArticleId(@RequestParam("articleId") Long articleId){
         try{
             return ResponseCreator.succeed(articleManagementService.getArticle(articleId));
@@ -92,7 +90,6 @@ public class ArticleRestController {
      * @return 記事dtoのリスト
      */
     @GetMapping("/article/tag")
-    @CrossOrigin("http://localhost:5173")
     Response<List<ArticleDto>> searchArticleByTagId(@RequestParam("tagId") Long tagId){
         try{
             return ResponseCreator.succeed(articleManagementService.searchArticleByTagId(tagId));
@@ -108,7 +105,6 @@ public class ArticleRestController {
      * @return 記事dtoのリスト
      */
     @GetMapping("/article/important")
-    @CrossOrigin("http://localhost:5173")
     Response<List<ArticleDto>> searchArticleByIsImportant(){
         try{
             return ResponseCreator.succeed(articleManagementService.searchArticleByIsImportant());
@@ -125,7 +121,6 @@ public class ArticleRestController {
      * @return 記事dtoのリスト
      */
     @GetMapping("/article/keyword")
-    @CrossOrigin("http://localhost:5173")
     Response<List<ArticleDto>> searchArticleByKeyword(@RequestParam("keyword") String keyword){
         try{
             return ResponseCreator.succeed(articleManagementService.searchArticleByKeyword(keyword));

@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class AchievementRestController {
     /** 達成のサービス */
@@ -45,7 +46,6 @@ public class AchievementRestController {
      * @return 達成Dto
      */
     @PostMapping("/mission/achieve")
-    @CrossOrigin("http://localhost:5173")
     public Response<AchievementDto> achieveMission(@Validated @RequestBody MissionAchieveForm form) {
         try{
             return ResponseCreator.succeed(achievementService.achieveMission(form));
@@ -68,7 +68,6 @@ public class AchievementRestController {
      * @return ラップされた達成Dtoのリスト
      */
     @GetMapping("/achievement/weekly")
-    @CrossOrigin("http://localhost:5173")
     public Response<List<AchievementDto>> getWeeklyAchievements(@RequestParam("userId") String userId,
             @RequestParam("date") String dateString) {
         try {
@@ -88,7 +87,6 @@ public class AchievementRestController {
      * @return ラップされた累計パラメータDto
      */
     @GetMapping("/achievement/total")
-    @CrossOrigin("http://localhost:5173")
     public Response<TotalParamDto> getTotalParam(@RequestParam("userId") String userId) {
         try {
             return ResponseCreator.succeed(achievementService.getTotalParam(userId));

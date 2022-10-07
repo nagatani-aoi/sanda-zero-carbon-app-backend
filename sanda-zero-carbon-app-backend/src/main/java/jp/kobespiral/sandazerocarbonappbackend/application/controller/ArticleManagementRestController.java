@@ -5,7 +5,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +17,6 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.ArticleForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ArticleValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
-import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Article;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.ArticleManagementService;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.UserArticleService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class ArticleManagementRestController {
     /** 記事の管理者のサービス */
@@ -48,10 +47,10 @@ public class ArticleManagementRestController {
      * @return 成功or失敗
      */
     @PostMapping("/sanda-admin/article")
-    @CrossOrigin("http://localhost:5173")
     public Response<Boolean> createArticle(@Validated @RequestBody ArticleForm form){
         //作成失敗は可能性ない
-        ArticleDto articleDto = articleManagementService.createArticle(form);
+        //ArticleDto articleDto = articleManagementService.createArticle(form);
+        articleManagementService.createArticle(form);
         return ResponseCreator.succeed(true);
     }
 
@@ -61,7 +60,6 @@ public class ArticleManagementRestController {
      * @return 記事dtoのリスト
      */
     @GetMapping("/sanda-admin/article")
-    @CrossOrigin("http://localhost:5173")
     Response<List<ArticleDto>> getAllArticle(){
         try{
             return ResponseCreator.succeed(articleManagementService.getAllArticles());
@@ -76,7 +74,6 @@ public class ArticleManagementRestController {
      * @return 記事dtoのリスト
      */
     @GetMapping("/sanda-admin/article/top")
-    @CrossOrigin("http://localhost:5173")
     Response<List<ArticleDto>> getTopArticle(@Validated @RequestParam("articleCount") int articleCount){
         try{
             return ResponseCreator.succeed(userArticleService.getTopArticle(articleCount));
@@ -93,7 +90,6 @@ public class ArticleManagementRestController {
      * @return　記事dto
      */
     @GetMapping("/sanda-admin/article/article")
-    @CrossOrigin("http://localhost:5173")
     Response<ArticleDto> searchArticleByArticleId(@RequestParam("articleId") Long articleId){
         try{
             return ResponseCreator.succeed(articleManagementService.getArticle(articleId));
@@ -110,7 +106,6 @@ public class ArticleManagementRestController {
      * @return 記事dtoのリスト
      */
     @GetMapping("/sanda-admin/article/tag")
-    @CrossOrigin("http://localhost:5173")
     Response<List<ArticleDto>> searchArticleByTagId(@RequestParam("tagId") Long tagId){
         try{
             return ResponseCreator.succeed(articleManagementService.searchArticleByTagId(tagId));
@@ -126,7 +121,6 @@ public class ArticleManagementRestController {
      * @return 記事dtoのリスト
      */
     @GetMapping("/sanda-admin/article/important")
-    @CrossOrigin("http://localhost:5173")
     Response<List<ArticleDto>> searchArticleByIsImportant(){
         try{
             return ResponseCreator.succeed(articleManagementService.searchArticleByIsImportant());
@@ -143,7 +137,6 @@ public class ArticleManagementRestController {
      * @return 記事dtoのリスト
      */
     @GetMapping("/sanda-admin/article/keyword")
-    @CrossOrigin("http://localhost:5173")
     Response<List<ArticleDto>> searchArticleByKeyword(@RequestParam("keyword") String keyword){
         try{
             return ResponseCreator.succeed(articleManagementService.searchArticleByKeyword(keyword));
@@ -161,7 +154,6 @@ public class ArticleManagementRestController {
      * @return 成功or失敗
      */
     @PutMapping("/sanda-admin/article")
-    @CrossOrigin("http://localhost:5173")
     Response<Boolean> updateArticle(@RequestParam("articleId") Long articleId, @Validated @RequestBody ArticleForm form){
         try{
             articleManagementService.updateArticle(articleId, form);
@@ -180,7 +172,6 @@ public class ArticleManagementRestController {
      * @return 成功or失敗
      */
     @DeleteMapping("/sanda-admin/article")
-    @CrossOrigin("http://localhost:5173")
     Response<Boolean> deleteArticle(@RequestParam("articleId") Long articleId){
         try{
             return ResponseCreator.succeed(articleManagementService.deleteArticle(articleId));

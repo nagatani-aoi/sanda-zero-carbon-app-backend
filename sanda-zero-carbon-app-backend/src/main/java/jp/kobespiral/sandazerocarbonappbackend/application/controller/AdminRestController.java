@@ -14,6 +14,7 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidat
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.AdministratorService;
 import lombok.RequiredArgsConstructor;
+
 /**
  * ユーザのRESTController
  * 
@@ -21,6 +22,8 @@ import lombok.RequiredArgsConstructor;
  */
 @RestController
 @RequiredArgsConstructor
+// @CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
 @RequestMapping("/api")
 public class AdminRestController {
     /** 管理者のサービス */
@@ -32,23 +35,25 @@ public class AdminRestController {
      * 管理者ログイン
      */
 
-     /**
-      * 管理者ログイン
-      * @param administratorId 管理者ID
-      * @param password パスワード
-      * @return 成功or失敗
-      */
+    /**
+     * 管理者ログイン
+     * 
+     * @param administratorId 管理者ID
+     * @param password        パスワード
+     * @return 成功or失敗
+     */
     @GetMapping("/sanda-admin/login")
-    @CrossOrigin("http://localhost:5173")
-    public Response<Boolean> login(@RequestParam("administratorId") Long administratorId,@RequestParam("password") String password){
-        try{
-            adminService.getAdministrator(administratorId,password);
+    public Response<Boolean> login(@RequestParam("administratorId") Long administratorId,
+            @RequestParam("password") String password) {
+        try {
+            adminService.getAdministrator(administratorId, password);
             return ResponseCreator.succeed(true);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ADMIN_DOES_NOT_EXISTS,new  UserValidationException(ADMIN_DOES_NOT_EXISTS,"get administrator", String.format("adminId : %d  ,password : %s doesn't exist.",administratorId,password)), false);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ADMIN_DOES_NOT_EXISTS,
+                    new UserValidationException(ADMIN_DOES_NOT_EXISTS, "get administrator",
+                            String.format("adminId : %d  ,password : %s doesn't exist.", administratorId, password)),
+                    false);
         }
     }
-
 
 }

@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @RestController
 @RequiredArgsConstructor
+// @CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
 @RequestMapping("/api")
 public class AchievementRestController {
     /** 達成のサービス */
@@ -45,16 +47,20 @@ public class AchievementRestController {
      * @return 達成Dto
      */
     @PostMapping("/mission/achieve")
-    @CrossOrigin("http://localhost:5173")
     public Response<AchievementDto> achieveMission(@Validated @RequestBody MissionAchieveForm form) {
-        try{
+        try {
             return ResponseCreator.succeed(achievementService.achieveMission(form));
-        }catch(UserValidationException e){
+        } catch (UserValidationException e) {
             return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,
-                    new UserValidationException(USER_DOES_NOT_EXIST, "achieve mission",String.format("this user does not exist (userId: %d )", form.getUserId())),null);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"achieve mission", String.format("this mission does not exist (missionId: )", form.getMissionId())),null);
+                    new UserValidationException(USER_DOES_NOT_EXIST, "achieve mission",
+                            String.format("this user does not exist (userId: %d )", form.getUserId())),
+                    null);
+        } catch (Exception e) {
+            return ResponseCreator
+                    .fail(ErrorCode.MISSION_DOES_NOT_EXIST,
+                            new MissionValidationException(MISSION_DOES_NOT_EXIST, "achieve mission",
+                                    String.format("this mission does not exist (missionId: )", form.getMissionId())),
+                            null);
         }
     }
 
@@ -68,7 +74,6 @@ public class AchievementRestController {
      * @return ラップされた達成Dtoのリスト
      */
     @GetMapping("/achievement/weekly")
-    @CrossOrigin("http://localhost:5173")
     public Response<List<AchievementDto>> getWeeklyAchievements(@RequestParam("userId") String userId,
             @RequestParam("date") String dateString) {
         try {
@@ -88,7 +93,6 @@ public class AchievementRestController {
      * @return ラップされた累計パラメータDto
      */
     @GetMapping("/achievement/total")
-    @CrossOrigin("http://localhost:5173")
     public Response<TotalParamDto> getTotalParam(@RequestParam("userId") String userId) {
         try {
             return ResponseCreator.succeed(achievementService.getTotalParam(userId));

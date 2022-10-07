@@ -31,6 +31,8 @@ import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Erro
  */
 @RestController
 @RequiredArgsConstructor
+// @CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
 @RequestMapping("/api")
 public class TagManagementRestController {
     /** タグのサービス */
@@ -40,86 +42,87 @@ public class TagManagementRestController {
     /*--------------------------Create--------------------------- */
     /**
      * タグ作成
+     * 
      * @param form タグフォーム
      * @return 作成の成功か、失敗
      */
     @PostMapping("/sanda-admin/tag")
-    @CrossOrigin("http://localhost:5173")
-    public Response<Boolean> tagUser(@Validated @RequestBody TagForm form){
-        try{
+    public Response<Boolean> tagUser(@Validated @RequestBody TagForm form) {
+        try {
             tagService.createTag(form);
             return ResponseCreator.succeed(true);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new TagValidationException(TAG_ALREADY_EXISTS,"create tag",String.format("tag-keyword : %s has already exist",form.getKeyword())),false);
+        } catch (Exception e) {
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_ALREADY_EXISTS, "create tag",
+                    String.format("tag-keyword : %s has already exist", form.getKeyword())), false);
         }
     }
 
     /*--------------------------Read--------------------------- */
     /**
      * タグの取得
+     * 
      * @param tagId タグID
      * @return タグDto
      */
     @GetMapping("/sanda-admin/{tagId}")
-    @CrossOrigin("http://localhost:5173")
-    public Response<TagDto> getTag(@PathVariable Long tagId){
-        try{
+    public Response<TagDto> getTag(@PathVariable Long tagId) {
+        try {
             TagDto tagDto = tagService.getTag(tagId);
             return ResponseCreator.succeed(tagDto);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new TagValidationException(TAG_DOES_NOT_EXIST,"get tag", String.format("tagId : %d doesn't exist",tagId)),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST, "get tag",
+                    String.format("tagId : %d doesn't exist", tagId)), null);
         }
     }
 
     /**
      * 全てのタグを取得する
+     * 
      * @return タグDtoのリスト
      */
     @GetMapping("/sanda-admin/tag")
-    @CrossOrigin("http://localhost:5173")
-    public Response<List<TagDto>> getAllTag(){
-        try{
+    public Response<List<TagDto>> getAllTag() {
+        try {
             List<TagDto> tagDtos = tagService.getAllTag();
             return ResponseCreator.succeed(tagDtos);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new TagValidationException(TAG_DOES_NOT_EXIST,"get all tag", String.format("tagList doesn't exist")),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST,
+                    "get all tag", String.format("tagList doesn't exist")), null);
         }
     }
+
     /*--------------------------Update--------------------------- */
     /**
      * タグの更新
+     * 
      * @param form 更新するための情報が入ったフォーム
      * @return 成功or失敗
      */
     @PutMapping("/sanda-admin/tag")
-    @CrossOrigin("http://localhost:5173")
-    public Response<Boolean> updateTag(@Validated @RequestBody TagForm form){
-        try{
+    public Response<Boolean> updateTag(@Validated @RequestBody TagForm form) {
+        try {
             tagService.updateTag(form);
             return ResponseCreator.succeed(true);
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(TAG_ALREADY_EXISTS,new TagValidationException(TAG_ALREADY_EXISTS,"create tag",String.format("tag-keyword : %s has already exist",form.getKeyword())),false);
+        } catch (Exception e) {
+            return ResponseCreator.fail(TAG_ALREADY_EXISTS, new TagValidationException(TAG_ALREADY_EXISTS, "create tag",
+                    String.format("tag-keyword : %s has already exist", form.getKeyword())), false);
         }
     }
 
     /*--------------------------Delete--------------------------- */
     /**
      * タグの削除
+     * 
      * @param tagId タグID
      * @return 成功or失敗
      */
     @DeleteMapping("/sanda-admin/tag")
-    @CrossOrigin("http://localhost:5173")
-    public Response<Boolean> deleteTag(@Validated @RequestParam("tagId") Long tagId){
-        if(tagService.deleteTag(tagId)){
+    public Response<Boolean> deleteTag(@Validated @RequestParam("tagId") Long tagId) {
+        if (tagService.deleteTag(tagId)) {
             return ResponseCreator.succeed(true);
-        }
-        else {
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new TagValidationException(TAG_DOES_NOT_EXIST,"delete tag", String.format("tagId : %d doesn't exist",tagId)),false);
+        } else {
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST, "delete tag",
+                    String.format("tagId : %d doesn't exist", tagId)), false);
         }
     }
 }

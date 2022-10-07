@@ -17,6 +17,8 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionManagementS
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 @RestController
+// @CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
 @RequestMapping("/api")
 public class DailyMissionManagementRestController {
     @Autowired
@@ -25,16 +27,16 @@ public class DailyMissionManagementRestController {
     /*--------------------------Create------------------------- */
     /**
      * 毎日0時に今日のデイリーミッションの選定を行う
+     * 
      * @return boolean
      */
     @PostMapping("/sanda-admin/daily-mission")
-    @CrossOrigin("http://localhost:5173")
-    Response<List<DailyMissionDto>> selectDailyMission(){
-        try{
+    Response<List<DailyMissionDto>> selectDailyMission() {
+        try {
             return ResponseCreator.succeed(missionManagementService.selectDailyMissions());
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"select daily mission", String.format("mission does not exist")),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST, new MissionValidationException(
+                    MISSION_DOES_NOT_EXIST, "select daily mission", String.format("mission does not exist")), null);
         }
     }
 }

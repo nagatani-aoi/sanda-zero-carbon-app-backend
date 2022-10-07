@@ -22,6 +22,8 @@ import lombok.RequiredArgsConstructor;
  */
 @RestController
 @RequiredArgsConstructor
+// @CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
 @RequestMapping("/api")
 public class MapRestController {
     /** マップのサービス */
@@ -37,14 +39,13 @@ public class MapRestController {
      * @return ラップされたマップDto
      */
     @GetMapping("/map")
-    @CrossOrigin("http://localhost:5173")
     public Response<MapDto> getMap(@RequestParam("userId") String userId,
             @RequestParam("currentLocation") int currentLocation) {
-        try{
+        try {
             return ResponseCreator.succeed(mapService.getMap(userId, currentLocation));
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,new UserValidationException(USER_DOES_NOT_EXIST,"get map", String.format("this user does not exist (userId: %d )",userId)),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
+                    "get map", String.format("this user does not exist (userId: %d )", userId)), null);
         }
     }
 
@@ -55,13 +56,13 @@ public class MapRestController {
      * @return ラップされたマップDto
      */
     @GetMapping("/map/initialLocation")
-    @CrossOrigin("http://localhost:5173")
     public Response<MapDto> getMapOnInitialLocation(@RequestParam("userId") String userId) {
-        try{
+        try {
             return ResponseCreator.succeed(mapService.getMapOnInitialLocation(userId));
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,new UserValidationException(USER_DOES_NOT_EXIST,"get map on initial location", String.format("this user does not exist (userId: %d )",userId)),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
+                    "get map on initial location", String.format("this user does not exist (userId: %d )", userId)),
+                    null);
         }
     }
 

@@ -25,6 +25,8 @@ import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Erro
  * @author kamae
  */
 @RestController
+// @CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
 @RequestMapping("/api")
 public class MissionRestController {
     @Autowired
@@ -33,32 +35,34 @@ public class MissionRestController {
     /*------------------ Read ------------------- */
     /**
      * すべてのミッションを取得する
+     * 
      * @return ミッションDTOのリスト
      */
     @GetMapping("/mission")
-    @CrossOrigin("http://localhost:5173")
-    Response<List<MissionDto>> getAllMission(){
-        try{
+    Response<List<MissionDto>> getAllMission() {
+        try {
             return ResponseCreator.succeed(missionService.getAllMission());
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,new MissionValidationException(MISSION_DOES_NOT_EXIST,"get all mission", String.format("mission does not exist")),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST, new MissionValidationException(
+                    MISSION_DOES_NOT_EXIST, "get all mission", String.format("mission does not exist")), null);
         }
     }
 
     /**
      * ユーザの持つ未達成のデイリーミッションを取得する
+     * 
      * @return デイリーミッションDTOのリスト
      */
     @GetMapping("/daily-mission/{userId}")
-    @CrossOrigin("http://localhost:5173")
-    Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable String userId){
-        try{
+    Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable String userId) {
+        try {
             return ResponseCreator.succeed(missionService.getDailyMission(userId));
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,new UserValidationException(USER_DOES_NOT_EXIST,"get all daily mission", String.format("this user does not exist (userId: %d )",userId)),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(
+                    ErrorCode.USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
+                            "get all daily mission", String.format("this user does not exist (userId: %d )", userId)),
+                    null);
         }
     }
-    
+
 }

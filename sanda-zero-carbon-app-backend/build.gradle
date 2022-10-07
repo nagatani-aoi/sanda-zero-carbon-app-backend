@@ -37,3 +37,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+war {
+    enabled = true
+    archiveName='sanda-zero-carbon.war' // <-ここはプロジェクトに合わせて書き換えてください
+}

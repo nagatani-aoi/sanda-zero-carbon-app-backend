@@ -122,7 +122,7 @@ public class TotalConditionService {
         LocalDateTime since = now.with(DayOfWeek.MONDAY).with(LocalTime.of(0, 0, 0, 0)); // 現在週の月曜日を取得
         LocalDateTime until = now.with(DayOfWeek.SUNDAY).with(LocalTime.of(0, 0, 0, 0)); // 現在週の日曜日を取得
 
-        List<TotalCondition> totalConditions = totalConditionRepository.findByRecordedAtBetween(since, until); // 直近1週間の市の状況を取得
+        List<TotalCondition> totalConditions = totalConditionRepository.findBySinceBetween(since, until); // 直近1週間の市の状況を取得
 
         for (TotalCondition totalCondition : totalConditions) { // リスト内の市の状況ごとに
             co2Reduction += totalCondition.getCo2Reduction(); // 削減CO2量を加算

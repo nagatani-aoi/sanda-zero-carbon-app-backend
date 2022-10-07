@@ -21,13 +21,15 @@ import lombok.NoArgsConstructor;
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long quizId;
-    String title;
+    Long quizId; // クイズID
+    String title; // タイトル
     String quizSentence; // 問題文
-    String explain; // 説明文
-    String ans1;
-    String ans2;
-    String ans3;
-    int point;
-    Long tagId;
+    String explaination; // 解説文
+    String ans1; //選択肢１
+    String ans2; //選択肢２
+    String ans3; //選択肢３
+    String ans4; //選択肢４
+    String correctAns; //正解
+    int point; //獲得ポイント
+    Long tagId; //タグID
 }

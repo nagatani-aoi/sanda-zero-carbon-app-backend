@@ -24,10 +24,10 @@ public class AnsweredQuiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long answeredQuizId; // 回答済みクイズID
-    Long userId; // ユーザID
     Long quizId; // クイズID
+    String userId; // ユーザID
     // @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime answeredAt; // 回答完了日時
-    String ans; // 正解
+    String ans; // 回答
     Boolean isCorrect; // 正誤フラグ
 }

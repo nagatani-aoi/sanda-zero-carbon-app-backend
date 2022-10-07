@@ -29,8 +29,8 @@ public class DailyMissionDto {
         DailyMissionDto dto = new DailyMissionDto();
         dto.dailyMissionId = dailyMission.getDailyMissionId();
         dto.missionId = mission.getMissionId();
+        // デイリーミッションのポイントを2倍に
         dto.point = 2*mission.getPoint();
-        //変数導入してもいいかも
         dto.title = mission.getTitle();
         dto.description = mission.getDescription();
         dto.CO2Reduction = mission.getCo2Reduction();

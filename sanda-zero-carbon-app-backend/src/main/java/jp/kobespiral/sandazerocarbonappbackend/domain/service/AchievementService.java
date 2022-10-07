@@ -73,10 +73,10 @@ public class AchievementService {
             }
         }
 
-        if (userDailyStatus.getTotalPoint() > Rule.maxMissionPoint) { // ポイント取得上限に達していたら
+        if (userDailyStatus.getTotalMissionPoint() > Rule.maxMissionPoint) { // ポイント取得上限に達していたら
             getRealPoint = 0; // ポイント0
-        } else if (userDailyStatus.getTotalPoint() + getPoint > Rule.maxMissionPoint) { // 今回のポイント獲得分を足すとポイント取得上限に達するなら
-            getRealPoint = Rule.maxMissionPoint - userDailyStatus.getTotalPoint(); // 上限までのポイント
+        } else if (userDailyStatus.getTotalMissionPoint() + getPoint > Rule.maxMissionPoint) { // 今回のポイント獲得分を足すとポイント取得上限に達するなら
+            getRealPoint = Rule.maxMissionPoint - userDailyStatus.getTotalMissionPoint(); // 上限までのポイント
         } else {
             getRealPoint = getPoint; // ポイント全て
         }
@@ -89,7 +89,7 @@ public class AchievementService {
 
         Achievement createdAchievement = achievementRepository.save(achievement);
 
-        userService.renewUserDailyStatus(userId, createdAchievement.getAchievementId()); // ユーザーデイリーステータスを更新
+        userService.renewUserDailyStatusForMission(userId, createdAchievement.getAchievementId()); // ユーザーデイリーステータスを更新
 
         return AchievementDto.build(createdAchievement, missionDto);
     }

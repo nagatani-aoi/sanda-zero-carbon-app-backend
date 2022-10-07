@@ -23,14 +23,15 @@ import lombok.NoArgsConstructor;
 public class UserDailyStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long userDailyStatusId;
-    String userId;
+    Long userDailyStatusId; //ユーザデイリーステータスID
+    String userId; //ユーザID
     // @Temporal(TemporalType.TIMESTAMP)
-    LocalDate date;
-    int totalPoint;
-    double totalCo2Reduction;
-    double totalCostReduction;
-    Boolean easyMissionCompleted;
-    Boolean normalMissionCompleted;
-    Boolean hardMissionCompleted;
+    LocalDate date; //日付
+    int totalMissionPoint; //今日のミッションで獲得したポイント
+    int totalQuizPoint; //今日のクイズで獲得したポイント
+    double totalCo2Reduction; //CO2削減量
+    double totalCostReduction; //コスト削減量
+    Boolean easyMissionCompleted; //簡単デイリーミッションの達成フラグ
+    Boolean normalMissionCompleted; //普通デイリーミッションの達成フラグ
+    Boolean hardMissionCompleted; //難しいデイリーミッションの達成フラグ
 }

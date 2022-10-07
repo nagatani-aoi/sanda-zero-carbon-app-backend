@@ -33,7 +33,7 @@ public class TotalConditionRestController {
      *
      * @return Response<boolean>
      */
-    @PostMapping("/total-codition")
+    @PostMapping("/total-condition")
     public Response<Boolean> calculateTotalCondition() {
         try {
             totalConditionService.calculateTotalCondition(); // 直近1時間の市の状況を計算
@@ -52,7 +52,7 @@ public class TotalConditionRestController {
      *
      * @return Response<市の状況DTO>
      */
-    @GetMapping("/total-codition")
+    @GetMapping("/total-condition")
     public Response<TotalConditionDto> getAllTotalCondition() {
         try {
             return ResponseCreator.succeed(totalConditionService.getAllTotalCondition()); // 全ての市の状況を集計して返す
@@ -66,7 +66,7 @@ public class TotalConditionRestController {
      *
      * @return Response<市の状況DTO>
      */
-    @GetMapping("/total-codition/weekly")
+    @GetMapping("/total-condition/weekly")
     public Response<TotalConditionDto> getWeeklyTotalCondition() {
         try {
             return ResponseCreator.succeed(totalConditionService.getWeeklyTotalCondition()); // 全ての市の状況を集計して返す

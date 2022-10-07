@@ -102,6 +102,8 @@ public class QuizManagementService {
         quiz.setAns1(form.getAns1());
         quiz.setAns2(form.getAns2());
         quiz.setAns3(form.getAns3());
+        quiz.setAns4(form.getAns4());
+        quiz.setCorrectAns(form.getCorrectAns());
         quiz.setPoint(form.getPoint());
         quiz.setTagId(form.getTagId());
         // タグの生成

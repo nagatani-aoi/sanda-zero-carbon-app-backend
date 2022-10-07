@@ -15,7 +15,7 @@ public class AnsweredQuizForm {
     @NotBlank
     String userId; // ユーザID
     @NotBlank
-    String ans; // 正解
+    String ans; // 回答
     @NotNull
     Boolean isCorrect; // 正誤フラグ
 

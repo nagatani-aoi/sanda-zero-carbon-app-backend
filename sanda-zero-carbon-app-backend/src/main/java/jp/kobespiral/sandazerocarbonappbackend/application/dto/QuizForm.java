@@ -27,9 +27,13 @@ public class QuizForm {
     @NotBlank
     @Length(min=1,max=100)
     String ans2; // 選択肢２
+    @Length(min=0,max=100)
+    String ans3; // 選択肢３
+    @Length(min=0,max=100)
+    String ans4; // 選択肢４
     @NotBlank
     @Length(min=1,max=100)
-    String ans3; // 選択肢３
+    String correctAns; //正解
     @NotNull
     @Positive
     int point; // 獲得ポイント
@@ -44,6 +48,8 @@ public class QuizForm {
         quiz.setAns1(ans1);
         quiz.setAns2(ans2);
         quiz.setAns3(ans3);
+        quiz.setAns4(ans4);
+        quiz.setCorrectAns(correctAns);
         quiz.setPoint(point);
         quiz.setTagId(tagId);
         return quiz;

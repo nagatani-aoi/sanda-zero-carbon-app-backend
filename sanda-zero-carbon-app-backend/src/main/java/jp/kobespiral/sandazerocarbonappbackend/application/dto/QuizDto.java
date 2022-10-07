@@ -13,6 +13,8 @@ public class QuizDto {
     String ans1; // 選択肢１
     String ans2; // 選択肢２
     String ans3; // 選択肢３
+    String ans4; //選択肢４
+    String correctAns; //正解
     int point; // 獲得ポイント
     Long tagId; // タグID
     String keyword; // キーワード
@@ -26,6 +28,8 @@ public class QuizDto {
         dto.ans1 = quiz.getAns1();
         dto.ans2 = quiz.getAns2();
         dto.ans3 = quiz.getAns3();
+        dto.ans4 = quiz.getAns4();
+        dto.correctAns = quiz.getCorrectAns();
         dto.point = quiz.getPoint();
         dto.tagId = tag.getTagId();
         dto.keyword = tag.getKeyword();

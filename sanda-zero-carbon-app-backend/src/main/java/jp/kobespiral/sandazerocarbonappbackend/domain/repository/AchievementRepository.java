@@ -16,12 +16,13 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
 @Repository
 public interface AchievementRepository extends CrudRepository<Achievement, Long> {
     /**
-     * 指定した日時以降の達成ミッションのリストを返す
-     * 
-     * @param date 達成日時
-     * @return List<Achievement> 達成ミッションのリスト
+     * 指定した日時範囲内の達成ミッションのリストを返す
+     *
+     * @param since いつから
+     * @param until いつまで
+     * @return 指定した日時範囲内の達成ミッションのリスト
      */
-    List<Achievement> findByAchievedAtGreaterThanEqual(LocalDateTime date);
+    List<Achievement> findByAchievedAtBetween(LocalDateTime since, LocalDateTime until);
 
     /**
      * ユーザIDを指定して，達成ミッションのリストを取得する

@@ -31,6 +31,7 @@ import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Erro
  */
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class TagManagementRestController {
     /** タグのサービス */
@@ -44,7 +45,6 @@ public class TagManagementRestController {
      * @return 作成の成功か、失敗
      */
     @PostMapping("/sanda-admin/tag")
-    @CrossOrigin("http://localhost:5173")
     public Response<Boolean> tagUser(@Validated @RequestBody TagForm form){
         try{
             tagService.createTag(form);
@@ -62,7 +62,6 @@ public class TagManagementRestController {
      * @return タグDto
      */
     @GetMapping("/sanda-admin/{tagId}")
-    @CrossOrigin("http://localhost:5173")
     public Response<TagDto> getTag(@PathVariable Long tagId){
         try{
             TagDto tagDto = tagService.getTag(tagId);
@@ -78,7 +77,6 @@ public class TagManagementRestController {
      * @return タグDtoのリスト
      */
     @GetMapping("/sanda-admin/tag")
-    @CrossOrigin("http://localhost:5173")
     public Response<List<TagDto>> getAllTag(){
         try{
             List<TagDto> tagDtos = tagService.getAllTag();
@@ -95,7 +93,6 @@ public class TagManagementRestController {
      * @return 成功or失敗
      */
     @PutMapping("/sanda-admin/tag")
-    @CrossOrigin("http://localhost:5173")
     public Response<Boolean> updateTag(@Validated @RequestBody TagForm form){
         try{
             tagService.updateTag(form);
@@ -113,7 +110,6 @@ public class TagManagementRestController {
      * @return 成功or失敗
      */
     @DeleteMapping("/sanda-admin/tag")
-    @CrossOrigin("http://localhost:5173")
     public Response<Boolean> deleteTag(@Validated @RequestParam("tagId") Long tagId){
         if(tagService.deleteTag(tagId)){
             return ResponseCreator.succeed(true);

@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
  */
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class MapRestController {
     /** マップのサービス */
@@ -37,7 +38,6 @@ public class MapRestController {
      * @return ラップされたマップDto
      */
     @GetMapping("/map")
-    @CrossOrigin("http://localhost:5173")
     public Response<MapDto> getMap(@RequestParam("userId") String userId,
             @RequestParam("currentLocation") int currentLocation) {
         try{
@@ -55,7 +55,6 @@ public class MapRestController {
      * @return ラップされたマップDto
      */
     @GetMapping("/map/initialLocation")
-    @CrossOrigin("http://localhost:5173")
     public Response<MapDto> getMapOnInitialLocation(@RequestParam("userId") String userId) {
         try{
             return ResponseCreator.succeed(mapService.getMapOnInitialLocation(userId));

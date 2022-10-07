@@ -25,6 +25,7 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.service.QuizService;
  * @author kamae
  */
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class QuizRestController {
     // クイズサービス
@@ -39,7 +40,6 @@ public class QuizRestController {
      * @return 回答したクイズのDTO
      */
     @GetMapping("/quiz/answer")
-    @CrossOrigin("http://localhost:5173")
     Response<AnsweredQuizDto> answerQuiz(@Validated @RequestBody AnsweredQuizForm form) {
         return ResponseCreator.succeed(quizService.createAnsweredQuiz(form));
     }
@@ -52,7 +52,6 @@ public class QuizRestController {
      * @return クイズのDTOリスト
      */
     @GetMapping("/quiz/unanswer")
-    @CrossOrigin("http://localhost:5173")
     Response<List<QuizDto>> getUnansweredQuiz(@RequestParam("userId") String userId) {
         return ResponseCreator.succeed(quizService.getUnansweredQuiz(userId));
     }
@@ -64,7 +63,6 @@ public class QuizRestController {
      * @return クイズのDTOリスト
      */
     @GetMapping("/quiz/correct")
-    @CrossOrigin("http://localhost:5173")
     Response<List<QuizDto>> getCorrectAnsweredQuiz(@RequestParam("userId") String userId) {
         return ResponseCreator.succeed(quizService.getCorrectAnsweredQuiz(userId));
     }
@@ -76,7 +74,6 @@ public class QuizRestController {
      * @return クイズのDTOリスト
      */
     @GetMapping("/quiz/incorrect")
-    @CrossOrigin("http://localhost:5173")
     Response<List<QuizDto>> getIncorrectAnsweredQuiz(@RequestParam("userId") String userId) {
         return ResponseCreator.succeed(quizService.getIncorrectAnsweredQuiz(userId));
     }

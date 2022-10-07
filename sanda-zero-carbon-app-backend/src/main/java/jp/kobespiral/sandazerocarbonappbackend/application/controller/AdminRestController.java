@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
  */
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class AdminRestController {
     /** 管理者のサービス */
@@ -39,7 +40,6 @@ public class AdminRestController {
       * @return 成功or失敗
       */
     @GetMapping("/sanda-admin/login")
-    @CrossOrigin("http://localhost:5173")
     public Response<Boolean> login(@RequestParam("administratorId") Long administratorId,@RequestParam("password") String password){
         try{
             adminService.getAdministrator(administratorId,password);

@@ -29,6 +29,7 @@ import java.util.List;
  * @author kamae
  */
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class QuizManagementRestController {
     // 管理者用クイズサービス
@@ -43,7 +44,6 @@ public class QuizManagementRestController {
      * @return 作成したクイズのDTO
      */
     @PostMapping("/sanda-admin/quiz")
-    @CrossOrigin("http://localhost:5173")
     Response<QuizDto> createQuiz(@Validated @RequestBody QuizForm form) {
         return ResponseCreator.succeed(quizManagementService.createQuiz(form));
     }
@@ -56,7 +56,6 @@ public class QuizManagementRestController {
      * @return 指定したクイズのDTO
      */
     @GetMapping("/sanda-admin/quiz/{quizId}")
-    @CrossOrigin("http://localhost:5173")
     Response<QuizDto> getQuiz(@PathVariable Long quizId) {
         return ResponseCreator.succeed(quizManagementService.getQuiz(quizId));
     }
@@ -67,7 +66,6 @@ public class QuizManagementRestController {
      * @return クイズのDTOリスト
      */
     @GetMapping("/sanda-admin/quiz")
-    @CrossOrigin("http://localhost:5173")
     Response<List<QuizDto>> getAllQuiz() {
         try{
             return ResponseCreator.succeed(quizManagementService.getAllQuiz());
@@ -86,7 +84,6 @@ public class QuizManagementRestController {
      * @return 更新したクイズのDTO
      */
     @PutMapping("/sanda-admin/quiz")
-    @CrossOrigin("http://localhost:5173")
     Response<QuizDto> updateQuiz(@Validated @RequestBody QuizForm form, @RequestParam("quizId") Long quizId) {
         return ResponseCreator.succeed(quizManagementService.updateQuiz(quizId, form));
     }
@@ -99,7 +96,6 @@ public class QuizManagementRestController {
      * @return Boolean
      */
     @DeleteMapping("/sanda-admin/quiz")
-    @CrossOrigin("http://localhost:5173")
     Response<Boolean> deleteQuiz(@RequestParam("quizId") Long quizId) {
         try{
             return ResponseCreator.succeed(quizManagementService.deleteQuiz(quizId));

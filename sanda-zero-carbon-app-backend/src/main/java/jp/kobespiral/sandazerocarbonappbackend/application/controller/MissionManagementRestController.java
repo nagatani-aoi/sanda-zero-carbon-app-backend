@@ -32,6 +32,7 @@ import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Erro
  * @author kamae
  */
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class MissionManagementRestController {
     @Autowired
@@ -44,7 +45,6 @@ public class MissionManagementRestController {
      * @return 作成したミッションのDTO
      */
     @PostMapping("/sanda-admin/mission")
-    @CrossOrigin("http://localhost:5173")
     Response<MissionDto> createMission(@Validated @RequestBody MissionForm form){
         try{
             return ResponseCreator.succeed(missionManagementService.createMission(form));
@@ -61,7 +61,6 @@ public class MissionManagementRestController {
      * @return 指定したIDのミッションDTO
      */
     @GetMapping("/sanda-admin/mission/{missionId}")
-    @CrossOrigin("http://localhost:5173")
     Response<MissionDto> getMission(@PathVariable Long missionId){
         try{
             return ResponseCreator.succeed(missionManagementService.getMission(missionId));
@@ -76,7 +75,6 @@ public class MissionManagementRestController {
      * @return すべてのミッションのDTOリスト
      */
     @GetMapping("/sanda-admin/mission")
-    @CrossOrigin("http://localhost:5173")
     Response<List<MissionDto>> getAllMission(){
         try{
             return ResponseCreator.succeed(missionManagementService.getAllMissions());
@@ -94,7 +92,6 @@ public class MissionManagementRestController {
      * @return 更新したミッションのDTO
      */
     @PutMapping("/sanda-admin/mission/{missionId}")
-    @CrossOrigin("http://localhost:5173")
     Response<MissionDto> updateMission(@PathVariable Long missionId, @Validated @RequestBody MissionForm form){
         try{
             return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
@@ -112,7 +109,6 @@ public class MissionManagementRestController {
      * @return boolean
      */
     @DeleteMapping("/sanda-admin/mission")
-    @CrossOrigin("http://localhost:5173")
     Response<Boolean> deleteMission(@RequestParam("missionId") Long missionId){
         try{
             return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));
@@ -130,7 +126,6 @@ public class MissionManagementRestController {
      * @return ミッションDTOのリスト
      */
     @PostMapping("/sanda-admin/search/keyword")
-    @CrossOrigin("http://localhost:5173")
     Response<List<MissionDto>> searchMissionByKeyword(@RequestParam("keyword") String keyword){
         return ResponseCreator.succeed(missionManagementService.searchMissionByKeyword(keyword));
     }
@@ -141,7 +136,6 @@ public class MissionManagementRestController {
      * @return ミッションDTOのリスト
      */
     @PostMapping("/sanda-admin/search/tag")
-    @CrossOrigin("http://localhost:5173")
     Response<List<MissionDto>> searchMissionByTag(@RequestParam("tag") Long tagId){
         try{
             return ResponseCreator.succeed(missionManagementService.searchMissionByTag(tagId));

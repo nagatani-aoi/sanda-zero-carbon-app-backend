@@ -37,5 +37,5 @@ public interface TotalConditionRepository extends CrudRepository<TotalCondition,
      * @param until フィルター期間の終わり
      * @return 指定された期間でフィルター済みのトータルコンディションのリスト
      */
-    List<TotalCondition> findByRecordedAtBetween(LocalDateTime since, LocalDateTime until);
+    List<TotalCondition> findBySinceBetween(LocalDateTime since, LocalDateTime until);
 }

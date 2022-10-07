@@ -23,8 +23,10 @@ import lombok.NoArgsConstructor;
 public class TotalCondition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long cityConditionId;
-    double costReduction;
-    double CO2Reduction;
+    Long totalConditionId; // 市の状況ID
+    double costReduction; // 節約金額
+    double Co2Reduction; // 削減CO2
+    LocalDateTime since; // いつから
+    LocalDateTime until; // いつまで
     LocalDateTime recordedAt; // 記録日時
 }

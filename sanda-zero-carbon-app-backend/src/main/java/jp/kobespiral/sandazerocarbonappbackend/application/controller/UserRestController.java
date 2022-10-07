@@ -62,12 +62,8 @@ public class UserRestController {
     @GetMapping("/user/login")
     @CrossOrigin("http://localhost:5173")
     public Response<Boolean> login(@RequestParam("userId") String userId,@RequestParam("password") String password){
-        try{
-            userService.loginUser(userId,password);
-            return ResponseCreator.succeed(true);
-        } catch (Exception e) {
-            return ResponseCreator.fail(USER_DOES_NOT_EXIST, new  UserValidationException(USER_DOES_NOT_EXIST,"login user", String.format("userId : %s ,password %s doesn't exist.",userId,password)), false);
-        }
+        return ResponseCreator.succeed(userService.loginUser(userId,password));
+
     }
 
     /**

@@ -23,13 +23,15 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.service.QuizManagementServ
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 import java.util.List;
+
 /**
  * 管理者側でクイズのCRUDを行うRESTコントローラ
  * 
  * @author kamae
  */
 @RestController
-@CrossOrigin("http://localhost:5173")
+// @CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
 @RequestMapping("/api")
 public class QuizManagementRestController {
     // 管理者用クイズサービス
@@ -67,11 +69,12 @@ public class QuizManagementRestController {
      */
     @GetMapping("/sanda-admin/quiz")
     Response<List<QuizDto>> getAllQuiz() {
-        try{
+        try {
             return ResponseCreator.succeed(quizManagementService.getAllQuiz());
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.QUIZ_DOES_NOT_EXIST,new QuizValidationException(QUIZ_DOES_NOT_EXIST,"update quiz", String.format("no quiz exist")),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.QUIZ_DOES_NOT_EXIST,
+                    new QuizValidationException(QUIZ_DOES_NOT_EXIST, "update quiz", String.format("no quiz exist")),
+                    null);
         }
     }
 
@@ -97,11 +100,11 @@ public class QuizManagementRestController {
      */
     @DeleteMapping("/sanda-admin/quiz")
     Response<Boolean> deleteQuiz(@RequestParam("quizId") Long quizId) {
-        try{
+        try {
             return ResponseCreator.succeed(quizManagementService.deleteQuiz(quizId));
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(ErrorCode.QUIZ_DOES_NOT_EXIST,new QuizValidationException(QUIZ_DOES_NOT_EXIST,"delete quiz", String.format("quizId: %d do not exist", quizId)),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(ErrorCode.QUIZ_DOES_NOT_EXIST, new QuizValidationException(QUIZ_DOES_NOT_EXIST,
+                    "delete quiz", String.format("quizId: %d do not exist", quizId)), null);
         }
     }
 }

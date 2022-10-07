@@ -2,6 +2,7 @@ package jp.kobespiral.sandazerocarbonappbackend.domain.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class Article {
     Long articleId;
     String title;
     Long tagId;
+    @Column(length = 100000)
     String description;
     // @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime postedAt;

@@ -20,7 +20,7 @@ public interface AnsweredQuizRepository extends CrudRepository<AnsweredQuiz, Lon
      * @param userId ユーザID
      * @return List<AnsweredQuiz> 回答済みクイズのリスト
      */
-    List<AnsweredQuiz> findByUserId(Long userId);
+    List<AnsweredQuiz> findByUserId(String userId);
 
     /**
      * 正誤フラグとユーザIDを指定して，該当する回答済みリストを取得する
@@ -29,5 +29,8 @@ public interface AnsweredQuizRepository extends CrudRepository<AnsweredQuiz, Lon
      * @param userId    ユーザID
      * @return List<AnsweredQuiz> 回答済みクイズのリスト
      */
-    List<AnsweredQuiz> findByIsCorrectAndUserId(Boolean isCorrect, Long userId);
+    List<AnsweredQuiz> findByIsCorrectAndUserId(Boolean isCorrect, String userId);
+
+    
+    List<AnsweredQuiz> findByUserIdAndQuizId(String userId, Long quizId);
 }

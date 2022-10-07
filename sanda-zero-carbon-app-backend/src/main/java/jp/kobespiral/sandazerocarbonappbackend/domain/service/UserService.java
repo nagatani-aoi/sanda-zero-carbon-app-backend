@@ -87,15 +87,14 @@ public class UserService {
      * @param password パスワード
      * @return
      */
-    public Boolean loginUser(String userId,String password) {
+    public User loginUser(String userId,String password) {
         //存在していたら
         if(userRepository.existsByUserIdAndPassword(userId,password)){
             User user = userRepository.findByUserIdAndPassword(userId,password);
-            return true;
+            return user;
         }
         else{
-            return false;
-            //throw new  UserValidationException(USER_DOES_NOT_EXIST,"login user", String.format("userId : %s,password : %s doesn't exist",userId,password));
+            throw new  UserValidationException(USER_DOES_NOT_EXIST,"login user", String.format("userId : %s,password : %s doesn't exist",userId,password));
         }
     }
 

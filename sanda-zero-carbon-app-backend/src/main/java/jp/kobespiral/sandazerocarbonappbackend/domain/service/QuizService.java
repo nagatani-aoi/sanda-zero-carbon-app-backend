@@ -68,7 +68,7 @@ public class QuizService {
         // タグの取得
         Tag tag = tagRepository.findById(quiz.getTagId()).orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ,"answer quiz",String.format("quizId: %d does not have tag", quiz.getQuizId())));
 
-        // 正解判定処理
+        /// 正解判定処理
         // 回答済みクイズエンティティを生成する
         AnsweredQuiz answeredQuiz = form.toEntity();
         Boolean isCorrect = answeredQuiz.getIsCorrect();
@@ -82,23 +82,13 @@ public class QuizService {
         answeredQuiz.setIsCorrect(isCorrect);
         answeredQuizRepository.save(answeredQuiz);
 
+        /// 過去に正解していないことを確認
+        Boolean isFirstCorrect = answeredQuizRepository.existsByUserIdAndQuizIdAndIsCorrect(userId, answeredQuiz.getQuizId(), true);
+
         // クイズが正解ならば、ユーザーデイリーステータスへポイントを加算する
-        // ユーザIDからユーザーデイリーステータスDtoを取得
-        UserDailyStatus userDailyStatus = userService.getUserDailyStatus(userId);
-
-        int currentPoint = userDailyStatus.getTotalPoint();
-        int getPoint = quiz.getPoint();
-
-        if (isCorrect) { // クイズが正解ならばポイント加算
-            if (currentPoint > Rule.maxMissionPoint) { // ポイント取得上限に達していたら
-                getPoint = 0; // ポイント0
-            } else if (currentPoint + getPoint > Rule.maxMissionPoint) { // 今回のポイント獲得分を足すとポイント取得上限に達するなら
-                getPoint = Rule.maxMissionPoint - currentPoint; // 上限までのポイント
-            }
-
+        if (isCorrect && !(isFirstCorrect)) { 
             // ポイントを加算する
-            userDailyStatus.setTotalPoint(currentPoint + getPoint);
-            userDailyStatusRepository.save(userDailyStatus);
+            userService.renewUserDailyStatusForQuiz(userId, answeredQuiz.getAnsweredQuizId()); // ユーザーデイリーステータスを更新
         }
     
         return AnsweredQuizDto.build(answeredQuiz, quiz, tag);

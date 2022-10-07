@@ -31,7 +31,8 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:5173")
+// @CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
 @RequestMapping("/api")
 public class ArticleManagementRestController {
     /** 記事の管理者のサービス */
@@ -43,13 +44,14 @@ public class ArticleManagementRestController {
     /*--------------------------Create--------------------------- */
     /**
      * 記事を作成する
+     * 
      * @param form 記事フォーム
      * @return 成功or失敗
      */
     @PostMapping("/sanda-admin/article")
-    public Response<Boolean> createArticle(@Validated @RequestBody ArticleForm form){
-        //作成失敗は可能性ない
-        //ArticleDto articleDto = articleManagementService.createArticle(form);
+    public Response<Boolean> createArticle(@Validated @RequestBody ArticleForm form) {
+        // 作成失敗は可能性ない
+        // ArticleDto articleDto = articleManagementService.createArticle(form);
         articleManagementService.createArticle(form);
         return ResponseCreator.succeed(true);
     }
@@ -57,128 +59,142 @@ public class ArticleManagementRestController {
     /*--------------------------Read--------------------------- */
     /**
      * 全ての記事を取得する
+     * 
      * @return 記事dtoのリスト
      */
     @GetMapping("/sanda-admin/article")
-    Response<List<ArticleDto>> getAllArticle(){
-        try{
+    Response<List<ArticleDto>> getAllArticle() {
+        try {
             return ResponseCreator.succeed(articleManagementService.getAllArticles());
-        }
-        catch(Exception e){
-            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST,new ArticleValidationException(MISSION_DOES_NOT_EXIST,"get all article", String.format("article does not exist")),null);
+        } catch (Exception e) {
+            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST, new ArticleValidationException(MISSION_DOES_NOT_EXIST,
+                    "get all article", String.format("article does not exist")), null);
         }
     }
 
     /**
      * 最新の記事を任意の個数取得する
+     * 
      * @return 記事dtoのリスト
      */
     @GetMapping("/sanda-admin/article/top")
-    Response<List<ArticleDto>> getTopArticle(@Validated @RequestParam("articleCount") int articleCount){
-        try{
+    Response<List<ArticleDto>> getTopArticle(@Validated @RequestParam("articleCount") int articleCount) {
+        try {
             return ResponseCreator.succeed(userArticleService.getTopArticle(articleCount));
-        }
-        catch(Exception e){
+        } catch (Exception e) {
 
-            ///////////エラー処理は後で
-            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST,new ArticleValidationException(MISSION_DOES_NOT_EXIST,"get top article", String.format("article does not exist")),null);
+            /////////// エラー処理は後で
+            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST, new ArticleValidationException(MISSION_DOES_NOT_EXIST,
+                    "get top article", String.format("article does not exist")), null);
         }
     }
+
     /**
      * 記事IDを指定して記事を取得する
+     * 
      * @param articleId 記事ID
-     * @return　記事dto
+     * @return 記事dto
      */
     @GetMapping("/sanda-admin/article/article")
-    Response<ArticleDto> searchArticleByArticleId(@RequestParam("articleId") Long articleId){
-        try{
+    Response<ArticleDto> searchArticleByArticleId(@RequestParam("articleId") Long articleId) {
+        try {
             return ResponseCreator.succeed(articleManagementService.getArticle(articleId));
-        }
-        catch(Exception e){
-            ///////////エラー処理は後で
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new ArticleValidationException(TAG_DOES_NOT_EXIST,"get article by articleId", String.format("this articleId does not exist (articleId: %d )",articleId)),null);
+        } catch (Exception e) {
+            /////////// エラー処理は後で
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,
+                    new ArticleValidationException(TAG_DOES_NOT_EXIST, "get article by articleId",
+                            String.format("this articleId does not exist (articleId: %d )", articleId)),
+                    null);
         }
     }
 
     /**
      * タグIDで記事を検索する
+     * 
      * @param tagId タグID
      * @return 記事dtoのリスト
      */
     @GetMapping("/sanda-admin/article/tag")
-    Response<List<ArticleDto>> searchArticleByTagId(@RequestParam("tagId") Long tagId){
-        try{
+    Response<List<ArticleDto>> searchArticleByTagId(@RequestParam("tagId") Long tagId) {
+        try {
             return ResponseCreator.succeed(articleManagementService.searchArticleByTagId(tagId));
-        }
-        catch(Exception e){
-            ///////////エラー処理は後で
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new ArticleValidationException(TAG_DOES_NOT_EXIST,"get article by tagId", String.format("this article does not exist (tagId: %d )",tagId)),null);
+        } catch (Exception e) {
+            /////////// エラー処理は後で
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new ArticleValidationException(TAG_DOES_NOT_EXIST,
+                    "get article by tagId", String.format("this article does not exist (tagId: %d )", tagId)), null);
         }
     }
 
     /**
      * 重要フラグの指定されている記事を取得する
+     * 
      * @return 記事dtoのリスト
      */
     @GetMapping("/sanda-admin/article/important")
-    Response<List<ArticleDto>> searchArticleByIsImportant(){
-        try{
+    Response<List<ArticleDto>> searchArticleByIsImportant() {
+        try {
             return ResponseCreator.succeed(articleManagementService.searchArticleByIsImportant());
-        }
-        catch(Exception e){
-            ///////////エラー処理は後で
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new ArticleValidationException(TAG_DOES_NOT_EXIST,"get article by isImportant", "this article does not exist"),null);
+        } catch (Exception e) {
+            /////////// エラー処理は後で
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new ArticleValidationException(TAG_DOES_NOT_EXIST,
+                    "get article by isImportant", "this article does not exist"), null);
         }
     }
 
     /**
      * キーワードで記事を取得する
+     * 
      * @param keyword キーワード
      * @return 記事dtoのリスト
      */
     @GetMapping("/sanda-admin/article/keyword")
-    Response<List<ArticleDto>> searchArticleByKeyword(@RequestParam("keyword") String keyword){
-        try{
+    Response<List<ArticleDto>> searchArticleByKeyword(@RequestParam("keyword") String keyword) {
+        try {
             return ResponseCreator.succeed(articleManagementService.searchArticleByKeyword(keyword));
-        }
-        catch(Exception e){
-            ///////////エラー処理は後で
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,new ArticleValidationException(TAG_DOES_NOT_EXIST,"get article by keyword", String.format("this article does not exist (keyword: %d )",keyword)),null);
+        } catch (Exception e) {
+            /////////// エラー処理は後で
+            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new ArticleValidationException(TAG_DOES_NOT_EXIST,
+                    "get article by keyword", String.format("this article does not exist (keyword: %d )", keyword)),
+                    null);
         }
     }
+
     /*--------------------------Update--------------------------- */
     /**
      * 記事を更新する
+     * 
      * @param articleId 記事ID
-     * @param form 記事フォーム
+     * @param form      記事フォーム
      * @return 成功or失敗
      */
     @PutMapping("/sanda-admin/article")
-    Response<Boolean> updateArticle(@RequestParam("articleId") Long articleId, @Validated @RequestBody ArticleForm form){
-        try{
+    Response<Boolean> updateArticle(@RequestParam("articleId") Long articleId,
+            @Validated @RequestBody ArticleForm form) {
+        try {
             articleManagementService.updateArticle(articleId, form);
             return ResponseCreator.succeed(true);
-        }
-        catch(Exception e){
-            ///////////エラー処理は後で
-            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST,new ArticleValidationException(MISSION_DOES_NOT_EXIST,"update the mission","this article does not exist"),false);
+        } catch (Exception e) {
+            /////////// エラー処理は後で
+            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST, new ArticleValidationException(MISSION_DOES_NOT_EXIST,
+                    "update the mission", "this article does not exist"), false);
         }
     }
 
     /*--------------------------Delete--------------------------- */
     /**
      * 記事を削除する
+     * 
      * @param articleId 記事ID
      * @return 成功or失敗
      */
     @DeleteMapping("/sanda-admin/article")
-    Response<Boolean> deleteArticle(@RequestParam("articleId") Long articleId){
-        try{
+    Response<Boolean> deleteArticle(@RequestParam("articleId") Long articleId) {
+        try {
             return ResponseCreator.succeed(articleManagementService.deleteArticle(articleId));
-        }
-        catch(Exception e){
-            ///////////エラー処理は後で
-            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST,new ArticleValidationException(MISSION_DOES_NOT_EXIST,"update the mission","this article does not exist"),false);
+        } catch (Exception e) {
+            /////////// エラー処理は後で
+            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST, new ArticleValidationException(MISSION_DOES_NOT_EXIST,
+                    "update the mission", "this article does not exist"), false);
         }
     }
 }

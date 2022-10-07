@@ -32,5 +32,5 @@ public interface AnsweredQuizRepository extends CrudRepository<AnsweredQuiz, Lon
     List<AnsweredQuiz> findByIsCorrectAndUserId(Boolean isCorrect, String userId);
 
     
-    Boolean existsByUserIdAndQuizIdAndIsCorrect(String userId, Long quizId, Boolean isCorrect);
+    List<AnsweredQuiz> findByUserIdAndQuizId(String userId, Long quizId);
 }

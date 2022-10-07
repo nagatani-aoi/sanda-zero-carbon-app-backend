@@ -71,6 +71,7 @@ public class QuizService {
         /// 正解判定処理
         // 回答済みクイズエンティティを生成する
         AnsweredQuiz answeredQuiz = form.toEntity();
+        answeredQuizRepository.save(answeredQuiz);
         Boolean isCorrect = answeredQuiz.getIsCorrect();
         // 正解の選択肢を取得
         String correctAns = quiz.getCorrectAns();
@@ -78,18 +79,27 @@ public class QuizService {
         if (correctAns.equals(answeredQuiz.getAns())) {
             isCorrect = true;
         }
+    
+        /// 過去に正解していないことを確認
+        Boolean isFirstCorrect = true;
+        List<AnsweredQuiz> list = answeredQuizRepository.findByUserIdAndQuizId(userId, answeredQuiz.getQuizId());
+        for (AnsweredQuiz aq: list) {
+            if(aq.getIsCorrect()) {
+                isFirstCorrect = false;
+            }
+        }
+
+        // クイズが正解ならば、ユーザーデイリーステータスへポイントを加算する
+        if (isCorrect) {
+            if(isFirstCorrect)
+            // ポイントを加算する
+            userService.renewUserDailyStatusForQuiz(userId, answeredQuiz.getAnsweredQuizId()); // ユーザーデイリーステータスを更新
+        }
+
         // 回答済みクイズエンティティを保存
         answeredQuiz.setIsCorrect(isCorrect);
         answeredQuizRepository.save(answeredQuiz);
 
-        /// 過去に正解していないことを確認
-        Boolean isFirstCorrect = answeredQuizRepository.existsByUserIdAndQuizIdAndIsCorrect(userId, answeredQuiz.getQuizId(), true);
-
-        // クイズが正解ならば、ユーザーデイリーステータスへポイントを加算する
-        if (isCorrect && !(isFirstCorrect)) { 
-            // ポイントを加算する
-            userService.renewUserDailyStatusForQuiz(userId, answeredQuiz.getAnsweredQuizId()); // ユーザーデイリーステータスを更新
-        }
     
         return AnsweredQuizDto.build(answeredQuiz, quiz, tag);
     }

@@ -16,7 +16,7 @@ public class AnsweredQuizDto {
     Long quizId; // クイズID
     String userId; // ユーザID
     LocalDateTime answeredAt; // 回答完了日時
-    String ans; // 回答
+    String userAns; // 回答
     Boolean isCorrect; // 正誤フラグ
 
     // 以下、クイズIDに紐づけられたクイズの中身に関する情報
@@ -41,7 +41,7 @@ public class AnsweredQuizDto {
         dto.userId = answeredQuiz.getUserId();
         dto.quizId = answeredQuiz.getQuizId();
         dto.answeredAt = answeredQuiz.getAnsweredAt();
-        dto.ans = answeredQuiz.getAns();
+        dto.userAns = answeredQuiz.getUserAns();
         dto.isCorrect = answeredQuiz.getIsCorrect();
 
         dto.title = quiz.getTitle();

@@ -74,7 +74,7 @@ public class QuizService {
         // 正解の選択肢を取得
         String correctAns = quiz.getCorrectAns();
         // 正解判定
-        if (correctAns.equals(answeredQuiz.getAns())) {
+        if (correctAns.equals(answeredQuiz.getUserAns())) {
             isCorrect = true;
         }
     

@@ -28,6 +28,6 @@ public class AnsweredQuiz {
     String userId; // ユーザID
     // @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime answeredAt; // 回答完了日時
-    String ans; // 回答
+    String userAns; // 回答
     Boolean isCorrect; // 正誤フラグ
 }

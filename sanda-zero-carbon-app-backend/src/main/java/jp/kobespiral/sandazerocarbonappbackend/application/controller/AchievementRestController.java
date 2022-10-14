@@ -20,7 +20,6 @@ import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Erro
 import java.util.List;
 
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -31,8 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @RestController
 @RequiredArgsConstructor
-// @CrossOrigin("http://localhost:5173")
-@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
 @RequestMapping("/api")
 public class AchievementRestController {
     /** 達成のサービス */

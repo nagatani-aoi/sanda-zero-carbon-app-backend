@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequiredArgsConstructor
 // @CrossOrigin("http://localhost:5173")
-@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
+//@CrossOrigin("https://sanda-zero-carbon-app-yuyohi.vercel.app/")
 @RequestMapping("/api")
 public class AchievementRestController {
     /** 達成のサービス */

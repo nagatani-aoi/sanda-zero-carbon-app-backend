@@ -30,8 +30,20 @@ public class QuizDto {
         dto.title = quiz.getTitle();
         dto.quizSentence = quiz.getQuizSentence();
         dto.explaination = quiz.getExplaination();
-        List<String> list = new ArrayList<String>(Arrays.asList(quiz.getAns1(), quiz.getAns2(), quiz.getAns3(), quiz.getAns4()));
-        dto.answerList = list;
+        if(quiz.getAns4() == null) {
+            if(quiz.getAns3() == null) {
+                List<String> list = new ArrayList<String>(Arrays.asList(quiz.getAns1(), quiz.getAns2()));
+                dto.answerList = list;
+            } else {
+                List<String> list = new ArrayList<String>(Arrays.asList(quiz.getAns1(), quiz.getAns2(), quiz.getAns3()));
+                dto.answerList = list;
+            }
+        } else {
+            if(quiz.getAns3() != null) {
+                List<String> list = new ArrayList<String>(Arrays.asList(quiz.getAns1(), quiz.getAns2(), quiz.getAns3(), quiz.getAns4()));
+                dto.answerList = list;
+            }
+        }
         // dto.ans1 = quiz.getAns1();
         // dto.ans2 = quiz.getAns2();
         // dto.ans3 = quiz.getAns3();

@@ -56,8 +56,7 @@ public class MissionRestController {
             return ResponseCreator.succeed(missionService.getDailyMission(userId));
         } catch (Exception e) {
             return ResponseCreator.fail(
-                    ErrorCode.USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
-                            "get all daily mission", String.format("this user does not exist (userId: %d )", userId)),
+                    ErrorCode.USER_DOES_NOT_EXIST, e,
                     null);
         }
     }

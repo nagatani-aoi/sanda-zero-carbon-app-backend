@@ -15,10 +15,12 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCre
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.AchievementService;
 import lombok.RequiredArgsConstructor;
+
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin("http://localhost:5173")
 @RequestMapping("/api")
 public class AchievementRestController {
+    
     /** 達成のサービス */
     private final AchievementService achievementService;
 
@@ -46,6 +49,7 @@ public class AchievementRestController {
      * @return 達成Dto
      */
     @PostMapping("/mission/achieve")
+    @CrossOrigin("http://localhost:5173")
     public Response<AchievementDto> achieveMission(@Validated @RequestBody MissionAchieveForm form) {
         try{
             return ResponseCreator.succeed(achievementService.achieveMission(form));

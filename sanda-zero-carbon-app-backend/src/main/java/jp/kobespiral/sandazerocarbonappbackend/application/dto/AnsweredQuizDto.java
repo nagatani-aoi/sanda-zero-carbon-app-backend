@@ -23,11 +23,6 @@ public class AnsweredQuizDto {
     String title; // タイトル
     String quizSentence; // 問題文
     String explaination; // 説明文
-    List<String> answerList; //選択肢リスト
-    // String ans1; // 選択肢１
-    // String ans2; // 選択肢２
-    // String ans3; // 選択肢３
-    // String ans4; // 選択肢４
 
     String correctAns; // 正解
     int point; // 獲得ポイント
@@ -47,12 +42,6 @@ public class AnsweredQuizDto {
         dto.title = quiz.getTitle();
         dto.quizSentence = quiz.getQuizSentence();
         dto.explaination = quiz.getExplaination();
-        List<String> list = new ArrayList<String>(Arrays.asList(quiz.getAns1(), quiz.getAns2(), quiz.getAns3(), quiz.getAns4()));
-        dto.answerList = list;
-        // dto.ans1 = quiz.getAns1();
-        // dto.ans2 = quiz.getAns2();
-        // dto.ans3 = quiz.getAns3();
-        // dto.ans4 = quiz.getAns4();
 
         dto.correctAns = quiz.getCorrectAns();
         dto.point = quiz.getPoint();

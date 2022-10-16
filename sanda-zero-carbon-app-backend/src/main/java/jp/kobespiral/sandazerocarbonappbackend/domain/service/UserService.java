@@ -214,10 +214,10 @@ public class UserService {
         LocalDate localDate = LocalDate.now();
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId,localDate);
         //その日のユーザデイリーステータスがなかったら作成
-        if(userDailyStatus == null){
-            UserDailyStatus tempDailyStatus = new UserDailyStatus(null, userId, localDate, 0,0 ,0,0, false,false,false);
-            userDailyStatusRepository.save(tempDailyStatus);
-            userDailyStatus = tempDailyStatus;
+        if(!userDailyStatusRepository.existsByUserIdAndDate(userId, localDate)){
+            UserDailyStatus tempUserDailyStatus = new UserDailyStatus(null, userId, localDate,0, 0, 0,0, false,false,false);
+            userDailyStatusRepository.save(tempUserDailyStatus);
+            userDailyStatus = tempUserDailyStatus;
         }
         return userDailyStatus;
     }

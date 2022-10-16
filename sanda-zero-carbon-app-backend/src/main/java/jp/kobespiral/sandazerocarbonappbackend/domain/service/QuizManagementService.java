@@ -43,7 +43,9 @@ public class QuizManagementService {
     public QuizDto createQuiz(QuizForm form) {
         // フォームからクイズエンティティを作成し、保存
         Quiz quiz = form.toEntity();
-        quizRepository.save(quiz);
+        if(quiz.getAns3() != null) {
+            quizRepository.save(quiz);
+        }
         // タグの生成
         Tag tag = tagRepository.findById(quiz.getTagId()).orElseThrow(() -> new TagValidationException(TAG_DOES_NOT_EXIST,"create quiz",String.format("tagId %d does not exist", quiz.getTagId())));
 

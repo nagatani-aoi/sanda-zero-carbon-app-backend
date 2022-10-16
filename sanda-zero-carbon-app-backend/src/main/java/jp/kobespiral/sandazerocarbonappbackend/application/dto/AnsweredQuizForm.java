@@ -15,14 +15,14 @@ public class AnsweredQuizForm {
     @NotBlank
     String userId; // ユーザID
     @NotBlank
-    String ans; // 回答
+    String userAns; // 回答
 
     public AnsweredQuiz toEntity() {
         AnsweredQuiz answeredQuiz = new AnsweredQuiz();
         answeredQuiz.setUserId(userId);
         answeredQuiz.setQuizId(quizId);
         answeredQuiz.setAnsweredAt(LocalDateTime.now());
-        answeredQuiz.setAns(ans);
+        answeredQuiz.setUserAns(userAns);
         answeredQuiz.setIsCorrect(false);
         return answeredQuiz;
     }

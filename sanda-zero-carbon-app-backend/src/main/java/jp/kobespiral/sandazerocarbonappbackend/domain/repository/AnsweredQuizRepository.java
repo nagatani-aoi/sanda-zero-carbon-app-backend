@@ -15,22 +15,25 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.entity.AnsweredQuiz;
 @Repository
 public interface AnsweredQuizRepository extends CrudRepository<AnsweredQuiz, Long> {
     /**
-     * ユーザIDを指定して，回答済みクイズのリストを取得する
-     * 
-     * @param userId ユーザID
-     * @return List<AnsweredQuiz> 回答済みクイズのリスト
+     * ユーザIDとクイズIDで回答済みクイズを取得
+     *
+     * @param userId
+     * @param quizId
+     * @return List<AnsweredQuiz>
      */
-    List<AnsweredQuiz> findByUserId(String userId);
+    List<AnsweredQuiz> findByUserIdAndQuizId(String userId, Long quizId);
 
     /**
-     * 正誤フラグとユーザIDを指定して，該当する回答済みリストを取得する
-     * 
-     * @param isCorrect 正誤フラグ
-     * @param userId    ユーザID
-     * @return List<AnsweredQuiz> 回答済みクイズのリスト
+     * ユーザIDとクイズIDで存在判定
+     *
+     * @param userId
+     * @param quizId
+     * @return
      */
-    List<AnsweredQuiz> findByIsCorrectAndUserId(Boolean isCorrect, String userId);
+    Boolean existsByUserIdAndQuizId(String userId, Long quizId);
 
-    
-    List<AnsweredQuiz> findByUserIdAndQuizId(String userId, Long quizId);
+    /**
+     * ユーザID，クイズIDでクイズを検索し，正解したことがあるかを判定
+     */
+    Boolean existsByUserIdAndQuizIdAndIsCorrectTrue(String userId, Long quizId);
 }

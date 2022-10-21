@@ -43,6 +43,9 @@ public class QuizService {
     // ユーザーデイリーステータスレポジトリ
     @Autowired
     UserDailyStatusRepository userDailyStatusRepository;
+    // 管理者用クイズサービス
+    @Autowired
+    QuizManagementService quizManagementService;
 
     /* ----------------Create----------------- */
     /**
@@ -114,21 +117,31 @@ public class QuizService {
         if(!(userService.isUserExist(userId))){
             throw new UserValidationException(USER_DOES_NOT_EXIST, "get unanswered quiz",String.format("this user does not exist (userId: %s )", userId));
         }
-        // ユーザIDより、回答済みクイズのリストを生成
-        List<AnsweredQuiz> AnsweredQuizList = answeredQuizRepository.findByUserId(userId);
 
-        List<Long> quizIdList = new ArrayList<Long>();
         List<QuizDto> quizDtoList = new ArrayList<QuizDto>();
 
-        // 回答済みクイズのリストより，クイズIDを抽出してリスト化する
-        for (AnsweredQuiz list: AnsweredQuizList) quizIdList.add(list.getQuizId());
+        // ユーザの回答済みクイズの存在を確認
+        if (answeredQuizRepository.existsByUserId(userId)) {
 
-        // クイズIDのリストを用いて未回答のクイズリストを作成し，DTO形式に変換
-        for (Quiz list: quizRepository.findByQuizIdNotIn(quizIdList)) {
-            // タグの取得
-            Tag tag = tagRepository.findById(list.getTagId()).orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ,"get answered quiz",String.format("quizId: %d does not have tag", list.getQuizId())));
+            // ユーザIDより、回答済みクイズのリストを生成
+            List<AnsweredQuiz> AnsweredQuizList = answeredQuizRepository.findByUserId(userId);
+            List<Long> quizIdList = new ArrayList<Long>();
 
-            quizDtoList.add(QuizDto.build(list, tag));
+            // 回答済みクイズのリストより，クイズIDを抽出してリスト化する
+            for (AnsweredQuiz list : AnsweredQuizList)
+                quizIdList.add(list.getQuizId());
+
+            // クイズIDのリストを用いて未回答のクイズリストを作成し，DTO形式に変換
+            for (Quiz list : quizRepository.findByQuizIdNotIn(quizIdList)) {
+                // タグの取得
+                Tag tag = tagRepository.findById(list.getTagId()).orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ,"get answered quiz", String.format("quizId: %d does not have tag", list.getQuizId())));
+
+                quizDtoList.add(QuizDto.build(list, tag));
+            }
+
+        } else {
+            // 回答済みクイズが存在しないなら、クイズをすべて出力
+            quizDtoList = quizManagementService.getAllQuiz();
         }
         return quizDtoList;
     }

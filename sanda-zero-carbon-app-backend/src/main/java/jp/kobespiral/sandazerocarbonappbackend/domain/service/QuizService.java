@@ -177,8 +177,8 @@ public class QuizService {
 
             if (answeredQuizRepository.existsByUserIdAndQuizId(userId,
                     quizId)
-                    && answeredQuizRepository.existsByUserIdAndQuizIdAndIsCorrectTrue(userId,
-                            quizId)) { // 正解した記録があれば
+                    && !(answeredQuizRepository.existsByUserIdAndQuizIdAndIsCorrectTrue(userId,
+                            quizId))) { // 正解した記録があれば
                 quizDtoList.add(this.buildQuizDto(quiz)); // Dto作成してリストに追加
             }
         }

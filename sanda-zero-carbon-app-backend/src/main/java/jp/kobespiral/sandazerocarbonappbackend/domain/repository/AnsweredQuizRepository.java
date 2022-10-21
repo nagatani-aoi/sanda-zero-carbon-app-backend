@@ -1,5 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -34,4 +35,18 @@ public interface AnsweredQuizRepository extends CrudRepository<AnsweredQuiz, Lon
     List<AnsweredQuiz> findByUserIdAndQuizId(String userId, Long quizId);
 
     Boolean existsByUserId(String userId);
+
+    /**
+     * ユーザIDとクイズIDで存在判定
+     *
+     * @param userId
+     * @param quizId
+     * @return
+     */
+    Boolean existsByUserIdAndQuizId(String userId, Long quizId);
+
+    /**
+     * ユーザID，クイズIDでクイズを検索し，正解したことがあるかを判定
+     */
+    Boolean existsByUserIdAndQuizIdAndIsCorrectTrue(String userId, Long quizId);
 }

@@ -173,7 +173,12 @@ public class QuizService {
         List<QuizDto> quizDtoList = new ArrayList<QuizDto>(); // 未回答のクイズを格納するリスト
 
         for (Quiz quiz : quizRepository.findAll()) {
-            if (!answeredQuizRepository.existsByUserIdAndQuizIdAndIsCorrectTrue(userId, quiz.getQuizId())) { // 正解した記録があれば
+            Long quizId = quiz.getQuizId();
+
+            if (answeredQuizRepository.existsByUserIdAndQuizId(userId,
+                    quizId)
+                    && answeredQuizRepository.existsByUserIdAndQuizIdAndIsCorrectTrue(userId,
+                            quizId)) { // 正解した記録があれば
                 quizDtoList.add(this.buildQuizDto(quiz)); // Dto作成してリストに追加
             }
         }

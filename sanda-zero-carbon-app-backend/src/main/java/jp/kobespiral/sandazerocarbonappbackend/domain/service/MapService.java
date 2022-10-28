@@ -47,8 +47,6 @@ public class MapService {
         Map map = mapRepository.findByCurrentLocationAndStage(
                 initialLocationRepository.findFirstByStage(stage).getInitialLocation(), stage); // 特定ユーザーのレベルから初期位置のマップを取得
 
-        // System.out.println(map.getImageSource());
-
         return MapDto.build(userId, map);
     }
 }

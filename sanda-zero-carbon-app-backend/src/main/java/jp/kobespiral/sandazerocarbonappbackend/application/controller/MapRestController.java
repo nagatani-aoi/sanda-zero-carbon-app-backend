@@ -48,7 +48,7 @@ public class MapRestController {
 
     /**
      * 指定したユーザーの初期位置のマップを取得
-     *
+     *2
      * @param userId ユーザーID
      * @return ラップされたマップDto
      */

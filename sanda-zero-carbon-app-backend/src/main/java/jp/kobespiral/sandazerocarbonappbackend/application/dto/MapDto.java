@@ -15,8 +15,9 @@ public class MapDto {
     int currentLocation; // マップ上での現在地
     Long nextLocation; // 次の地点
     Long backLocation; // 1つ前の地点
-    String imageSource; // ホーム画面背景の画像ソース(URL)
-    String source; // マップの画像ソース(URL)
+    String mapImage; // マップの画像データ
+    String placeImage; // 名勝の画像データ
+    String placeName; // 名勝の名称
 
     /**
      * ユーザーIDとマップのエンティティからDtoを作成
@@ -33,8 +34,9 @@ public class MapDto {
         dto.currentLocation = map.getCurrentLocation();
         dto.nextLocation = map.getNextLocation();
         dto.backLocation = map.getBackLocation();
-        dto.imageSource = map.getImageSource();
-        dto.source = map.getSource();
+        dto.mapImage = map.getMapImage();
+        dto.placeImage = map.getPlaceImage();
+        dto.placeName = map.getPlaceName();
         return dto;
     }
 }

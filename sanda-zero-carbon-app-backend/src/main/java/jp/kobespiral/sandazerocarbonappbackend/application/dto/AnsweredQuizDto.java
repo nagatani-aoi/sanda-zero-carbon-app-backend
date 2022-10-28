@@ -1,9 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.AnsweredQuiz;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Quiz;

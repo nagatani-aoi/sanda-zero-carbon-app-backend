@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.AnsweredQuizDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.AnsweredQuizForm;
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.CorrectQuizCountDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.QuizDto;
 
 import java.util.List;
@@ -75,5 +76,16 @@ public class QuizRestController {
     @GetMapping("/quiz/incorrect")
     Response<List<QuizDto>> getIncorrectAnsweredQuiz(@RequestParam("userId") String userId) {
         return ResponseCreator.succeed(quizService.getIncorrectAnsweredQuiz(userId));
+    }
+
+    /**
+     * クイズの総数と正解数を取得する
+     * 
+     * @param userId
+     * @return CorrectQuizCountDto
+     */
+    @GetMapping("/quiz/result")
+    Response<CorrectQuizCountDto> getCorrectQuizCount(@RequestParam("userId") String userId) {
+        return ResponseCreator.succeed(quizService.getCorrectQuizCount(userId));
     }
 }

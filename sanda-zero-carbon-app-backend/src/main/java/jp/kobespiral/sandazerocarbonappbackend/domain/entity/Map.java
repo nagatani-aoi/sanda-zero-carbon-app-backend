@@ -29,9 +29,10 @@ public class Map {
     Long nextLocation; // 次の地点
     Long backLocation; // 1つ前の地点
     @Lob
-    @Column(name = "imageSource", columnDefinition = "LONGBLOB", nullable = false)
-    String imageSource; // ホーム画面背景の画像ソース(URL)
+    @Column(name = "mapImage", columnDefinition = "LONGBLOB", nullable = false)
+    String mapImage; // マップの画像データ
     @Lob
-    @Column(name = "source", columnDefinition = "LONGBLOB", nullable = false)
-    String source; // マップの画像ソース(URL)
+    @Column(name = "placeImage", columnDefinition = "LONGBLOB", nullable = false)
+    String placeImage; // 名勝の画像データ
+    String placeName; // 名勝の名称
 }

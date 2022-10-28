@@ -10,6 +10,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 // .allowedOrigins("http://localhost:5173");
-                .allowedOrigins("http://localhost:5173","https://sanda-zero-carbon-app-yuyohi.vercel.app/");
+                // .allowedOrigins("http://localhost:5173",
+                // "https://sanda-zero-carbon-app-yuyohi.vercel.app/");
+                .allowedOrigins("*");
     }
 }

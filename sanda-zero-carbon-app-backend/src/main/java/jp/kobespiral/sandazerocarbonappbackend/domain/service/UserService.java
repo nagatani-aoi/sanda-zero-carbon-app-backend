@@ -232,7 +232,8 @@ public class UserService {
      * @param userId
      * @return
      */
-    public UserDailyStatus getUserDailyStatus(String userId) {
+    // @Transactional
+    public synchronized UserDailyStatus getUserDailyStatus(String userId) {
         LocalDate localDate = LocalDate.now();
         UserDailyStatus userDailyStatus;
 

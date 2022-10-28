@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * ユーザ側でクイズの回答やクイズ一覧の取得を行うサービス
  * 
- * @author kamae
+ * @author kamae & ing
  */
 @Service
 public class QuizService {
@@ -57,17 +57,21 @@ public class QuizService {
     public AnsweredQuizDto createAnsweredQuiz(AnsweredQuizForm form) {
         String userId = form.getUserId();
         // ユーザIDが存在するか確認
-        if(!(userService.isUserExist(userId))){
-            throw new UserValidationException(USER_DOES_NOT_EXIST, "answer quiz",String.format("this user does not exist (userId: %s )", form.getUserId()));
+        if (!(userService.isUserExist(userId))) {
+            throw new UserValidationException(USER_DOES_NOT_EXIST, "answer quiz",
+                    String.format("this user does not exist (userId: %s )", form.getUserId()));
         }
 
         // IDで指定されたクイズの取得
-        Quiz quiz = quizRepository.findById(form.getQuizId()).orElseThrow(() -> new QuizValidationException(QUIZ_DOES_NOT_EXIST,
-        "answer quiz",
-        String.format("quizId %d does not exist", form.getQuizId())));
+        Quiz quiz = quizRepository.findById(form.getQuizId())
+                .orElseThrow(() -> new QuizValidationException(QUIZ_DOES_NOT_EXIST,
+                        "answer quiz",
+                        String.format("quizId %d does not exist", form.getQuizId())));
 
         // タグの取得
-        Tag tag = tagRepository.findById(quiz.getTagId()).orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ,"answer quiz",String.format("quizId: %d does not have tag", quiz.getQuizId())));
+        Tag tag = tagRepository.findById(quiz.getTagId())
+                .orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ, "answer quiz",
+                        String.format("quizId: %d does not have tag", quiz.getQuizId())));
 
         /// 正解判定処理
         // 回答済みクイズエンティティを生成する
@@ -80,32 +84,32 @@ public class QuizService {
         if (correctAns.equals(answeredQuiz.getUserAns())) {
             isCorrect = true;
         }
-    
+
         /// 過去に正解していないことを確認
         Boolean isFirstCorrect = true;
         List<AnsweredQuiz> list = answeredQuizRepository.findByUserIdAndQuizId(userId, answeredQuiz.getQuizId());
-        for (AnsweredQuiz aq: list) {
-            if(aq.getIsCorrect()) {
+        for (AnsweredQuiz aq : list) {
+            if (aq.getIsCorrect()) {
                 isFirstCorrect = false;
             }
         }
 
         // クイズが正解ならば、ユーザーデイリーステータスへポイントを加算する
         if (isCorrect) {
-            if(isFirstCorrect)
-            // ポイントを加算する
-            userService.renewUserDailyStatusForQuiz(userId, answeredQuiz.getAnsweredQuizId()); // ユーザーデイリーステータスを更新
+            if (isFirstCorrect)
+                // ポイントを加算する
+                userService.renewUserDailyStatusForQuiz(userId, answeredQuiz.getAnsweredQuizId()); // ユーザーデイリーステータスを更新
         }
 
         // 回答済みクイズエンティティを保存
         answeredQuiz.setIsCorrect(isCorrect);
         answeredQuizRepository.save(answeredQuiz);
 
-    
         return AnsweredQuizDto.build(answeredQuiz, quiz, tag);
     }
-    
+
     /* -----------------Read------------------ */
+
     /**
      * ユーザが未回答のクイズをリストで取得する
      * 
@@ -114,35 +118,19 @@ public class QuizService {
      */
     public List<QuizDto> getUnansweredQuiz(String userId) {
         // ユーザIDの存在を確認し、ユーザが持つ回答済みクイズのリストを作成
-        if(!(userService.isUserExist(userId))){
-            throw new UserValidationException(USER_DOES_NOT_EXIST, "get unanswered quiz",String.format("this user does not exist (userId: %s )", userId));
+        if (!(userService.isUserExist(userId))) {
+            throw new UserValidationException(USER_DOES_NOT_EXIST, "get unanswered quiz",
+                    String.format("this user does not exist (userId: %s )", userId));
         }
 
-        List<QuizDto> quizDtoList = new ArrayList<QuizDto>();
+        List<QuizDto> quizDtoList = new ArrayList<QuizDto>(); // 未回答のクイズを格納するリスト
 
-        // ユーザの回答済みクイズの存在を確認
-        if (answeredQuizRepository.existsByUserId(userId)) {
-
-            // ユーザIDより、回答済みクイズのリストを生成
-            List<AnsweredQuiz> AnsweredQuizList = answeredQuizRepository.findByUserId(userId);
-            List<Long> quizIdList = new ArrayList<Long>();
-
-            // 回答済みクイズのリストより，クイズIDを抽出してリスト化する
-            for (AnsweredQuiz list : AnsweredQuizList)
-                quizIdList.add(list.getQuizId());
-
-            // クイズIDのリストを用いて未回答のクイズリストを作成し，DTO形式に変換
-            for (Quiz list : quizRepository.findByQuizIdNotIn(quizIdList)) {
-                // タグの取得
-                Tag tag = tagRepository.findById(list.getTagId()).orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ,"get answered quiz", String.format("quizId: %d does not have tag", list.getQuizId())));
-
-                quizDtoList.add(QuizDto.build(list, tag));
+        for (Quiz quiz : quizRepository.findAll()) {
+            if (!answeredQuizRepository.existsByUserIdAndQuizId(userId, quiz.getQuizId())) { // 回答済みクイズに存在しないならば
+                quizDtoList.add(this.buildQuizDto(quiz)); // Dto作成してリストに追加
             }
-
-        } else {
-            // 回答済みクイズが存在しないなら、クイズをすべて出力
-            quizDtoList = quizManagementService.getAllQuiz();
         }
+
         return quizDtoList;
     }
 
@@ -153,21 +141,18 @@ public class QuizService {
      * @return クイズエンティティのDTOリスト
      */
     public List<QuizDto> getCorrectAnsweredQuiz(String userId) {
-        List<QuizDto> quizDtoList = new ArrayList<QuizDto>();
-
         // ユーザの存在を確認
-        if(!(userService.isUserExist(userId))){
-            throw new UserValidationException(USER_DOES_NOT_EXIST, "get quiz answered correctly",String.format("this user does not exist (userId: %s )", userId));
+        if (!(userService.isUserExist(userId))) {
+            throw new UserValidationException(USER_DOES_NOT_EXIST, "get quiz answered correctly",
+                    String.format("this user does not exist (userId: %s )", userId));
         }
 
-        // 正解したクイズをまとめたリストをDTO形式で作成する
-        for (AnsweredQuiz list: answeredQuizRepository.findByIsCorrectAndUserId(true, userId)) {
-            // IDで指定されたクイズの取得
-            Quiz quiz = quizRepository.findById(list.getQuizId()).orElseThrow(() -> new QuizValidationException(QUIZ_DOES_NOT_EXIST,"get quiz answered correctly",String.format("userId %s does not have quiz", userId)));
-            // タグの取得
-            Tag tag = tagRepository.findById(quiz.getTagId()).orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ,"get quiz answered correctly",String.format("quizId: %d does not have tag", quiz.getQuizId())));
+        List<QuizDto> quizDtoList = new ArrayList<QuizDto>(); // 未回答のクイズを格納するリスト
 
-            quizDtoList.add(QuizDto.build(quiz, tag));
+        for (Quiz quiz : quizRepository.findAll()) {
+            if (answeredQuizRepository.existsByUserIdAndQuizIdAndIsCorrectTrue(userId, quiz.getQuizId())) { // 正解した記録があれば
+                quizDtoList.add(this.buildQuizDto(quiz)); // Dto作成してリストに追加
+            }
         }
         return quizDtoList;
     }
@@ -179,23 +164,42 @@ public class QuizService {
      * @return クイズエンティティのDTOリスト
      */
     public List<QuizDto> getIncorrectAnsweredQuiz(String userId) {
-        List<QuizDto> quizDtoList = new ArrayList<QuizDto>();
-
         // ユーザの存在を確認
-        if(!(userService.isUserExist(userId))){
-            throw new UserValidationException(USER_DOES_NOT_EXIST, "get quiz answered incorrectly",String.format("this user does not exist (userId: %s )", userId));
+        if (!(userService.isUserExist(userId))) {
+            throw new UserValidationException(USER_DOES_NOT_EXIST, "get quiz answered incorrectly",
+                    String.format("this user does not exist (userId: %s )", userId));
         }
 
-        // 間違えたクイズをまとめたリストをDTO形式で作成する
-        for (AnsweredQuiz list: answeredQuizRepository.findByIsCorrectAndUserId(false, userId)) {
-            // IDで指定されたクイズの取得
-            Quiz quiz = quizRepository.findById(list.getQuizId()).orElseThrow(() -> new QuizValidationException(QUIZ_DOES_NOT_EXIST,"get quiz answered incorrectly",String.format("userId %s does not have quiz", userId)));
+        List<QuizDto> quizDtoList = new ArrayList<QuizDto>(); // 未回答のクイズを格納するリスト
 
-            // タグの取得
-            Tag tag = tagRepository.findById(quiz.getTagId()).orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ,"get quiz answered incorrectly",String.format("quizId: %d does not have tag", quiz.getQuizId())));
+        for (Quiz quiz : quizRepository.findAll()) {
+            Long quizId = quiz.getQuizId();
 
-            quizDtoList.add(QuizDto.build(quiz, tag));
+            if (answeredQuizRepository.existsByUserIdAndQuizId(userId,
+                    quizId)
+                    && !(answeredQuizRepository.existsByUserIdAndQuizIdAndIsCorrectTrue(userId,
+                            quizId))) { // 正解した記録があれば
+                quizDtoList.add(this.buildQuizDto(quiz)); // Dto作成してリストに追加
+            }
         }
         return quizDtoList;
+    }
+
+    /* ----------------- Other ------------------ */
+
+    /**
+     * quiz からquizDtoを作成，主にタグの取得
+     *
+     * @param quiz
+     * @return QuizDto
+     */
+    public QuizDto buildQuizDto(Quiz quiz) {
+        // タグの取得
+        Tag tag = tagRepository.findById(quiz.getTagId())
+                .orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ,
+                        "get quiz answered incorrectly",
+                        String.format("quizId: %d does not have tag", quiz.getQuizId())));
+
+        return QuizDto.build(quiz, tag);
     }
 }

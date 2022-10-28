@@ -43,5 +43,4 @@ public interface QuizRepository extends CrudRepository<Quiz, Long> {
      * @return 指定されたタグIDでフィルター済みのクイズのリスト
      */
     List<Quiz> findByTagIdContaining(String tagId);
-
 }

@@ -14,4 +14,6 @@ public class Rule {
     public static int maxMissionPoint = 70;
     /** 1日にクイズで得られるポイント */
     public static int maxQuizPoint = 30;
+    /** マップのステージの最大値 */
+    public static int maxStage = 4;
 }

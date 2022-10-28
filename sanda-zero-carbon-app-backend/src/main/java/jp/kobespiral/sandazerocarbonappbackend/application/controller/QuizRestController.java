@@ -84,7 +84,7 @@ public class QuizRestController {
      * @param userId
      * @return CorrectQuizCountDto
      */
-    @GetMapping("/quiz/result")
+    @GetMapping("/quiz/status")
     Response<CorrectQuizCountDto> getCorrectQuizCount(@RequestParam("userId") String userId) {
         return ResponseCreator.succeed(quizService.getCorrectQuizCount(userId));
     }

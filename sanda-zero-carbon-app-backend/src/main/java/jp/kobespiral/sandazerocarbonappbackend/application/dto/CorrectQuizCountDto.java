@@ -1,5 +1,8 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 
+import lombok.Data;
+
+@Data
 public class CorrectQuizCountDto {
     String userId;
     int totalQuizSize;

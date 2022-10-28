@@ -40,5 +40,5 @@ tasks.named('test') {
 
 war {
     enabled = true
-    archiveName='sanda-zero-carbon.war' // <-ここはプロジェクトに合わせて書き換えてください
+    archiveName='sanda_zero_carbon.war' // <-ここはプロジェクトに合わせて書き換えてください
 }

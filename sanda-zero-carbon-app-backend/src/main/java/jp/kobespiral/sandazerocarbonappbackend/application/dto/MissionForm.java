@@ -3,6 +3,7 @@ package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
@@ -25,10 +26,10 @@ public class MissionForm {
     @Length(min=1,max=1000)
     String description; // 説明
     @NotNull
-    @Positive
+    @PositiveOrZero
     double co2Reduction; // CO2削減量
     @NotNull
-    @Positive
+    @PositiveOrZero
     double costReduction; // 節約金額
     @NotNull
     Difficulty difficulty; // 難易度

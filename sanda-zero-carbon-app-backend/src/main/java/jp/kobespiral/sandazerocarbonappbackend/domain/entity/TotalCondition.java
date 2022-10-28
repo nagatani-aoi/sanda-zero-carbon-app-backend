@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * 市の状況把握エンティティ
- * 
- * @author sato
+ *
+ * @author sato checked ing
  */
 @Data
 @AllArgsConstructor
@@ -25,7 +25,7 @@ public class TotalCondition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long totalConditionId; // 市の状況ID
     double costReduction; // 節約金額
-    double Co2Reduction; // 削減CO2
+    double co2Reduction; // 削減CO2
     LocalDateTime since; // いつから
     LocalDateTime until; // いつまで
     LocalDateTime recordedAt; // 記録日時

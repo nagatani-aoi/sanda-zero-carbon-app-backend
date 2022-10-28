@@ -10,9 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * イニシャルロケーションのエンティティ
- * 
- * @author sato
+ * ステージ毎のマップの初期位置のエンティティ
+ *
+ * @author sato checked ing
  */
 @Data
 @AllArgsConstructor
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class InitialLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long initialLocationId;
-    int stage;
-    int initialLocation;
+    Long initialLocationId; // 初期位置のID
+    int stage; // ステージ
+    int initialLocation; // 初期位置
 }

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * クイズ エンティティ
- * 
- * @author Marin
+ *
+ * @author Marin checked ing
  */
 @Data
 @AllArgsConstructor
@@ -25,11 +25,11 @@ public class Quiz {
     String title; // タイトル
     String quizSentence; // 問題文
     String explaination; // 解説文
-    String ans1; //選択肢１
-    String ans2; //選択肢２
-    String ans3; //選択肢３
-    String ans4; //選択肢４
-    String correctAns; //正解
-    int point; //獲得ポイント
-    Long tagId; //タグID
+    String ans1; // 選択肢１
+    String ans2; // 選択肢２
+    String ans3; // 選択肢３
+    String ans4; // 選択肢４
+    String correctAns; // 解答
+    int point; // 獲得ポイント
+    Long tagId; // タグID
 }

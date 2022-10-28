@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 /**
  * ミッション エンティティ
  *
- * @author Marin
+ * @author Marin checked ing
  */
 @Data
 @AllArgsConstructor

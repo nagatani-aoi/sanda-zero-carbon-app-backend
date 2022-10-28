@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * 記事エンティティ
- * 
- * @author sato
+ *
+ * @author sato checked ing
  */
 @Data
 @AllArgsConstructor
@@ -24,14 +24,13 @@ import lombok.NoArgsConstructor;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long articleId;
-    String title;
-    Long tagId;
-    @Column(length = 100000)
-    String description;
-    // @Temporal(TemporalType.TIMESTAMP)
-    LocalDateTime postedAt;
-    String thumbnailSource;
-    Boolean isImportant;
-    String url;
+    Long articleId; // 記事ID
+    String title; // 記事タイトル
+    Long tagId; // タグID
+    @Column(length = 100000) // 最大10万文字
+    String description; // 説明
+    LocalDateTime postedAt; // 投稿時間
+    String thumbnailSource; // サムネイル画像URL
+    Boolean isImportant; // 重要かどうか
+    String url; // 記事リンク
 }

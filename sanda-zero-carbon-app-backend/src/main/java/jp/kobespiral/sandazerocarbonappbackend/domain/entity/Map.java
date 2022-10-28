@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * マップ エンティティ
- * 
- * @author Kamae
+ *
+ * @author Kamae & yuyohi checked ing
  */
 @Data
 @AllArgsConstructor

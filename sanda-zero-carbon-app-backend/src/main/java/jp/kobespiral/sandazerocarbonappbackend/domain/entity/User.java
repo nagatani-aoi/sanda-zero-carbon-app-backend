@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * ユーザ エンティティ
- * 
- * @author Kamae
+ *
+ * @author Kamae checked ing
  */
 @Data
 @AllArgsConstructor
@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     String userId; // ユーザID
-    String password;//パスワード
+    String password;// パスワード
     int age; // 年齢
-    int totalPoint;//累積ポイント
+    int totalPoint;// 累積ポイント
 }

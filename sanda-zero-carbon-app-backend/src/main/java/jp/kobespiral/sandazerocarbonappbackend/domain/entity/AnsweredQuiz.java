@@ -26,7 +26,6 @@ public class AnsweredQuiz {
     Long answeredQuizId; // 回答済みクイズID
     Long quizId; // クイズID
     String userId; // ユーザID
-    // @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime answeredAt; // 回答完了日時
     String userAns; // 回答
     Boolean isCorrect; // 正誤フラグ

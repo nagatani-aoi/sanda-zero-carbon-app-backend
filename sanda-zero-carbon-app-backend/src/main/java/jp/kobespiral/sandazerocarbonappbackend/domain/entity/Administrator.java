@@ -10,9 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * アドミン エンティティ
- * 
- * @author Kamae
+ * 管理者エンティティ
+ *
+ * @author Kamae checked ing
  */
 @Data
 @AllArgsConstructor
@@ -21,6 +21,6 @@ import lombok.NoArgsConstructor;
 public class Administrator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long administratorId; // アドミンID
+    Long administratorId; // 管理者ID
     String password; // パスワード
 }

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * タグ エンティティ
- * 
- * @author Kamae
+ *
+ * @author Kamae checked ing
  */
 @Data
 @AllArgsConstructor

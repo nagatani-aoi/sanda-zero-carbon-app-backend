@@ -35,8 +35,17 @@ public class MapService {
      * @return マップのDto
      */
     public MapDto getMap(String userId, int currentLocation) {
-        Map map = mapRepository.findByCurrentLocationAndStage(currentLocation,
-                (userService.getUserDto(userId).getLevel() / Rule.mapLevelRate) + 1); // 特定ユーザーのレベルと現在地からマップを取得
+        int caluculatedStage = userService.getUserDto(userId).getLevel() / Rule.mapLevelRate + 1; // マップの段階を計算
+
+        int stage; // ユーザーの現在のステージ
+
+        if (caluculatedStage > Rule.maxStage) { // 計算したステージが最大値を超えていたら
+            stage = Rule.maxStage; // ステージの最大値に設定
+        } else {
+            stage = caluculatedStage; // 計算したステージに設定
+        }
+
+        Map map = mapRepository.findByCurrentLocationAndStage(currentLocation, stage); // 特定ユーザーのレベルと現在地からマップを取得
 
         return MapDto.build(userId, map);
     }

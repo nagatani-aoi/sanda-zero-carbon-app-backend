@@ -41,8 +41,8 @@ public class MapRestController {
         try {
             return ResponseCreator.succeed(mapService.getMap(userId, currentLocation));
         } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
-                    "get map", String.format("this user does not exist (userId: %d )", userId)), null);
+            System.err.println(e.toString());
+            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, e, null);
         }
     }
 

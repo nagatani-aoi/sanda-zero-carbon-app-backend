@@ -1,10 +1,11 @@
 package jp.kobespiral.sandazerocarbonappbackend.cofigration.exception;
 
-public class ArticleValidationException extends RuntimeException{
+public class ArticleValidationException extends RuntimeException {
     /** シリアライズであることを保証？ */
     private final static long serialVersionUID = 1L;
     /** エラーの種類識別子 */
     private final ErrorCode code;
+
     /**
      * 例外を生成するコンストラクタ
      *

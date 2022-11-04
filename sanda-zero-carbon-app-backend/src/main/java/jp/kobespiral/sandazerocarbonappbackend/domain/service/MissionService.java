@@ -30,8 +30,6 @@ public class MissionService {
     DailyMissionRepository dailyMissionRepository;
     @Autowired
     MissionRepository missionRepository;
-    // @Autowired
-    // UserDailyStatusRepository userDailyStatusRepository;
     @Autowired
     TagRepository tagRepository;
     @Autowired

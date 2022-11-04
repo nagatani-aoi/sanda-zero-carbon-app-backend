@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * マップ エンティティ
- * 
+ *
  * @author Kamae
  */
 @Data
@@ -35,4 +35,5 @@ public class Map {
     @Column(name = "placeImage", columnDefinition = "LONGBLOB", nullable = false)
     String placeImage; // 名勝の画像データ
     String placeName; // 名勝の名称
+    String placeLink; // 名勝のリンク
 }

@@ -102,7 +102,7 @@ public class InitializerRestCotroller {
         quizForm.setAns2("回答2");
         quizForm.setAns3("回答3");
         quizForm.setAns4("回答4");
-        quizForm.setCorrectAnsNum(1);
+        quizForm.setCorrectAnsNum(1 - 1);
         quizForm.setExplaination("お試しクイズ");
         quizForm.setPoint(1);
         quizForm.setQuizSentence("お試しクイズ？");

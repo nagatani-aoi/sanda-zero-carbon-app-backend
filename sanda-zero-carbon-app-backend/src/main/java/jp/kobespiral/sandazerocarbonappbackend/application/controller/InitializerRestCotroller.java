@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionForm;
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.QuizForm;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.TagForm;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserForm;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Difficulty;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.MissionManagementService;
+import jp.kobespiral.sandazerocarbonappbackend.domain.service.QuizManagementService;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.TagManagementService;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,8 @@ public class InitializerRestCotroller {
     private final MissionManagementService missionManagementService;
     /** タグサービス */
     private final TagManagementService tagManagementService;
+    /** クイズサービス */
+    private final QuizManagementService quizManagementService;
 
     /**
      * 初期状態からDBをいい感じに埋める
@@ -91,5 +95,19 @@ public class InitializerRestCotroller {
         missionManagementService.createMission(missionForm);
 
         missionManagementService.selectDailyMissions(); // デイリーミッションの選択
+
+        // クイズを新規登録
+        QuizForm quizForm = new QuizForm();
+        quizForm.setAns1("回答1");
+        quizForm.setAns2("回答2");
+        quizForm.setAns3("回答3");
+        quizForm.setAns4("回答4");
+        quizForm.setCorrectAnsNum(1);
+        quizForm.setExplaination("お試しクイズ");
+        quizForm.setPoint(1);
+        quizForm.setQuizSentence("お試しクイズ？");
+        quizForm.setTagId(1l);
+        quizForm.setTitle("お試しクイズ");
+        quizManagementService.createQuiz(quizForm);
     }
 }

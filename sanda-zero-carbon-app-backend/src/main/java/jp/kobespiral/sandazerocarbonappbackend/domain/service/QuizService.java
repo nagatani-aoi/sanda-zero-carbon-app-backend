@@ -79,10 +79,10 @@ public class QuizService {
         AnsweredQuiz answeredQuiz = form.toEntity();
         answeredQuizRepository.save(answeredQuiz);
         Boolean isCorrect = answeredQuiz.getIsCorrect();
-        // 正解の選択肢を取得
-        String correctAns = quiz.getCorrectAns();
+        // 正解の選択肢番号を取得
+        int correctAnsNum = quiz.getCorrectAnsNum();
         // 正解判定
-        if (correctAns.equals(answeredQuiz.getUserAns())) {
+        if (correctAnsNum == answeredQuiz.getUserAnsNum()) {
             isCorrect = true;
         }
 
@@ -195,7 +195,7 @@ public class QuizService {
     public CorrectQuizCountDto getCorrectQuizCount(String userId) {
         int totalQuizSize, correctQuizCount = 0;
         Boolean isFirstCorrect = true;
-        
+
         // ユーザの存在を確認
         if (!(userService.isUserExist(userId))) {
             throw new UserValidationException(USER_DOES_NOT_EXIST, "get quiz answered incorrectly",
@@ -208,7 +208,7 @@ public class QuizService {
 
         for (Quiz quiz : allQuizList) {
             for (AnsweredQuiz answeredQuiz : answeredQuizRepository.findByUserIdAndQuizId(userId, quiz.getQuizId())) {
-                if ( answeredQuiz.getIsCorrect() && isFirstCorrect ) { // クイズに正解した記録があれば、correctQuizCountを+1する。ただし+1するのは1度のみ
+                if (answeredQuiz.getIsCorrect() && isFirstCorrect) { // クイズに正解した記録があれば、correctQuizCountを+1する。ただし+1するのは1度のみ
                     correctQuizCount = correctQuizCount + 1;
                     isFirstCorrect = false;
                 }

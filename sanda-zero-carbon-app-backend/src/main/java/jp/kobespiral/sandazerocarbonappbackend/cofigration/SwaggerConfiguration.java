@@ -23,8 +23,8 @@ public class SwaggerConfiguration {
     public Docket swaggerSpringMvcPlugin() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
-                .protocols(Collections.singleton("https")) // <- ポイント 1
-                .host("es4.eedept.kobe-u.ac.jp") // <- ポイント 2
+                .protocols(Collections.singleton("http")) // <- ポイント 1
+                .host("localhost:18080") // <- ポイント 2
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.regex("/api.*"))
@@ -37,11 +37,8 @@ public class SwaggerConfiguration {
                 .title("Sanda Zero Carbon App")
                 .description("Sanda Zero Carbon Appのバックエンド")
                 .version("0.0.1")
-                // .contact(new Contact("Aoi Nagatani", "http://localhost:18080",
-                // "ing@ws.cs.kobe-u.ac.jp"))
                 .contact(new Contact("Aoi Nagatani", "https://es4.eedept.kobe-u.ac.jp",
                         "ing@ws.cs.kobe-u.ac.jp"))
-                // .contact("Masahide Nakamura")
                 .license("license")
                 .licenseUrl("license URL")
                 .termsOfServiceUrl("")

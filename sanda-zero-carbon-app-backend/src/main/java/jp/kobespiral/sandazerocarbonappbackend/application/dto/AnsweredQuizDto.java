@@ -13,7 +13,7 @@ public class AnsweredQuizDto {
     Long quizId; // クイズID
     String userId; // ユーザID
     LocalDateTime answeredAt; // 回答完了日時
-    String userAns; // 回答
+    int userAnsNum; // 回答
     Boolean isCorrect; // 正誤フラグ
 
     // 以下、クイズIDに紐づけられたクイズの中身に関する情報
@@ -21,7 +21,7 @@ public class AnsweredQuizDto {
     String quizSentence; // 問題文
     String explaination; // 説明文
 
-    String correctAns; // 正解
+    int correctAnsNum; // 正解
     int point; // 獲得ポイント
     Long tagId; // タグID
     String keyword; // キーワード
@@ -33,14 +33,14 @@ public class AnsweredQuizDto {
         dto.userId = answeredQuiz.getUserId();
         dto.quizId = answeredQuiz.getQuizId();
         dto.answeredAt = answeredQuiz.getAnsweredAt();
-        dto.userAns = answeredQuiz.getUserAns();
+        dto.userAnsNum = answeredQuiz.getUserAnsNum();
         dto.isCorrect = answeredQuiz.getIsCorrect();
 
         dto.title = quiz.getTitle();
         dto.quizSentence = quiz.getQuizSentence();
         dto.explaination = quiz.getExplaination();
 
-        dto.correctAns = quiz.getCorrectAns();
+        dto.correctAnsNum = quiz.getCorrectAnsNum();
         dto.point = quiz.getPoint();
         dto.tagId = tag.getTagId();
         dto.keyword = tag.getKeyword();

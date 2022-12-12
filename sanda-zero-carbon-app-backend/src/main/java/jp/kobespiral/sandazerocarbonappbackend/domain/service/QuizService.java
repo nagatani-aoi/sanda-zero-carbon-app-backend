@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.AnsweredQuizDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.AnsweredQuizForm;
+import jp.kobespiral.sandazerocarbonappbackend.application.dto.CorrectQuizCountDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.QuizDto;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.QuizValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
@@ -78,10 +79,10 @@ public class QuizService {
         AnsweredQuiz answeredQuiz = form.toEntity();
         answeredQuizRepository.save(answeredQuiz);
         Boolean isCorrect = answeredQuiz.getIsCorrect();
-        // 正解の選択肢を取得
-        String correctAns = quiz.getCorrectAns();
+        // 正解の選択肢番号を取得
+        int correctAnsNum = quiz.getCorrectAnsNum();
         // 正解判定
-        if (correctAns.equals(answeredQuiz.getUserAns())) {
+        if (correctAnsNum == answeredQuiz.getUserAnsNum()) {
             isCorrect = true;
         }
 
@@ -183,6 +184,39 @@ public class QuizService {
             }
         }
         return quizDtoList;
+    }
+
+    /**
+     * クイズの総数と正解数を取得する
+     * 
+     * @param userId
+     * @return correctQuizCountDto
+     */
+    public CorrectQuizCountDto getCorrectQuizCount(String userId) {
+        int totalQuizSize, correctQuizCount = 0;
+        Boolean isFirstCorrect = true;
+
+        // ユーザの存在を確認
+        if (!(userService.isUserExist(userId))) {
+            throw new UserValidationException(USER_DOES_NOT_EXIST, "get quiz answered incorrectly",
+                    String.format("this user does not exist (userId: %s )", userId));
+        }
+
+        // 全クイズを取得し、そのサイズをtotalQuizSizeに入れる
+        List<Quiz> allQuizList = quizRepository.findAll();
+        totalQuizSize = allQuizList.size();
+
+        for (Quiz quiz : allQuizList) {
+            for (AnsweredQuiz answeredQuiz : answeredQuizRepository.findByUserIdAndQuizId(userId, quiz.getQuizId())) {
+                if (answeredQuiz.getIsCorrect() && isFirstCorrect) { // クイズに正解した記録があれば、correctQuizCountを+1する。ただし+1するのは1度のみ
+                    correctQuizCount = correctQuizCount + 1;
+                    isFirstCorrect = false;
+                }
+            }
+            isFirstCorrect = true;
+        }
+
+        return CorrectQuizCountDto.build(userId, totalQuizSize, correctQuizCount);
     }
 
     /* ----------------- Other ------------------ */

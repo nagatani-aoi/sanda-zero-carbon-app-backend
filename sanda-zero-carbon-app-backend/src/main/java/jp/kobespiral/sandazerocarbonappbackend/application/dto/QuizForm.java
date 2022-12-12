@@ -31,7 +31,6 @@ public class QuizForm {
     String ans3; // 選択肢３
     @Length(min = 0, max = 100)
     String ans4; // 選択肢４
-    @NotBlank
     // 1 ~ 4の数字範囲制約必要
     // @Length(min = 1, max = 100)
     int correctAnsNum; // 正解

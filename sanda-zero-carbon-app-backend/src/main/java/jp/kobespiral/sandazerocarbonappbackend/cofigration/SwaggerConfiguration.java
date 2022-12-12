@@ -24,7 +24,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
                 .protocols(Collections.singleton("https")) // <- ポイント 1
-                .host("es4.eedept.kobe-u.ac.jp/sanda_zero_carbon") // <- ポイント 2
+                .host("es4.eedept.kobe-u.ac.jp") // <- ポイント 2
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.regex("/api.*"))

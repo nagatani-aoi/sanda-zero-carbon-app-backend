@@ -14,6 +14,7 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.MissionForm;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.DailyMission;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Difficulty;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Mission;
+import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionPoint;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Tag;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.DailyMissionRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.MissionRepository;
@@ -130,7 +131,9 @@ public class MissionManagementService {
         Mission mission = missionRepository.findById(missionId)
                 .orElseThrow(() -> new MissionValidationException(MISSION_DOES_NOT_EXIST, "read the mission",
                         String.format("missionId: %d does not exist", missionId)));
-        mission.setPoint(form.getPoint());
+        
+        mission.setPoint(MissionPoint.valueOf(form.getDifficulty().toString()).getInt());
+        // mission.setPoint(form.getPoint());
         mission.setTitle(form.getTitle());
         mission.setDescription(form.getDescription());
         mission.setCo2Reduction(form.getCo2Reduction());

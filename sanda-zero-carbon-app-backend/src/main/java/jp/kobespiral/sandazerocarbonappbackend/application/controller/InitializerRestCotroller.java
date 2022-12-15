@@ -51,7 +51,7 @@ public class InitializerRestCotroller {
 
         // 難易度低のミッションを新規登録
         MissionForm missionForm = new MissionForm();
-        missionForm.setPoint(5);
+        //missionForm.setPoint(5);
         missionForm.setTitle("お試しミッション小");
         missionForm.setDescription("難易度低のお試しミッションです");
         missionForm.setCo2Reduction(5);
@@ -62,7 +62,7 @@ public class InitializerRestCotroller {
         missionManagementService.createMission(missionForm);
 
         // 難易度中のミッションを新規登録
-        missionForm.setPoint(10);
+        //missionForm.setPoint(10);
         missionForm.setTitle("お試しミッション中");
         missionForm.setDescription("難易度中のお試しミッションです");
         missionForm.setCo2Reduction(10);
@@ -73,7 +73,7 @@ public class InitializerRestCotroller {
         missionManagementService.createMission(missionForm);
 
         // 難易度大のミッションを新規登録
-        missionForm.setPoint(15);
+        //missionForm.setPoint(15);
         missionForm.setTitle("お試しミッション大");
         missionForm.setDescription("難易度高のお試しミッションです");
         missionForm.setCo2Reduction(15);
@@ -84,7 +84,7 @@ public class InitializerRestCotroller {
         missionManagementService.createMission(missionForm);
 
         // 難易度中のDoTypeのミッションを新規登録
-        missionForm.setPoint(10);
+        //missionForm.setPoint(10);
         missionForm.setTitle("お試しミッションDoType");
         missionForm.setDescription("DoTypeのお試しミッションです");
         missionForm.setCo2Reduction(10);

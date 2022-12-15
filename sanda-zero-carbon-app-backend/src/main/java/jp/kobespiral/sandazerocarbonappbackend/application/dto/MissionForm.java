@@ -9,16 +9,16 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Difficulty;
+import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionPoint;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Mission;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
 import lombok.Data;
-
 @Data
 public class MissionForm {
-    @NotNull
-    @Positive
-    @Range(min=1,max=100)
-    int point; // ポイント
+    // @NotNull
+    // @Positive
+    // @Range(min=1,max=100)
+    // int point; // ポイント
     @NotBlank
     @Length(min=1,max=100)
     String title; // 題目
@@ -40,7 +40,8 @@ public class MissionForm {
 
     public Mission toEntity() {
         Mission mission = new Mission();
-        mission.setPoint(point);
+        //mission.setPoint(3);
+        mission.setPoint(MissionPoint.valueOf(difficulty.toString()).getInt());
         mission.setTitle(title);
         mission.setDescription(description);
         mission.setCo2Reduction(co2Reduction);

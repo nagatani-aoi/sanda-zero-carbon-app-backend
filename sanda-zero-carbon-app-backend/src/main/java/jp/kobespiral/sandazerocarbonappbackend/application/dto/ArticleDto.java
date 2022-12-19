@@ -3,6 +3,8 @@ package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang3.StringUtils;
+
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.Ogp;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Article;
 import lombok.Data;
@@ -56,8 +58,9 @@ public class ArticleDto {
         dto.isImportant = article.getIsImportant();
         dto.url = article.getUrl();
 
-        dto.title = Ogp.getOgp(dto.url).select("meta[property~=og:title*]").attr("content");
-        dto.description = Ogp.getOgp(dto.url).select("meta[property~=og:description*]").attr("content");
+        dto.title = StringUtils.abbreviate(Ogp.getOgp(dto.url).select("meta[property~=og:title*]").attr("content"), 30);
+        dto.description = StringUtils
+                .abbreviate(Ogp.getOgp(dto.url).select("meta[property~=og:description*]").attr("content"), 75);
         dto.thumbnailSource = Ogp.getOgp(dto.url).select("meta[property~=og:image*]").attr("content");
 
         return dto;

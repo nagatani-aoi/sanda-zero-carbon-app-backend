@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 
 import org.apache.commons.lang3.StringUtils;
 
-import jp.kobespiral.sandazerocarbonappbackend.cofigration.Ogp;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Article;
+import jp.kobespiral.sandazerocarbonappbackend.domain.utils.Ogp;
+// import jp.kobespiral.sandazerocarbonappbackend.domain.utils.Ogp;
 import lombok.Data;
 
 @Data
@@ -50,11 +51,8 @@ public class ArticleDto {
         // OGPの取得版に切り替える
         ArticleDto dto = new ArticleDto();
         dto.articleId = article.getArticleId();
-        // dto.title = article.getTitle();
         dto.tagId = article.getTagId();
-        // dto.description = article.getDescription();
         dto.postedAt = article.getPostedAt();
-        // dto.thumbnailSource = article.getThumbnailSource();
         dto.isImportant = article.getIsImportant();
         dto.url = article.getUrl();
 

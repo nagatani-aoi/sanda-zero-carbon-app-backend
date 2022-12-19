@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * 記事エンティティ
- * 
- * @author sato
+ *
+ * @author sato & ing
  */
 @Data
 @AllArgsConstructor
@@ -29,9 +29,10 @@ public class Article {
     Long tagId;
     @Column(length = 100000)
     String description;
-    // @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime postedAt;
     String thumbnailSource;
     Boolean isImportant;
     String url;
+    /** OGP機能を利用するか */
+    Boolean isOgpUsed;
 }

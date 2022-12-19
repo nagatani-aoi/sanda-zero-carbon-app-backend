@@ -1,4 +1,4 @@
-package jp.kobespiral.sandazerocarbonappbackend.cofigration;
+package jp.kobespiral.sandazerocarbonappbackend.domain.utils;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.cofigration.exception;
 
-public class MissionValidationException extends RuntimeException{
+public class AnsweredQuizValidationException extends RuntimeException{
     /** シリアライズであることを保証？ */
     private final static long serialVersionUID = 1L;
     /** エラーの種類識別子 */
@@ -12,7 +12,7 @@ public class MissionValidationException extends RuntimeException{
      * @param error 発生したエラーの内容を説明する文字列
      * @param cause 発生したエラーの原因を説明する文字列
      */
-    public MissionValidationException(ErrorCode code, String error, String cause) {
+    public AnsweredQuizValidationException(ErrorCode code, String error, String cause) {
         super(String.format("Fail to %s, because %s.", error, cause));
         this.code = code;
     }
@@ -23,7 +23,7 @@ public class MissionValidationException extends RuntimeException{
      * @param code  エラーコード
      * @param message 発生したエラーを説明する文字列
      */
-    public MissionValidationException(ErrorCode code, String message) {
+    public AnsweredQuizValidationException(ErrorCode code, String message) {
         super(message);
         this.code = code;
     }
@@ -32,4 +32,3 @@ public class MissionValidationException extends RuntimeException{
         return code;
     }
 }
-

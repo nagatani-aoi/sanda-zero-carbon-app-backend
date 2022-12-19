@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Quiz;
 import lombok.Data;
@@ -31,8 +32,7 @@ public class QuizForm {
     String ans3; // 選択肢３
     @Length(min = 0, max = 100)
     String ans4; // 選択肢４
-    // 1 ~ 4の数字範囲制約必要
-    // @Length(min = 1, max = 100)
+    @Range(min = 0, max = 3)
     int correctAnsNum; // 正解
     @NotNull
     @Positive

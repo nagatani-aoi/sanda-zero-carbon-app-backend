@@ -13,7 +13,22 @@ public class UserValidationException extends RuntimeException{
      * @param cause 発生したエラーの原因を説明する文字列
      */
     public UserValidationException(ErrorCode code, String error, String cause) {
-        super(String.format("fail to %s, because %s.", error, cause));
+        super(String.format("Fail to %s, because %s.", error, cause));
         this.code = code;
+    }
+
+    /**
+     * 例外を生成するコンストラクタ
+     * 
+     * @param code  エラーコード
+     * @param message 発生したエラーを説明する文字列
+     */
+    public UserValidationException(ErrorCode code, String message) {
+        super(message);
+        this.code = code;
+    }
+
+    public ErrorCode getCode() {
+        return code;
     }
 }

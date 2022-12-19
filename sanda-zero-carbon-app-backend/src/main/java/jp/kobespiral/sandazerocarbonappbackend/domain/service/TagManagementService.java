@@ -45,7 +45,7 @@ public class TagManagementService {
      * @return
      */
     public TagDto getTag(Long tagId){
-        Tag tag = tagRepository.findById(tagId).orElseThrow(()->new TagValidationException(TAG_DOES_NOT_EXIST,"get tag", String.format("tagId : %d doesn't exist",tagId)));
+        Tag tag = tagRepository.findById(tagId).orElseThrow(()->new TagValidationException(NO_SUCH_TAG_EXISTS,"get tag", String.format("tag (Id:%d) does not exist",tagId)));
         return TagDto.build(tag);       
     }
 
@@ -68,9 +68,9 @@ public class TagManagementService {
      * @return 更新したタグのDto
      */
     public TagDto updateTag(TagForm form){
-        Tag tag = tagRepository.findById(form.getTagId()).orElseThrow(()->new TagValidationException(TAG_DOES_NOT_EXIST,"Not exist the tag", String.format("Try to get tagId : %d",form.getTagId())));
+        Tag tag = tagRepository.findById(form.getTagId()).orElseThrow(()->new TagValidationException(NO_SUCH_TAG_EXISTS,"update tag", String.format("tag (Id:%d) does not exist",form.getTagId())));
         if(tagRepository.existsByKeyword(form.getKeyword())){
-            throw new TagValidationException(TAG_ALREADY_EXISTS,"create tag",String.format("tag-keyword : %s has already exist",form.getKeyword()));
+            throw new TagValidationException(TAG_ALREADY_EXISTS,"update tag",String.format("tag-keyword : %s has already exist",form.getKeyword()));
         }
         tag.setKeyword(form.getKeyword());
         tagRepository.save(tag);

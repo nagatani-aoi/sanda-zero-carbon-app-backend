@@ -45,20 +45,21 @@ public class AchievementRestController {
      */
     @PostMapping("/mission/achieve")
     public Response<AchievementDto> achieveMission(@Validated @RequestBody MissionAchieveForm form) {
-        try {
-            return ResponseCreator.succeed(achievementService.achieveMission(form));
-        } catch (UserValidationException e) {
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,
-                    new UserValidationException(USER_DOES_NOT_EXIST, "achieve mission",
-                            String.format("this user does not exist (userId: %d )", form.getUserId())),
-                    null);
-        } catch (Exception e) {
-            return ResponseCreator
-                    .fail(ErrorCode.MISSION_DOES_NOT_EXIST,
-                            new MissionValidationException(MISSION_DOES_NOT_EXIST, "achieve mission",
-                                    String.format("this mission does not exist (missionId: )", form.getMissionId())),
-                            null);
-        }
+        return ResponseCreator.succeed(achievementService.achieveMission(form));
+        // try {
+        //     return ResponseCreator.succeed(achievementService.achieveMission(form));
+        // } catch (UserValidationException e) {
+        //     return ResponseCreator.fail(NO_SUCH_USER_EXISTS,
+        //             new UserValidationException(NO_SUCH_USER_EXISTS, "achieve mission",
+        //                     String.format("this user does not exist (userId: %d )", form.getUserId())),
+        //             null);
+        // } catch (Exception e) {
+        //     return ResponseCreator
+        //             .fail(ErrorCode.MISSION_DOES_NOT_EXIST,
+        //                     new MissionValidationException(MISSION_DOES_NOT_EXIST, "achieve mission",
+        //                             String.format("this mission does not exist (missionId: )", form.getMissionId())),
+        //                     null);
+        // }
     }
 
     /* -------------------- Read -------------------- */
@@ -73,14 +74,16 @@ public class AchievementRestController {
     @GetMapping("/achievement/weekly")
     public Response<List<AchievementDto>> getWeeklyAchievements(@RequestParam("userId") String userId,
             @RequestParam("date") String dateString) {
-        try {
-            return ResponseCreator.succeed(achievementService.getAchivement(userId, dateString)); // 達成リストを取得
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST,
-                    new UserValidationException(USER_DOES_NOT_EXIST, "get the list of weekly achievement",
-                            String.format("this user does not exist (userId: %d )", userId)),
-                    null);
-        }
+                return ResponseCreator.succeed(achievementService.getAchivement(userId, dateString)); // 達成リストを取得
+    //     try {
+    //         return ResponseCreator.succeed(achievementService.getAchivement(userId, dateString)); // 達成リストを取得
+    //     } catch (Exception e) {
+    //         return ResponseCreator.fail(NO_SUCH_USER_EXISTS,
+    //                 new UserValidationException( NO_SUCH_USER_EXISTS
+    // , "get the list of weekly achievement",
+    //                         String.format("this user does not exist (userId: %d )", userId)),
+    //                 null);
+    //     }
     }
 
     /**
@@ -91,13 +94,6 @@ public class AchievementRestController {
      */
     @GetMapping("/achievement/total")
     public Response<TotalParamDto> getTotalParam(@RequestParam("userId") String userId) {
-        try {
-            return ResponseCreator.succeed(achievementService.getTotalParam(userId));
-        } catch (Exception e) {
-            return ResponseCreator.fail(
-                    ErrorCode.USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
-                            "get total parameter", String.format("this user does not exist (userId: %d )", userId)),
-                    null);
-        }
+        return ResponseCreator.succeed(achievementService.getTotalParam(userId));
     }
 }

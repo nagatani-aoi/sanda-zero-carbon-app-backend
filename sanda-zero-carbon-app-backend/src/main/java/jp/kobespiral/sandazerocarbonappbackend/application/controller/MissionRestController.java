@@ -36,12 +36,13 @@ public class MissionRestController {
      */
     @GetMapping("/mission")
     Response<List<MissionDto>> getAllMission() {
-        try {
-            return ResponseCreator.succeed(missionService.getAllMission());
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST, new MissionValidationException(
-                    MISSION_DOES_NOT_EXIST, "get all mission", String.format("mission does not exist")), null);
-        }
+        return ResponseCreator.succeed(missionService.getAllMission());
+        // try {
+        //     return ResponseCreator.succeed(missionService.getAllMission());
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST, new MissionValidationException(
+        //             MISSION_DOES_NOT_EXIST, "get all mission", String.format("mission does not exist")), null);
+        // }
     }
 
     /**
@@ -51,13 +52,14 @@ public class MissionRestController {
      */
     @GetMapping("/daily-mission/{userId}")
     Response<List<DailyMissionDto>> getAllDailyMission(@PathVariable String userId) {
-        try {
-            return ResponseCreator.succeed(missionService.getDailyMission(userId));
-        } catch (Exception e) {
-            return ResponseCreator.fail(
-                    ErrorCode.USER_DOES_NOT_EXIST, e,
-                    null);
-        }
+        return ResponseCreator.succeed(missionService.getDailyMission(userId));
+        // try {
+        //     return ResponseCreator.succeed(missionService.getDailyMission(userId));
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(
+        //             ErrorCode.USER_DOES_NOT_EXIST, e,
+        //             null);
+        // }
     }
 
 }

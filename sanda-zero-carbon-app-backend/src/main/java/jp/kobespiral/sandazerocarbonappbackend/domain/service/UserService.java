@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserDailyDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserForm;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.AnsweredQuizValidationException;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.AnsweredQuiz;
@@ -56,7 +58,7 @@ public class UserService {
         String userId = form.getUserId();
         if (userRepository.existsById(userId)) {
             throw new UserValidationException(USER_ALREADY_EXISTS, "create user",
-                    String.format("userId : %s has already exist.", userId));
+                    String.format("user (Id:%s) does not exist.", userId));
         }
         User user = form.toEntity();
         if (user.getPassword() == "" || user.getPassword() == null) {
@@ -76,8 +78,8 @@ public class UserService {
      * @return ユーザ
      */
     public User getUser(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserValidationException(USER_DOES_NOT_EXIST,
-                "get user", String.format("userId : %s does't exist", userId)));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserValidationException(NO_SUCH_USER_EXISTS,
+                "get user", String.format("user (Id:%s) does not exist", userId)));
         return user;
     }
 
@@ -108,8 +110,8 @@ public class UserService {
             User user = userRepository.findByUserIdAndPassword(userId, password);
             return user;
         } else {
-            throw new UserValidationException(USER_DOES_NOT_EXIST, "login user",
-                    String.format("userId : %s,password : %s doesn't exist", userId, password));
+            throw new UserValidationException(NO_SUCH_USER_EXISTS, "login user",
+                    String.format("user(Id:%s, password:%s does not exist", userId, password));
         }
     }
 
@@ -121,8 +123,8 @@ public class UserService {
      */
     public UserDto getUserDto(String userId) {
         // 微妙
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserValidationException(USER_DOES_NOT_EXIST,
-                "get userDto", String.format("userId : %s doesn't exits", userId)));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserValidationException(NO_SUCH_USER_EXISTS,
+                "get userDto", String.format("user (Id:%s) does not exist", userId)));
         return UserDto.build(user);
     }
 
@@ -148,8 +150,8 @@ public class UserService {
 
     public UserDailyStatus renewUserDailyStatusForMission(String userId, Long achievementId) {
         Achievement achievement = achievementRepository.findById(achievementId)
-                .orElseThrow(() -> new UserValidationException(USER_DOES_NOT_EXIST, "create the user",
-                        String.format("crate %d", userId)));
+                .orElseThrow(() -> new UserValidationException(NO_SUCH_USER_EXISTS, "renew userDailyStatus for mission",
+                        String.format("user (Id:%s) does not exist", userId)));
         // 日付タイプの変更
         LocalDateTime localDateTime = achievement.getAchievedAt();
         LocalDate localDate = localDateTime.toLocalDate();
@@ -160,8 +162,8 @@ public class UserService {
             userDailyStatusRepository.save(tempUserDailyStatus);
         }
         Mission mission = missionRepository.findById(achievement.getMissionId())
-                .orElseThrow(() -> new UserValidationException(USER_DOES_NOT_EXIST, "create the user",
-                        String.format("crate %d", userId)));
+                .orElseThrow(() -> new MissionValidationException(NO_SUCH_MISSION_EXISTS, "renew userDailyStatus for mission",
+                        String.format("Mission (Id:%d) does not exist", achievement.getMissionId())));
 
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId, localDate);
 
@@ -199,9 +201,9 @@ public class UserService {
 
     public UserDailyStatus renewUserDailyStatusForQuiz(String userId, Long answeredQuizId) {
         AnsweredQuiz answeredQuiz = answeredQuizRepository.findById(answeredQuizId)
-                .orElseThrow(() -> new UserValidationException(USER_DOES_NOT_EXIST, "create the user",
-                        String.format("crate %d", userId)));
-        // 日付タイプの変更
+                .orElseThrow(() -> new AnsweredQuizValidationException(NO_SUCH_ANSWERED_QUIZ_EXISTS, "renew userDailyStatus for quiz",
+                        String.format("answered quiz (Id:%d) does not exist", answeredQuizId)));
+        // 日付タイプの変更git
         LocalDateTime localDateTime = answeredQuiz.getAnsweredAt();
         LocalDate localDate = localDateTime.toLocalDate();
         // その日のデイリーステータスが存在しなければ、新たに作成

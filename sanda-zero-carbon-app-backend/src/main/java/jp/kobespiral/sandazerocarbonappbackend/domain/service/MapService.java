@@ -3,11 +3,14 @@ package jp.kobespiral.sandazerocarbonappbackend.domain.service;
 import org.springframework.stereotype.Service;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.MapDto;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Map;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.InitialLocationRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.MapRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.utils.Rule;
 import lombok.RequiredArgsConstructor;
+import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
+
 
 /**
  * マップのサービス
@@ -35,6 +38,10 @@ public class MapService {
      * @return マップのDto
      */
     public MapDto getMap(String userId, int currentLocation) {
+        if(!(userService.isUserExist(userId))){
+            throw new UserValidationException(NO_SUCH_USER_EXISTS, "get map",String.format("user (Id:%d) does not exist", userId));
+        }
+
         int caluculatedStage = userService.getUserDto(userId).getLevel() / Rule.mapLevelRate + 1; // マップの段階を計算
 
         int stage; // ユーザーの現在のステージ
@@ -57,6 +64,10 @@ public class MapService {
      * @return MapDto
      */
     public MapDto getMapOnInitialLocation(String userId) {
+        if(!(userService.isUserExist(userId))){
+            throw new UserValidationException(NO_SUCH_USER_EXISTS, "get map on initial location",String.format("user (Id:%d) does not exist", userId));
+        }
+
         int caluculatedStage = userService.getUserDto(userId).getLevel() / Rule.mapLevelRate + 1; // マップの段階を計算
 
         int stage; // ユーザーの現在のステージ

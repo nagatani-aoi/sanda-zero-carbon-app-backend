@@ -38,12 +38,13 @@ public class MapRestController {
     @GetMapping("/map")
     public Response<MapDto> getMap(@RequestParam("userId") String userId,
             @RequestParam("currentLocation") int currentLocation) {
-        try {
-            return ResponseCreator.succeed(mapService.getMap(userId, currentLocation));
-        } catch (Exception e) {
-            System.err.println(e.toString());
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, e, null);
-        }
+        return ResponseCreator.succeed(mapService.getMap(userId, currentLocation));
+        // try {
+        //     return ResponseCreator.succeed(mapService.getMap(userId, currentLocation));
+        // } catch (Exception e) {
+        //     System.err.println(e.toString());
+        //     return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, e, null);
+        // }
     }
 
     /**
@@ -54,12 +55,13 @@ public class MapRestController {
      */
     @GetMapping("/map/initialLocation")
     public Response<MapDto> getMapOnInitialLocation(@RequestParam("userId") String userId) {
-        try {
-            return ResponseCreator.succeed(mapService.getMapOnInitialLocation(userId));
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
-                    "get map on initial location", String.format("this user does not exist (userId: %d )", userId)),
-                    null);
-        }
+        return ResponseCreator.succeed(mapService.getMapOnInitialLocation(userId));
+        // try {
+        //     return ResponseCreator.succeed(mapService.getMapOnInitialLocation(userId));
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
+        //             "get map on initial location", String.format("this user does not exist (userId: %d )", userId)),
+        //             null);
+        // }
     }
 }

@@ -5,7 +5,7 @@ package jp.kobespiral.sandazerocarbonappbackend.cofigration.exception;
  * 
  * @author ing
  */
-public class TotalConditionValidationException extends RuntimeException {
+public class TotalConditionException extends RuntimeException {
     /** シリアライズであることを保証？ */
     private final static long serialVersionUID = 1L;
     /** エラーの種類識別子 */
@@ -18,8 +18,23 @@ public class TotalConditionValidationException extends RuntimeException {
      * @param error 発生したエラーの内容を説明する文字列
      * @param cause 発生したエラーの原因を説明する文字列
      */
-    public TotalConditionValidationException(ErrorCode code, String error, String cause) {
-        super(String.format("fail to %s, because %s.", error, cause));
+    public TotalConditionException(ErrorCode code, String error, String cause) {
+        super(String.format("Fail to %s, because %s.", error, cause));
         this.code = code;
+    }
+    
+    /**
+     * 例外を生成するコンストラクタ
+     * 
+     * @param code  エラーコード
+     * @param message 発生したエラーを説明する文字列
+     */
+    public TotalConditionException(ErrorCode code, String message) {
+        super(message);
+        this.code = code;
+    }
+
+    public ErrorCode getCode() {
+        return code;
     }
 }

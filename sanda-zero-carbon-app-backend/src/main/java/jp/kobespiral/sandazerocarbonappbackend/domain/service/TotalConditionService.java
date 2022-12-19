@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.TotalConditionDto;
-import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.TotalConditionValidationException;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.TotalConditionException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Mission;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.TotalCondition;
@@ -73,7 +73,7 @@ public class TotalConditionService {
 
             for (Achievement achievement : achievements) { // 達成のリストに関してそれぞれ
                 Mission mission = missionRepository.findById(achievement.getMissionId())
-                        .orElseThrow(() -> new TotalConditionValidationException(
+                        .orElseThrow(() -> new TotalConditionException(
                                 TOTAL_CONDITION_COULD_NOT_BE_CALUCULATE, "caliculate total condition",
                                 String.format("Accessed a non-existent mission"))); // 達成したミッションを取得
 

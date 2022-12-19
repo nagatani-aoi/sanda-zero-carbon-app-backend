@@ -29,11 +29,12 @@ public class DailyMissionManagementRestController {
      */
     @PostMapping("/sanda-admin/daily-mission")
     Response<List<DailyMissionDto>> selectDailyMission() {
-        try {
-            return ResponseCreator.succeed(missionManagementService.selectDailyMissions());
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST, new MissionValidationException(
-                    MISSION_DOES_NOT_EXIST, "select daily mission", String.format("mission does not exist")), null);
-        }
+        return ResponseCreator.succeed(missionManagementService.selectDailyMissions());
+        // try {
+        //     return ResponseCreator.succeed(missionManagementService.selectDailyMissions());
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST, new MissionValidationException(
+        //             MISSION_DOES_NOT_EXIST, "select daily mission", String.format("mission does not exist")), null);
+        // }
     }
 }

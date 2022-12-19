@@ -45,13 +45,14 @@ public class MissionManagementRestController {
      */
     @PostMapping("/sanda-admin/mission")
     Response<MissionDto> createMission(@Validated @RequestBody MissionForm form) {
-        try {
-            return ResponseCreator.succeed(missionManagementService.createMission(form));
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST,
-                    "create the mission", String.format("this tag does not exist (tagId: %d )", form.getTitle())),
-                    null);
-        }
+        return ResponseCreator.succeed(missionManagementService.createMission(form));
+        // try {
+        //     return ResponseCreator.succeed(missionManagementService.createMission(form));
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST,
+        //             "create the mission", String.format("this tag does not exist (tagId: %d )", form.getTitle())),
+        //             null);
+        // }
     }
 
     /*---------------------- Read -------------------------- */
@@ -62,14 +63,15 @@ public class MissionManagementRestController {
      */
     @GetMapping("/sanda-admin/mission/{missionId}")
     Response<MissionDto> getMission(@PathVariable Long missionId) {
-        try {
-            return ResponseCreator.succeed(missionManagementService.getMission(missionId));
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,
-                    new MissionValidationException(MISSION_DOES_NOT_EXIST, "get the mission",
-                            String.format("this mission does not exist (missionId: %d )", missionId)),
-                    null);
-        }
+        return ResponseCreator.succeed(missionManagementService.getMission(missionId));
+        // try {
+        //     return ResponseCreator.succeed(missionManagementService.getMission(missionId));
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,
+        //             new MissionValidationException(MISSION_DOES_NOT_EXIST, "get the mission",
+        //                     String.format("this mission does not exist (missionId: %d )", missionId)),
+        //             null);
+        // }
     }
 
     /**
@@ -79,12 +81,13 @@ public class MissionManagementRestController {
      */
     @GetMapping("/sanda-admin/mission")
     Response<List<MissionDto>> getAllMission() {
-        try {
-            return ResponseCreator.succeed(missionManagementService.getAllMissions());
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST, new MissionValidationException(
-                    MISSION_DOES_NOT_EXIST, "get all mission", String.format("mission does not exist")), null);
-        }
+        return ResponseCreator.succeed(missionManagementService.getAllMissions());
+        // try {
+        //     return ResponseCreator.succeed(missionManagementService.getAllMissions());
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST, new MissionValidationException(
+        //             MISSION_DOES_NOT_EXIST, "get all mission", String.format("mission does not exist")), null);
+        // }
     }
 
     /*----------------------- Update --------------------------- */
@@ -96,14 +99,15 @@ public class MissionManagementRestController {
      */
     @PutMapping("/sanda-admin/mission/{missionId}")
     Response<MissionDto> updateMission(@PathVariable Long missionId, @Validated @RequestBody MissionForm form) {
-        try {
-            return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,
-                    new MissionValidationException(MISSION_DOES_NOT_EXIST, "update the mission",
-                            String.format("this mission does not exist (missionId: %d )", missionId)),
-                    null);
-        }
+        return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
+        // try {
+        //     return ResponseCreator.succeed(missionManagementService.updateMission(missionId, form));
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,
+        //             new MissionValidationException(MISSION_DOES_NOT_EXIST, "update the mission",
+        //                     String.format("this mission does not exist (missionId: %d )", missionId)),
+        //             null);
+        // }
     }
 
     /*-----------------------Delete------------------------- */
@@ -115,14 +119,15 @@ public class MissionManagementRestController {
      */
     @DeleteMapping("/sanda-admin/mission")
     Response<Boolean> deleteMission(@RequestParam("missionId") Long missionId) {
-        try {
-            return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,
-                    new MissionValidationException(MISSION_DOES_NOT_EXIST, "delete the mission",
-                            String.format("this mission does not exist (missionId: %d )", missionId)),
-                    null);
-        }
+        return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));
+        // try {
+        //     return ResponseCreator.succeed(missionManagementService.deleteMission(missionId));
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.MISSION_DOES_NOT_EXIST,
+        //             new MissionValidationException(MISSION_DOES_NOT_EXIST, "delete the mission",
+        //                     String.format("this mission does not exist (missionId: %d )", missionId)),
+        //             null);
+        // }
     }
 
     /*--------------------Other-----------------------*/
@@ -145,11 +150,12 @@ public class MissionManagementRestController {
      */
     @PostMapping("/sanda-admin/search/tag")
     Response<List<MissionDto>> searchMissionByTag(@RequestParam("tag") Long tagId) {
-        try {
-            return ResponseCreator.succeed(missionManagementService.searchMissionByTag(tagId));
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST,
-                    "create the mission", String.format("this tag does not exist (tagId: %d )", tagId)), null);
-        }
+        return ResponseCreator.succeed(missionManagementService.searchMissionByTag(tagId));
+        // try {
+        //     return ResponseCreator.succeed(missionManagementService.searchMissionByTag(tagId));
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST,
+        //             "create the mission", String.format("this tag does not exist (tagId: %d )", tagId)), null);
+        // }
     }
 }

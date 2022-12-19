@@ -61,7 +61,8 @@ public class ArticleManagementService {
     public ArticleDto getArticle(Long articleId) {
 
         //////////////////////////////エラーのところはコンフリ注意して後で変更
-        Article article = articleRepository.findById(articleId).orElseThrow(()->new ArticleValidationException(USER_DOES_NOT_EXIST,"get article", String.format("articleId : %s does't exist",articleId)));
+
+        Article article = articleRepository.findById(articleId).orElseThrow(()->new ArticleValidationException(NO_SUCH_ARTICLE_EXISTS,"get article", String.format("article (Id:%d) does not exist",articleId)));
         ArticleDto articleDto = new ArticleDto();
         articleDto = ArticleDto.build(article);
         return articleDto;
@@ -74,7 +75,7 @@ public class ArticleManagementService {
      * @return 更新後の記事dto
      */
     public ArticleDto updateArticle(Long articleId,ArticleForm form){
-        Article article = articleRepository.findById(articleId).orElseThrow(()->new ArticleValidationException(USER_DOES_NOT_EXIST,"update article", String.format("userId : %s doesn't exist",articleId)));
+        Article article = articleRepository.findById(articleId).orElseThrow(()->new ArticleValidationException(NO_SUCH_ARTICLE_EXISTS,"update article", String.format("article (Id:%d) does not exist",articleId)));
         article.setTitle(form.getTitle());
         article.setTagId(form.getTagId());
         article.setDescription(form.getDescription());

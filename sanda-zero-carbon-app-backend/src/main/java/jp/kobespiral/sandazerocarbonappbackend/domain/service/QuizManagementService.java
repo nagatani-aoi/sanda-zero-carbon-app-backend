@@ -48,8 +48,8 @@ public class QuizManagementService {
         }
         // タグの生成
         Tag tag = tagRepository.findById(quiz.getTagId())
-                .orElseThrow(() -> new TagValidationException(TAG_DOES_NOT_EXIST, "create quiz",
-                        String.format("tagId %d does not exist", quiz.getTagId())));
+                .orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS, "get tag in createQuiz",
+                        String.format("tag (Id:%d) does not exist", quiz.getTagId())));
 
         return QuizDto.build(quiz, tag);
     }
@@ -63,12 +63,12 @@ public class QuizManagementService {
      */
     public QuizDto getQuiz(Long quizId) {
         // IDで指定されたクイズを取得する
-        Quiz quiz = quizRepository.findById(quizId).orElseThrow(() -> new QuizValidationException(QUIZ_DOES_NOT_EXIST,
-                "get quiz", String.format("quizId %d does not exist", quizId)));
+        Quiz quiz = quizRepository.findById(quizId).orElseThrow(() -> new QuizValidationException(NO_SUCH_QUIZ_EXISTS,
+                "get quiz", String.format("quiz (Id:%d) does not exist", quizId)));
         // タグの取得
         Tag tag = tagRepository.findById(quiz.getTagId())
-                .orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION, "get quiz",
-                        String.format("quizId: %d does not have tag", quizId)));
+                .orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS, "get tag in getQuiz",
+                        String.format("tag (Id:%d) does not exist", quiz.getTagId())));
 
         return QuizDto.build(quiz, tag);
     }
@@ -86,8 +86,8 @@ public class QuizManagementService {
         // 取得したクイズのリストを1つずつDTO形式に変換
         for (Quiz list : quizList) {
             Tag tag = tagRepository.findById(list.getTagId())
-                    .orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ, "get all quiz",
-                            String.format("quizId: %d does not have tag", list.getQuizId())));
+                    .orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS,"get tag in get allQuiz",
+                            String.format("tag (Id:%d) does not exist", list.getTagId())));
             quizDtoList.add(QuizDto.build(list, tag));
         }
         return quizDtoList;
@@ -103,8 +103,8 @@ public class QuizManagementService {
      */
     public QuizDto updateQuiz(Long quizId, QuizForm form) {
         // IDで指定されたクイズを取得
-        Quiz quiz = quizRepository.findById(quizId).orElseThrow(() -> new QuizValidationException(QUIZ_DOES_NOT_EXIST,
-                "quiz update", String.format("quizId: %d does not exist", quizId)));
+        Quiz quiz = quizRepository.findById(quizId).orElseThrow(() -> new QuizValidationException(NO_SUCH_QUIZ_EXISTS,
+                "quiz update", String.format("quiz (Id:%d) does not exist", quizId)));
         // クイズエンティティの各値を更新
         quiz.setTitle(form.getTitle());
         quiz.setQuizSentence(form.getQuizSentence());
@@ -119,9 +119,8 @@ public class QuizManagementService {
         quizRepository.save(quiz);
         // タグの生成
         Tag tag = tagRepository.findById(form.getTagId())
-                .orElseThrow(() -> new QuizValidationException(NO_TAG_CORRESPONDING_TO_THE_QUIZ, "update",
-                        String.format("quizId: %d does not have tag", quizId)));
-
+                .orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS, "get tag in updateQuiz",
+                        String.format("tag (Id:%d) does not exist", form.getTagId())));
         return QuizDto.build(quiz, tag);
     }
 

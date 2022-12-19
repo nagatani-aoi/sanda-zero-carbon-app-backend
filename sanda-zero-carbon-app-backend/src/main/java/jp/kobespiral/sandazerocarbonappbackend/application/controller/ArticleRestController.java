@@ -44,12 +44,13 @@ public class ArticleRestController {
      */
     @GetMapping("/article")
     Response<List<ArticleDto>> getAllArticle() {
-        try {
-            return ResponseCreator.succeed(articleManagementService.getAllArticles());
-        } catch (Exception e) {
-            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST, new ArticleValidationException(MISSION_DOES_NOT_EXIST,
-                    "get all article", String.format("article does not exist")), null);
-        }
+        return ResponseCreator.succeed(articleManagementService.getAllArticles());
+        // try {
+        //     return ResponseCreator.succeed(articleManagementService.getAllArticles());
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(MISSION_DOES_NOT_EXIST, new ArticleValidationException(MISSION_DOES_NOT_EXIST,
+        //             "get all article", String.format("article does not exist")), null);
+        // }
     }
 
     /**
@@ -59,14 +60,15 @@ public class ArticleRestController {
      */
     @GetMapping("/article/top")
     Response<List<ArticleDto>> getTopArticle(@Validated @RequestParam("articleCount") int articleCount) {
-        try {
-            return ResponseCreator.succeed(userArticleService.getTopArticle(articleCount));
-        } catch (Exception e) {
+        return ResponseCreator.succeed(userArticleService.getTopArticle(articleCount));
+        // try {
+        //     return ResponseCreator.succeed(userArticleService.getTopArticle(articleCount));
+        // } catch (Exception e) {
 
-            /////////// エラー処理は後で
-            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST, new ArticleValidationException(MISSION_DOES_NOT_EXIST,
-                    "get top article", String.format("article does not exist")), null);
-        }
+        //     /////////// エラー処理は後で
+        //     return ResponseCreator.fail(MISSION_DOES_NOT_EXIST, new ArticleValidationException(MISSION_DOES_NOT_EXIST,
+        //             "get top article", String.format("article does not exist")), null);
+        // }
     }
 
     /**
@@ -77,15 +79,16 @@ public class ArticleRestController {
      */
     @GetMapping("/article/article")
     Response<ArticleDto> searchArticleByArticleId(@RequestParam("articleId") Long articleId) {
-        try {
-            return ResponseCreator.succeed(articleManagementService.getArticle(articleId));
-        } catch (Exception e) {
-            /////////// エラー処理は後で
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST,
-                    new ArticleValidationException(TAG_DOES_NOT_EXIST, "get article by articleId",
-                            String.format("this articleId does not exist (articleId: %d )", articleId)),
-                    null);
-        }
+        return ResponseCreator.succeed(articleManagementService.getArticle(articleId));
+        // try {
+        //     return ResponseCreator.succeed(articleManagementService.getArticle(articleId));
+        // } catch (Exception e) {
+        //     /////////// エラー処理は後で
+        //     return ResponseCreator.fail(TAG_DOES_NOT_EXIST,
+        //             new ArticleValidationException(TAG_DOES_NOT_EXIST, "get article by articleId",
+        //                     String.format("this articleId does not exist (articleId: %d )", articleId)),
+        //             null);
+        // }
     }
 
     /**
@@ -96,13 +99,14 @@ public class ArticleRestController {
      */
     @GetMapping("/article/tag")
     Response<List<ArticleDto>> searchArticleByTagId(@RequestParam("tagId") Long tagId) {
-        try {
-            return ResponseCreator.succeed(articleManagementService.searchArticleByTagId(tagId));
-        } catch (Exception e) {
-            /////////// エラー処理は後で
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new ArticleValidationException(TAG_DOES_NOT_EXIST,
-                    "get article by tagId", String.format("this article does not exist (tagId: %d )", tagId)), null);
-        }
+        return ResponseCreator.succeed(articleManagementService.searchArticleByTagId(tagId));
+        // try {
+        //     return ResponseCreator.succeed(articleManagementService.searchArticleByTagId(tagId));
+        // } catch (Exception e) {
+        //     /////////// エラー処理は後で
+        //     return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new ArticleValidationException(TAG_DOES_NOT_EXIST,
+        //             "get article by tagId", String.format("this article does not exist (tagId: %d )", tagId)), null);
+        // }
     }
 
     /**
@@ -112,13 +116,14 @@ public class ArticleRestController {
      */
     @GetMapping("/article/important")
     Response<List<ArticleDto>> searchArticleByIsImportant() {
-        try {
-            return ResponseCreator.succeed(articleManagementService.searchArticleByIsImportant());
-        } catch (Exception e) {
-            /////////// エラー処理は後で
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new ArticleValidationException(TAG_DOES_NOT_EXIST,
-                    "get article by isImportant", "this article does not exist"), null);
-        }
+        return ResponseCreator.succeed(articleManagementService.searchArticleByIsImportant());
+        // try {
+        //     return ResponseCreator.succeed(articleManagementService.searchArticleByIsImportant());
+        // } catch (Exception e) {
+        //     /////////// エラー処理は後で
+        //     return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new ArticleValidationException(TAG_DOES_NOT_EXIST,
+        //             "get article by isImportant", "this article does not exist"), null);
+        // }
     }
 
     /**
@@ -129,14 +134,15 @@ public class ArticleRestController {
      */
     @GetMapping("/article/keyword")
     Response<List<ArticleDto>> searchArticleByKeyword(@RequestParam("keyword") String keyword) {
-        try {
-            return ResponseCreator.succeed(articleManagementService.searchArticleByKeyword(keyword));
-        } catch (Exception e) {
-            /////////// エラー処理は後で
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new ArticleValidationException(TAG_DOES_NOT_EXIST,
-                    "get article by keyword", String.format("this article does not exist (keyword: %d )", keyword)),
-                    null);
-        }
+        return ResponseCreator.succeed(articleManagementService.searchArticleByKeyword(keyword));
+        // try {
+        //     return ResponseCreator.succeed(articleManagementService.searchArticleByKeyword(keyword));
+        // } catch (Exception e) {
+        //     /////////// エラー処理は後で
+        //     return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new ArticleValidationException(TAG_DOES_NOT_EXIST,
+        //             "get article by keyword", String.format("this article does not exist (keyword: %d )", keyword)),
+        //             null);
+        // }
     }
     /*--------------------------Update--------------------------- */
 

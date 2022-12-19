@@ -45,13 +45,15 @@ public class TagManagementRestController {
      */
     @PostMapping("/sanda-admin/tag")
     public Response<Boolean> tagUser(@Validated @RequestBody TagForm form) {
-        try {
-            tagService.createTag(form);
-            return ResponseCreator.succeed(true);
-        } catch (Exception e) {
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_ALREADY_EXISTS, "create tag",
-                    String.format("tag-keyword : %s has already exist", form.getKeyword())), false);
-        }
+        tagService.createTag(form);
+        return ResponseCreator.succeed(true);
+        // try {
+        //     tagService.createTag(form);
+        //     return ResponseCreator.succeed(true);
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_ALREADY_EXISTS, "create tag",
+        //             String.format("tag-keyword : %s has already exist", form.getKeyword())), false);
+        // }
     }
 
     /*--------------------------Read--------------------------- */
@@ -63,13 +65,15 @@ public class TagManagementRestController {
      */
     @GetMapping("/sanda-admin/{tagId}")
     public Response<TagDto> getTag(@PathVariable Long tagId) {
-        try {
-            TagDto tagDto = tagService.getTag(tagId);
-            return ResponseCreator.succeed(tagDto);
-        } catch (Exception e) {
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST, "get tag",
-                    String.format("tagId : %d doesn't exist", tagId)), null);
-        }
+        TagDto tagDto = tagService.getTag(tagId);
+        return ResponseCreator.succeed(tagDto);
+        // try {
+        //     TagDto tagDto = tagService.getTag(tagId);
+        //     return ResponseCreator.succeed(tagDto);
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST, "get tag",
+        //             String.format("tagId : %d doesn't exist", tagId)), null);
+        // }
     }
 
     /**
@@ -79,13 +83,15 @@ public class TagManagementRestController {
      */
     @GetMapping("/sanda-admin/tag")
     public Response<List<TagDto>> getAllTag() {
-        try {
-            List<TagDto> tagDtos = tagService.getAllTag();
-            return ResponseCreator.succeed(tagDtos);
-        } catch (Exception e) {
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST,
-                    "get all tag", String.format("tagList doesn't exist")), null);
-        }
+        List<TagDto> tagDtos = tagService.getAllTag();
+        return ResponseCreator.succeed(tagDtos);
+        // try {
+        //     List<TagDto> tagDtos = tagService.getAllTag();
+        //     return ResponseCreator.succeed(tagDtos);
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST,
+        //             "get all tag", String.format("tagList doesn't exist")), null);
+        // }
     }
 
     /*--------------------------Update--------------------------- */
@@ -97,13 +103,15 @@ public class TagManagementRestController {
      */
     @PutMapping("/sanda-admin/tag")
     public Response<Boolean> updateTag(@Validated @RequestBody TagForm form) {
-        try {
-            tagService.updateTag(form);
-            return ResponseCreator.succeed(true);
-        } catch (Exception e) {
-            return ResponseCreator.fail(TAG_ALREADY_EXISTS, new TagValidationException(TAG_ALREADY_EXISTS, "create tag",
-                    String.format("tag-keyword : %s has already exist", form.getKeyword())), false);
-        }
+        tagService.updateTag(form);
+        return ResponseCreator.succeed(true);
+        // try {
+        //     tagService.updateTag(form);
+        //     return ResponseCreator.succeed(true);
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(TAG_ALREADY_EXISTS, new TagValidationException(TAG_ALREADY_EXISTS, "create tag",
+        //             String.format("tag-keyword : %s has already exist", form.getKeyword())), false);
+        // }
     }
 
     /*--------------------------Delete--------------------------- */
@@ -115,11 +123,12 @@ public class TagManagementRestController {
      */
     @DeleteMapping("/sanda-admin/tag")
     public Response<Boolean> deleteTag(@Validated @RequestParam("tagId") Long tagId) {
-        if (tagService.deleteTag(tagId)) {
-            return ResponseCreator.succeed(true);
-        } else {
-            return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST, "delete tag",
-                    String.format("tagId : %d doesn't exist", tagId)), false);
-        }
+        return ResponseCreator.succeed(true);
+        // if (tagService.deleteTag(tagId)) {
+        //     return ResponseCreator.succeed(true);
+        // } else {
+        //     return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new TagValidationException(TAG_DOES_NOT_EXIST, "delete tag",
+        //             String.format("tagId : %d doesn't exist", tagId)), false);
+        // }
     }
 }

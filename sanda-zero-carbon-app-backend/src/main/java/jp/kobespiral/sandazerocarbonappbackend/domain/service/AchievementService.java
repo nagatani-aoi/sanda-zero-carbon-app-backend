@@ -52,7 +52,7 @@ public class AchievementService {
         Boolean isDailyMission = form.getIsDailyMission(); // デイリーミッションフラグを固定
 
         if(!(userService.isUserExist(userId))){
-            throw new UserValidationException(USER_DOES_NOT_EXIST, "achieve mission",String.format("this user does not exist (userId: %d )", form.getUserId()));
+            throw new UserValidationException(NO_SUCH_USER_EXISTS, "achieve mission",String.format("user (Id:%d) does not exist", form.getUserId()));
         }
         UserDailyStatus userDailyStatus = userService.getUserDailyStatus(userId);
         // ユーザIDからユーザーデイリーステータスDtoを取得

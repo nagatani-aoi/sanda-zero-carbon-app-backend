@@ -19,6 +19,8 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.repository.DailyMissionRep
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.MissionRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.TagRepository;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.TagValidationException;
+
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 /**
@@ -45,10 +47,9 @@ public class MissionManagementService {
     public MissionDto createMission(MissionForm form) {
         Mission mission = form.toEntity();
         missionRepository.save(mission);
-        Tag tag = tagRepository.findById(mission.getTagId())
-                .orElseThrow(() -> new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,
-                        "get tag from the mission",
-                        String.format("missionId; %d does not have tag", mission.getMissionId())));
+
+        Tag tag = tagRepository.findById(mission.getTagId()).orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS,"create mission",String.format("tag (Id:%d) does not exist", mission.getTagId())));
+
         return MissionDto.build(mission, tag);
     }
 
@@ -73,9 +74,9 @@ public class MissionManagementService {
             dailyMissionRepository.save(dailyMission);
             // 
             Tag tag = tagRepository.findById(missionList.get(index).getTagId())
-                    .orElseThrow(() -> new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,
-                            "get tag from the mission",
-                            String.format("missionId; %d does not have tag", missionList.get(index).getMissionId())));
+                    .orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS,
+                            "select daily mission",
+                            String.format("tag (Id:%d) does not exist", missionList.get(index).getTagId())));
             // デイリーミッションDTOリストの末尾に追加する
             dailyMissionDtoList.add(DailyMissionDto.build(missionList.get(index), dailyMission, tag));
         }
@@ -93,9 +94,9 @@ public class MissionManagementService {
         List<MissionDto> missionDtoList = new ArrayList<MissionDto>();
         for (Mission list : missionList) {
             Tag tag = tagRepository.findById(list.getTagId())
-                    .orElseThrow(() -> new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,
-                            "get tag from the mission",
-                            String.format("missionId; %d does not have tag", list.getMissionId())));
+                    .orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS,
+                            "get all mission",
+                            String.format("tag (Id:%d) does not exist", list.getTagId())));
             missionDtoList.add(MissionDto.build(list, tag));
         }
         return missionDtoList;
@@ -109,12 +110,12 @@ public class MissionManagementService {
      */
     public MissionDto getMission(Long missionId) {
         Mission mission = missionRepository.findById(missionId)
-                .orElseThrow(() -> new MissionValidationException(MISSION_DOES_NOT_EXIST, "read the mission",
-                        String.format("missionId: %d does not exist", missionId)));
+                .orElseThrow(() -> new MissionValidationException(NO_SUCH_MISSION_EXISTS, "get mission",
+                        String.format("mission (Id:%d) does not exist", missionId)));
         Tag tag = tagRepository.findById(mission.getTagId())
-                .orElseThrow(() -> new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,
-                        "get tag from the mission",
-                        String.format("missionId; %d does not have tag", mission.getMissionId())));
+                .orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS,
+                        "get mission",
+                        String.format("tag (Id:%d) does not exist", mission.getTagId())));
         return MissionDto.build(mission, tag);
     }
 
@@ -128,8 +129,8 @@ public class MissionManagementService {
      */
     public MissionDto updateMission(Long missionId, MissionForm form) {
         Mission mission = missionRepository.findById(missionId)
-                .orElseThrow(() -> new MissionValidationException(MISSION_DOES_NOT_EXIST, "read the mission",
-                        String.format("missionId: %d does not exist", missionId)));
+                .orElseThrow(() -> new MissionValidationException(NO_SUCH_MISSION_EXISTS, "update mission",
+                        String.format("mission (Id:%d) does not exist", missionId)));
         mission.setPoint(form.getPoint());
         mission.setTitle(form.getTitle());
         mission.setDescription(form.getDescription());
@@ -139,9 +140,9 @@ public class MissionManagementService {
         mission.setMissionType(form.getMissionType());
         mission.setTagId(form.getTagId());
         Tag tag = tagRepository.findById(mission.getTagId())
-                .orElseThrow(() -> new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,
-                        "get tag from the mission",
-                        String.format("missionId; %d does not have tag", mission.getMissionId())));
+                .orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS,
+                        "update mission",
+                        String.format("tag (Id:%d) does not exist", mission.getTagId())));
         return MissionDto.build(missionRepository.save(mission), tag);
     }
 
@@ -169,9 +170,9 @@ public class MissionManagementService {
         List<MissionDto> missionDtoList = new ArrayList<MissionDto>();
         for (Mission list : missionList) {
             Tag tag = tagRepository.findById(list.getTagId())
-                    .orElseThrow(() -> new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,
-                            "get tag from the mission",
-                            String.format("missionId; %d does not have tag", list.getMissionId())));
+                    .orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS,
+                            "search mission by keyword",
+                            String.format("tag (Id:%d) does not exist", list.getMissionId())));
             missionDtoList.add(MissionDto.build(list, tag));
         }
         return missionDtoList;
@@ -186,8 +187,8 @@ public class MissionManagementService {
     public List<MissionDto> searchMissionByTag(Long tagId) {
         List<Mission> missionList = missionRepository.findByTagId(tagId);
         Tag tag = tagRepository.findById(tagId)
-                .orElseThrow(() -> new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,
-                        "give tag to the mission", String.format("give tag to %d", tagId)));
+                .orElseThrow(() -> new TagValidationException(NO_SUCH_TAG_EXISTS,
+                        "search mission by tag", String.format("tag (Id:%d) does not exist", tagId)));
         List<MissionDto> missionDtoList = new ArrayList<MissionDto>();
         for (Mission list : missionList) {
             missionDtoList.add(MissionDto.build(list, tag));

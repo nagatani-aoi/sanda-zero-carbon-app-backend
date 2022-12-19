@@ -66,13 +66,14 @@ public class QuizManagementRestController {
      */
     @GetMapping("/sanda-admin/quiz")
     Response<List<QuizDto>> getAllQuiz() {
-        try {
-            return ResponseCreator.succeed(quizManagementService.getAllQuiz());
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.QUIZ_DOES_NOT_EXIST,
-                    new QuizValidationException(QUIZ_DOES_NOT_EXIST, "update quiz", String.format("no quiz exist")),
-                    null);
-        }
+        return ResponseCreator.succeed(quizManagementService.getAllQuiz());
+        // try {
+        //     return ResponseCreator.succeed(quizManagementService.getAllQuiz());
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.QUIZ_DOES_NOT_EXIST,
+        //             new QuizValidationException(QUIZ_DOES_NOT_EXIST, "update quiz", String.format("no quiz exist")),
+        //             null);
+        // }
     }
 
     /*-----------------Update--------------- */
@@ -97,11 +98,12 @@ public class QuizManagementRestController {
      */
     @DeleteMapping("/sanda-admin/quiz")
     Response<Boolean> deleteQuiz(@RequestParam("quizId") Long quizId) {
-        try {
-            return ResponseCreator.succeed(quizManagementService.deleteQuiz(quizId));
-        } catch (Exception e) {
-            return ResponseCreator.fail(ErrorCode.QUIZ_DOES_NOT_EXIST, new QuizValidationException(QUIZ_DOES_NOT_EXIST,
-                    "delete quiz", String.format("quizId: %d do not exist", quizId)), null);
-        }
+        return ResponseCreator.succeed(quizManagementService.deleteQuiz(quizId));
+        // try {
+        //     return ResponseCreator.succeed(quizManagementService.deleteQuiz(quizId));
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ErrorCode.QUIZ_DOES_NOT_EXIST, new QuizValidationException(QUIZ_DOES_NOT_EXIST,
+        //             "delete quiz", String.format("quizId: %d do not exist", quizId)), null);
+        // }
     }
 }

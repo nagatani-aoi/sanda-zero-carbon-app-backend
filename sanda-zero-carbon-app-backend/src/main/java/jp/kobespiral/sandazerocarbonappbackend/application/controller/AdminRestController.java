@@ -42,15 +42,17 @@ public class AdminRestController {
     @GetMapping("/sanda-admin/login")
     public Response<Boolean> login(@RequestParam("administratorId") Long administratorId,
             @RequestParam("password") String password) {
-        try {
-            adminService.getAdministrator(administratorId, password);
-            return ResponseCreator.succeed(true);
-        } catch (Exception e) {
-            return ResponseCreator.fail(ADMIN_DOES_NOT_EXISTS,
-                    new UserValidationException(ADMIN_DOES_NOT_EXISTS, "get administrator",
-                            String.format("adminId : %d  ,password : %s doesn't exist.", administratorId, password)),
-                    false);
-        }
+                adminService.getAdministrator(administratorId, password);
+                return ResponseCreator.succeed(true);
+        // try {
+        //     adminService.getAdministrator(administratorId, password);
+        //     return ResponseCreator.succeed(true);
+        // } catch (Exception e) {
+        //     return ResponseCreator.fail(ADMIN_DOES_NOT_EXISTS,
+        //             new UserValidationException(ADMIN_DOES_NOT_EXISTS, "get administrator",
+        //                     String.format("adminId : %d  ,password : %s doesn't exist.", administratorId, password)),
+        //             false);
+        // }
     }
 
 }

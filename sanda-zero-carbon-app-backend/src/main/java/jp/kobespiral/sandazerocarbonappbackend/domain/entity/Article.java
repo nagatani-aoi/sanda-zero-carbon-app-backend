@@ -34,6 +34,5 @@ public class Article {
     Boolean isImportant;
     String url;
     /** OGP機能を利用するか */
-    @Column(columnDefinition = "default '1'")
     Boolean isOgpUsed;
 }

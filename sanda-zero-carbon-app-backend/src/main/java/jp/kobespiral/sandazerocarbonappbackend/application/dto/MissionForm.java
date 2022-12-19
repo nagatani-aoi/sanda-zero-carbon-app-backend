@@ -2,17 +2,16 @@ package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
 
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Difficulty;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionPoint;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Mission;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.MissionType;
 import lombok.Data;
+
 @Data
 public class MissionForm {
     // @NotNull
@@ -20,10 +19,10 @@ public class MissionForm {
     // @Range(min=1,max=100)
     // int point; // ポイント
     @NotBlank
-    @Length(min=1,max=100)
+    @Length(min = 1, max = 100)
     String title; // 題目
     @NotBlank
-    @Length(min=1,max=1000)
+    @Length(min = 1, max = 1000)
     String description; // 説明
     @NotNull
     @PositiveOrZero
@@ -40,7 +39,7 @@ public class MissionForm {
 
     public Mission toEntity() {
         Mission mission = new Mission();
-        //mission.setPoint(3);
+        // mission.setPoint(3);
         mission.setPoint(MissionPoint.valueOf(difficulty.toString()).getInt());
         mission.setTitle(title);
         mission.setDescription(description);

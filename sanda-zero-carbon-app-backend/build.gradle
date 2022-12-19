@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.10'
+	id 'org.springframework.boot' version '2.6.14'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id 'java'
 	id 'war'
@@ -32,6 +32,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'io.springfox:springfox-swagger2:2.8.0'
     implementation  'io.springfox:springfox-swagger-ui:2.8.0'
+	compileOnly 'org.jsoup:jsoup:1.15.3'
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	implementation 'org.apache.commons:commons-lang3:3.0'
 }
 
 tasks.named('test') {

@@ -13,6 +13,7 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ArticleVali
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.ArticleManagementService;
+import jp.kobespiral.sandazerocarbonappbackend.domain.service.ArticleService;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.UserArticleService;
 import lombok.RequiredArgsConstructor;
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
@@ -32,6 +33,8 @@ public class ArticleRestController {
     @Autowired
     ArticleManagementService articleManagementService;
     @Autowired
+    ArticleService articleService;
+    @Autowired
     UserArticleService userArticleService;
 
     /*--------------------------Create--------------------------- */
@@ -46,6 +49,21 @@ public class ArticleRestController {
     Response<List<ArticleDto>> getAllArticle() {
         try {
             return ResponseCreator.succeed(articleManagementService.getAllArticles());
+        } catch (Exception e) {
+            return ResponseCreator.fail(MISSION_DOES_NOT_EXIST, new ArticleValidationException(MISSION_DOES_NOT_EXIST,
+                    "get all article", String.format("article does not exist")), null);
+        }
+    }
+
+    /**
+     * 全ての記事のOGPを取得する
+     * 
+     * @return 記事dtoのリスト
+     */
+    @GetMapping("/article/ogp")
+    Response<List<ArticleDto>> getAllArticleOgp() {
+        try {
+            return ResponseCreator.succeed(articleService.getAllArticles());
         } catch (Exception e) {
             return ResponseCreator.fail(MISSION_DOES_NOT_EXIST, new ArticleValidationException(MISSION_DOES_NOT_EXIST,
                     "get all article", String.format("article does not exist")), null);

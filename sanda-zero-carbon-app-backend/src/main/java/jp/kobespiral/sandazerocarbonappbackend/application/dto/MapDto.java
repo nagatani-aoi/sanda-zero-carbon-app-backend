@@ -10,8 +10,6 @@ import lombok.Data;
  */
 @Data
 public class MapDto {
-    // String userId; // ユーザーID
-    // Long mapId; // マップID
     int currentLocation; // マップ上での現在地
     Long nextLocation; // 次の地点
     Long backLocation; // 1つ前の地点

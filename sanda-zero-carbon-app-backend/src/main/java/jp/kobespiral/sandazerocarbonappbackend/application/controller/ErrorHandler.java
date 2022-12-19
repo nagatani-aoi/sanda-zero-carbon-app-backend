@@ -1,9 +1,11 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 
+
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.AnsweredQuizValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ArticleValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.QuizValidationException;
@@ -49,6 +51,11 @@ public class ErrorHandler {
         return ResponseCreator.fail(ex.getCode(), ex, null);
     }
 
+    @ExceptionHandler(AnsweredQuizValidationException.class)
+    public Response<Object> handleAnsweredQuizValidationException(AnsweredQuizValidationException ex) {
+        return ResponseCreator.fail(ex.getCode(), ex, null);
+    }
+
     @ExceptionHandler(ArticleValidationException.class)
     public Response<Object> handleArticleValidationException(ArticleValidationException ex) {
         return ResponseCreator.fail(ex.getCode(), ex, null);
@@ -58,4 +65,10 @@ public class ErrorHandler {
     public Response<Object> handleTotalConditionException(TotalConditionException ex) {
         return ResponseCreator.fail(ex.getCode(), ex, null);
     }
+
+    /*-------------その他-------------- */
+    // @ExceptionHandler(Exception.class)
+    // public Response<Object> handleException(Exception ex) {
+    //     return ResponseCreator.fail(HttpStatus.INTERNAL_SERVER_ERROR, ex, null);
+    // }
 }

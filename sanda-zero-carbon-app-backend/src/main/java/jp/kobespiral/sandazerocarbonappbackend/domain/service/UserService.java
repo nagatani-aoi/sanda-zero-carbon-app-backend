@@ -8,6 +8,7 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.AnsweredQuizValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.MissionValidationException;
+import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.QuizValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Achievement;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.AnsweredQuiz;
@@ -213,8 +214,8 @@ public class UserService {
             userDailyStatusRepository.save(tempUserDailyStatus);
         }
         Quiz quiz = quizRepository.findById(answeredQuiz.getQuizId())
-                .orElseThrow(() -> new UserValidationException(USER_DOES_NOT_EXIST, "create the user",
-                        String.format("crate %d", userId)));
+                .orElseThrow(() -> new QuizValidationException(NO_SUCH_QUIZ_EXISTS, "create the user",
+                        String.format("quiz (Id:%d) does not exist", answeredQuiz.getQuizId())));
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId, localDate);
 
         // ユーザのトータルポイントの更新
@@ -259,8 +260,8 @@ public class UserService {
      * @return パスワードを変更したユーザエンティティ
      */
     public User changePassword(String userId, String password) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserValidationException(USER_DOES_NOT_EXIST,
-                "change user password", String.format("userId : %s doesn't exist", userId)));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserValidationException(NO_SUCH_USER_EXISTS,
+                "change user password", String.format("user (Id:%s) does not exist", userId)));
         user.setPassword(password);
         userRepository.save(user);
         return user;

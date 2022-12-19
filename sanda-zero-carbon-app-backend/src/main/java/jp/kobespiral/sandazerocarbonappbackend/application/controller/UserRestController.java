@@ -14,11 +14,10 @@ import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserDto;
 import jp.kobespiral.sandazerocarbonappbackend.application.dto.UserForm;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
-import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.User;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
-import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
+import jp.kobespiral.sandazerocarbonappbackend.application.controller.ErrorHandler;
 
 /**
  * ユーザのRESTController
@@ -67,9 +66,8 @@ public class UserRestController {
         // try {
         //     userService.loginUser(userId, password);
         //     return ResponseCreator.succeed(true);
-        // } catch (Exception e) {
-        //     return ResponseCreator.fail(USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
-        //             "login user", String.format("userId : %s ,password %s doesn't exist.", userId, password)), false);
+        // } catch (UserValidationException e) {
+        //     throw
         // }
 
     }
@@ -87,9 +85,8 @@ public class UserRestController {
         // try {
         //     UserDto user = userService.getUserDto(userId);
         //     return ResponseCreator.succeed(user);
-        // } catch (Exception e) {
-        //     return ResponseCreator.fail(USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
-        //             "get userDto", String.format("userId : %s doesn't exits", userId)), null);
+        // } catch (UserValidationException e) {
+        //     return handleUserValidationException(e);
         // }
     }
 

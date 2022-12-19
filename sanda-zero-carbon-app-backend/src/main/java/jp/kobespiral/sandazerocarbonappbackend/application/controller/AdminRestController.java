@@ -1,6 +1,7 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,7 +11,6 @@ import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Response;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ResponseCreator;
 import jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.UserValidationException;
 
-import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 import jp.kobespiral.sandazerocarbonappbackend.domain.service.AdministratorService;
 import lombok.RequiredArgsConstructor;
 
@@ -53,6 +53,10 @@ public class AdminRestController {
         //                     String.format("adminId : %d  ,password : %s doesn't exist.", administratorId, password)),
         //             false);
         // }
+    }
+    @ExceptionHandler(UserValidationException.class)
+    public Response<Object> handleUserValidationException(UserValidationException ex) {
+        return ResponseCreator.fail(ex.getCode(), ex, null);
     }
 
 }

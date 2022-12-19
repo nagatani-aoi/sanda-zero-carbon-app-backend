@@ -1,5 +1,6 @@
 package jp.kobespiral.sandazerocarbonappbackend.domain.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,11 @@ public class ArticleService {
         List<Article> articleList = articleRepository.findAllByOrderByPostedAtDesc();
         List<ArticleDto> articleDtoList = new ArrayList<ArticleDto>();
         for (Article list : articleList) {
-            articleDtoList.add(ArticleDto.build(list));
+            try {
+                articleDtoList.add(ArticleDto.buildOgp(list));
+            } catch (IOException e) {
+                System.err.println(e);
+            }
         }
         return articleDtoList;
     }

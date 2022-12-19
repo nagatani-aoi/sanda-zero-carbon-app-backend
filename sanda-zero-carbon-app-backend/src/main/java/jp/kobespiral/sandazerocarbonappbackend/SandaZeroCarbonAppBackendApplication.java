@@ -9,5 +9,4 @@ public class SandaZeroCarbonAppBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SandaZeroCarbonAppBackendApplication.class, args);
 	}
-
 }

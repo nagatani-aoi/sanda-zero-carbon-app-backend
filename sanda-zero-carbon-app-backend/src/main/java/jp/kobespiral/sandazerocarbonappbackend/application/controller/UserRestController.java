@@ -135,4 +135,16 @@ public class UserRestController {
         }
     }
 
+    /*--------------------------Update--------------------------- */
+    @GetMapping("/user/flag")
+    public Response<Boolean> resetFlag(@Validated @RequestParam("userId") String userId) {
+        try {
+            userService.flagNullify(userId);
+            return ResponseCreator.succeed(true);
+        } catch (Exception e) {
+            return ResponseCreator.fail(USER_DOES_NOT_EXIST, new UserValidationException(USER_DOES_NOT_EXIST,
+                    "get userDailyDto", String.format("userId : %s doesn't exits", userId)), null);
+        }
+    }
+
 }

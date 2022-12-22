@@ -22,4 +22,6 @@ public class User {
     String password;//パスワード
     int age; // 年齢
     int totalPoint;//累積ポイント
+    Boolean levelFlag;//レベルアップフラグ
+    Boolean mapFlag;//マップ解放フラグ
 }

@@ -20,6 +20,8 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.repository.MissionReposito
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.QuizRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.UserDailyStatusRepository;
 import jp.kobespiral.sandazerocarbonappbackend.domain.repository.UserRepository;
+import jp.kobespiral.sandazerocarbonappbackend.domain.utils.Rule;
+
 import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.ErrorCode.*;
 
 import java.nio.charset.Charset;
@@ -165,10 +167,25 @@ public class UserService {
 
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId, localDate);
 
-        // ユーザのトータルポイントの更新
+
         User user = getUser(userId);
+        //ユーザのレベルアップフラグの判定
+        if((user.getTotalPoint()/Rule.levelRate) != ((user.getTotalPoint()+achievement.getGetPoint())/Rule.levelRate)){
+            user.setLevelFlag(true);
+        }
+
+        int beforeStage = calculateStage(userId);//トータルポイント更新前のステージ
+        // ユーザのトータルポイントの更新
         user.setTotalPoint(user.getTotalPoint() + achievement.getGetPoint());
         userRepository.save(user);
+
+        int afterStage = calculateStage(userId);//トータルポイント更新後のステージ
+        //マップ解放フラグの判定
+        if(beforeStage != afterStage){
+            user.setMapFlag(true);
+            userRepository.save(user);
+        }
+
         // デイリーステータスの更新
         userDailyStatus.setTotalMissionPoint(userDailyStatus.getTotalMissionPoint() + achievement.getGetPoint());
         userDailyStatus.setTotalCo2Reduction(userDailyStatus.getTotalCo2Reduction() + mission.getCo2Reduction());
@@ -215,10 +232,22 @@ public class UserService {
                         String.format("crate %d", userId)));
         UserDailyStatus userDailyStatus = userDailyStatusRepository.findByUserIdAndDate(userId, localDate);
 
-        // ユーザのトータルポイントの更新
         User user = getUser(userId);
+        //ユーザのレベルアップフラグの判定
+        if((user.getTotalPoint()/Rule.levelRate) != ((user.getTotalPoint()+quiz.getPoint())/Rule.levelRate)){
+            user.setLevelFlag(true);
+        }
+        int beforeStage = calculateStage(userId);//トータルポイント更新前のステージ
+        // ユーザのトータルポイントの更新
         user.setTotalPoint(user.getTotalPoint() + quiz.getPoint());
         userRepository.save(user);
+
+        int afterStage = calculateStage(userId);//トータルポイント更新後のステージ
+        //マップ解放フラグの判定
+        if(beforeStage != afterStage){
+            user.setMapFlag(true);
+            userRepository.save(user);
+        }
         // デイリーステータスの更新
         userDailyStatus.setTotalQuizPoint(userDailyStatus.getTotalQuizPoint() + quiz.getPoint());
         userDailyStatusRepository.save(userDailyStatus);
@@ -287,5 +316,33 @@ public class UserService {
                     .charAt(myindex));
         }
         return builder.toString();
+    }
+    
+    /**
+     * ステージの計算
+     * @param userId ユーザID
+     * @return 現在のステージ
+     */
+    public int calculateStage(String userId) {
+        int calculatedStage = getUserDto(userId).getLevel() / Rule.mapLevelRate + 1; // ステージの段階を計算
+        int stage; //  最終的に決定されたステージ
+
+        if (calculatedStage > Rule.maxStage) { // 計算したステージが最大値を超えていたら
+            stage = Rule.maxStage; // ステージの最大値に設定
+        } else {
+            stage = calculatedStage; // 計算したステージに設定
+        }
+        return stage;
+    }
+
+    /**
+     * レベルアップフラグとマップ解放フラグのリセット
+     * @param userId ユーザId
+     */
+    public void flagNullify(String userId) {
+        User user = getUser(userId);
+        user.setLevelFlag(false);
+        user.setMapFlag(false);
+        userRepository.save(user);
     }
 }

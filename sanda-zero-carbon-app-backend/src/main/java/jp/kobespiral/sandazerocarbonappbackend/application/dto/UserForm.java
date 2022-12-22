@@ -14,7 +14,7 @@ public class UserForm {
     String password;
     int age;
     public User toEntity(){
-        User user = new User(userId,password,age,0);
+        User user = new User(userId,password,age,0,false,false);
         return user;
     }
 }

@@ -15,6 +15,8 @@ public class UserDto {
     int level;// レベル
     double nextLevelPercentage;// 次のレベルまでの割合
     int levelRate;// 1レベルあげるために必要なポイント
+    Boolean levelFlag;//レベルアップフラグ
+    Boolean mapFlag;//マップ解放フラグ
 
     public static UserDto build(User user) {
         UserDto dto = new UserDto();
@@ -25,6 +27,8 @@ public class UserDto {
         dto.nextLevelPercentage = (double) (user.getTotalPoint() % Rule.levelRate) / Rule.levelRate;
         // System.out.println(dto.nextLevelPercentage);
         dto.levelRate = Rule.levelRate;
+        dto.levelFlag = user.getLevelFlag();
+        dto.mapFlag = user.getMapFlag();
         return dto;
     }
 }

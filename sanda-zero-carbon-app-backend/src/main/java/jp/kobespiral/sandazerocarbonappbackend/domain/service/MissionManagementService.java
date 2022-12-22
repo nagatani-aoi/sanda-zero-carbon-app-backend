@@ -45,11 +45,11 @@ public class MissionManagementService {
      */
     public MissionDto createMission(MissionForm form) {
         Mission mission = form.toEntity();
-        missionRepository.save(mission);
         Tag tag = tagRepository.findById(mission.getTagId())
                 .orElseThrow(() -> new MissionValidationException(NO_TAG_CORRESPONDING_TO_THE_MISSION,
                         "get tag from the mission",
                         String.format("missionId; %d does not have tag", mission.getMissionId())));
+        missionRepository.save(mission);
         return MissionDto.build(mission, tag);
     }
 

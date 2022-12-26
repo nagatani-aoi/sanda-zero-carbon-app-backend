@@ -47,4 +47,27 @@ public class ArticleService {
         }
         return articleDtoList;
     }
+
+    /**
+     * 重要度の高い記事を検索する
+     * 
+     * @return 記事dtoリスト
+     */
+    public List<ArticleDto> searchArticleByIsImportant() {
+        List<Article> articleList = articleRepository.findByIsImportantTrue();
+        List<ArticleDto> articleDtoList = new ArrayList<ArticleDto>();
+        for (Article article : articleList) {
+            if (article.getIsOgpUsed()) { // OGPを利用するフラグがTrueなら
+                try {
+                    articleDtoList.add(ArticleDto.buildOgp(article));
+                } catch (IOException e) {
+                    throw new ArticleValidationException(OTHER_ERROR, "get article",
+                            String.format("URL is anomalous value"));
+                }
+            } else {
+                articleDtoList.add(ArticleDto.build(article));
+            }
+        }
+        return articleDtoList;
+    }
 }

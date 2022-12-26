@@ -19,8 +19,8 @@ import static jp.kobespiral.sandazerocarbonappbackend.cofigration.exception.Erro
 
 /**
  * 記事の管理者サービス
- * 
- * @author sato
+ *
+ * @author sato & ing
  */
 
 @Service
@@ -83,27 +83,24 @@ public class ArticleManagementService {
 
     /**
      * 記事を更新する
-     * 
+     *
      * @param articleId 記事ID
      * @param form      記事フォーム
      * @return 更新後の記事dto
      */
     public ArticleDto updateArticle(Long articleId, ArticleForm form) {
-        Article article = articleRepository.findById(articleId)
+        articleRepository.findById(articleId)
                 .orElseThrow(() -> new ArticleValidationException(USER_DOES_NOT_EXIST, "update article",
                         String.format("userId : %s doesn't exist", articleId)));
-        article.setTitle(form.getTitle());
-        article.setTagId(form.getTagId());
-        article.setDescription(form.getDescription());
-        // 時間は現在時刻に更新
-        article.setPostedAt(LocalDateTime.now());
-        article.setThumbnailSource(form.getThumbnailSource());
-        article.setIsImportant(form.getIsImportant());
-        article.setUrl(form.getUrl());
-        articleRepository.save(article);
-        ArticleDto articleDto = new ArticleDto();
-        articleDto = ArticleDto.build(article);
-        return articleDto;
+
+        // formからEntityを作成して変更しない点をセット
+        Article articleUpdated = form.toEntity();
+        articleUpdated.setArticleId(articleId);
+        articleUpdated.setPostedAt(LocalDateTime.now());
+
+        articleRepository.save(articleUpdated); // 更新をデータベースに適応
+
+        return ArticleDto.build(articleUpdated); // ArticleDTOを返す
     }
 
     /**

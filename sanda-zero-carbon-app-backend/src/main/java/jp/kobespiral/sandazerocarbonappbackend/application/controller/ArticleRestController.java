@@ -131,7 +131,7 @@ public class ArticleRestController {
     @GetMapping("/article/important")
     Response<List<ArticleDto>> searchArticleByIsImportant() {
         try {
-            return ResponseCreator.succeed(articleManagementService.searchArticleByIsImportant());
+            return ResponseCreator.succeed(articleService.searchArticleByIsImportant());
         } catch (Exception e) {
             /////////// エラー処理は後で
             return ResponseCreator.fail(TAG_DOES_NOT_EXIST, new ArticleValidationException(TAG_DOES_NOT_EXIST,

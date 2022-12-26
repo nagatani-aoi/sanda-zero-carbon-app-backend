@@ -23,10 +23,10 @@ public class SwaggerConfiguration {
     public Docket swaggerSpringMvcPlugin() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
-                // .protocols(Collections.singleton("https")) // <- ポイント 1
-                // .host("es4.eedept.kobe-u.ac.jp") // <- ポイント 2
-                .protocols(Collections.singleton("http")) // <- ポイント 1
-                .host("localhost:18080") // <- ポイント 2
+                .protocols(Collections.singleton("https")) // <- ポイント 1
+                .host("es4.eedept.kobe-u.ac.jp") // <- ポイント 2
+                // .protocols(Collections.singleton("http")) // <- ポイント 1
+                // .host("localhost:18080") // <- ポイント 2
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.regex("/api.*"))

@@ -1,6 +1,7 @@
 package jp.kobespiral.sandazerocarbonappbackend.application.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Article;
 import lombok.Data;
@@ -12,16 +13,19 @@ import lombok.Data;
  */
 @Data
 public class ArticleForm {
-    String title;
-    @NotBlank
-    Long tagId;
-    String description;
-    String thumbnailSource;
-    Boolean isImportant;
     @NotBlank
     String url;
-    /** OGP機能を利用 */
+    @NotNull
+    Boolean isImportant;
+    @NotNull
+    Long tagId;
+    @NotNull
     Boolean isOgpUsed;
+    String title;
+    String description;
+    String thumbnailSource;
+
+    /** OGP機能を利用 */
 
     /**
      * 記事フォームから記事エンティティを作成

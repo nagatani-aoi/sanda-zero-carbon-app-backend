@@ -16,9 +16,11 @@ import jp.kobespiral.sandazerocarbonappbackend.domain.entity.Article;
 public interface ArticleRepository extends CrudRepository<Article, Long> {
     /**
      * 全ての記事を取得する
+     * 
      * @return 全ての記事
      */
     List<Article> findAllByOrderByPostedAtDesc();
+
     /**
      * タグIDで記事を検索する
      * 
@@ -32,7 +34,7 @@ public interface ArticleRepository extends CrudRepository<Article, Long> {
      * 
      * @return 重要度の高い記事のリスト
      */
-    List<Article> findByIsImportantTrue();
+    List<Article> findByIsImportantTrueOrderByPostedAtDesc();
 
     /**
      * キーワードで記事のタイトルを検索する

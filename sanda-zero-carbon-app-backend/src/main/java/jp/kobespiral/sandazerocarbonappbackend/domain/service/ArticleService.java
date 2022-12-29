@@ -54,7 +54,7 @@ public class ArticleService {
      * @return 記事dtoリスト
      */
     public List<ArticleDto> searchArticleByIsImportant() {
-        List<Article> articleList = articleRepository.findByIsImportantTrue();
+        List<Article> articleList = articleRepository.findByIsImportantTrueOrderByPostedAtDesc();
         List<ArticleDto> articleDtoList = new ArrayList<ArticleDto>();
         for (Article article : articleList) {
             if (article.getIsOgpUsed()) { // OGPを利用するフラグがTrueなら
